@@ -34,40 +34,39 @@
 		
 		// TRAITEMENT DES DONNEES ET APPEL DES VUES
 		
-		if($step == 'visitor'){	// PARAMETRE CLIENT
+		if ($step == 'visitor') {	// PARAMETRE CLIENT
+			$page = "Authentification client";
+			if (!$is_form_completed) {			// Si utilisateur inconnu et pas de données "nouveau client" reçues
+				require 'views/form/view_formClient.php';				// Chargement vue du formulaire "nouveau client"
 				
-				if(!$is_formClient_completed){			// Si utilisateur inconnu et pas de données "nouveau client" reçues
-					
-					require ' views/form/view_formClient.php';				// Chargement vue du formulaire "nouveau client"
-					
-				}elseif($is_form_completed){			//Sinon, si formulaire "nouveau client" rempli.
-					
-					require 'ctrl/post/editClient.php';						// Traitement du formulaire "nouveau client"
+			} else {			//Sinon, si formulaire "nouveau client" rempli.
+				require 'ctrl/post/editClient.php';						// Traitement du formulaire "nouveau client"
+			}
+		} elseif ($step == 'client') {						//Si Client deja renseigné.
+			if (!$is_form_completed) {					// Sinon si CLIENT IDENTIFIE et pas de renseignement sur method livraison et paiement
+				
+				require 'views/form/view_formCommande.php';								// Chargement de l'affichage du formulaire	parametrage commande.		
+			} elseif ($is_form_completed) {
+				
+				require 'ctrl/post/editCommande.php';
+				
+			}
+		} elseif ($step == 'paiement') {
+			if ($is_commande_validated) {
+				
+				add_commande($panier);					// Si la commande est validée on l'ajoute à la base de donnée.
+				if ( $panier->mode_paiement() == 'En ligne') { 
+				/* REDIRECTION VERS PAYBOX/ paypal*/
+				} else {
+					require 'view_confirmationCommande.php';
 				}
-		}elseif($step == 'client'){						//Si Client deja renseigné.
-			
-				if(!$is_form_completed){					// Sinon si CLIENT IDENTIFIE et pas de renseignement sur method livraison et paiement
-					
-					require 'views/form/view_formCommande.php';								// Chargement de l'affichage du formulaire	parametrage commande.		
-				}elseif($is_form_completed){
-					
-					require 'ctrl/post/editCommande.php';
-					
-				}
-		}elseif($step == 'paiement'){
-			
-				if($is_commande_validated){
-					
-					add_commande($panier);					// Si la commande est validée on l'ajoute à la base de donnée.
-					if( $panier->mode_paiement() == 'En ligne'){ /* REDIRECTION VERS PAYBOX/ paypal*/}
-					else{	require 'view_confirmationCommande.php';}
-				}else(!$is_commande_validated){
-					
-					require 'views/commande/view_recapCommande.php';
-				}
-		}elseif($step == 'annuler'){
-			
-			header('Location: boutique.php?$formAnswer=Commande annulée&show=list');exit();
+			} elseif (!$is_commande_validated){
+				
+				require 'views/commande/view_recapCommande.php';
+			}
+		} elseif ($step == 'annuler') {
+			header('Location: boutique.php?$formAnswer=Commande annulée&show=list');
+			exit();
 		}
 
 		
@@ -75,3 +74,6 @@
 		require 'views/gabarit/gabarit.php';
 		
 		//PASSAGE DE SESSION
+
+		
+		?>
