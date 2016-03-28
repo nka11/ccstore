@@ -1,6 +1,10 @@
 <?php
 
-	class Produit {
+class Produit {
+  /**
+   * Représente un produit
+   *
+   */
 		
 		private $id_p,
 				$titre,
@@ -24,7 +28,9 @@
 			$this->categorie = get_categorie($this->tag_cat());
 			$this->producteur = get_producteur($this->id_producteur());
 		}
-		
+    /**
+     * loads data from a db record
+     */
 		public function hydrate(array $donnees)
 		{
 			foreach ($donnees as $key => $value)
