@@ -1,0 +1,34 @@
+/* Balises HTML5, display : block */
+
+article, aside, footer, header, hgroup, nav
+{
+	display : block;
+}
+
+/* Reset deco et style listes*/
+
+ul, li, a
+{
+	list-style-type: none;
+	text-decoration: none;
+}
+
+/*Mise à zero des margins et padding par defaut */
+
+abbr, address, area, article, aside, b, base, blockquote, body,
+br, button, caption, cite, code, col, colgroup, command, datalist, dd,
+del, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form,
+h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, img, input,
+ins, label, legend, li, link, map, mark, menu, meter, nav, ol, ul, p, q
+{
+	margin : 0;
+	padding : 0;
+}
+
+a img{border:none;}
+
+img{border:none;}
+
+a:visited{ color:black;}
+
+a{text-decoration : none;}
