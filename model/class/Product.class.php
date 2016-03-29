@@ -13,16 +13,14 @@ class Product {
 				$prix_achat,
 				$prix_vente,
 				$tva,
-				$producteurs,
-				$tags_cat,
 				$description,
 				$is_active,
 				$img,
 				
 				//objets : 
 				
-				$categorie,
-				$producteur;
+				$categories,
+				$producteurs;
 		
 		public function __construct(array $donnees)
 		{
@@ -46,18 +44,17 @@ class Product {
 		//getter
 		
 		public function id_p() {return $this->id_p;}
+		public function id() {return $this->id_p;}
 		public function titre() {return $this->titre;}
 		public function prix_achat() {return $this->prix_achat;}
 		public function prix_vente() {return $this->prix_vente;}
 		public function tva() {return $this->tva;}
-		public function id_producteur() { return $this->id_producteur;}
-		public function tag_cat() { return $this->tag_cat;}
 		public function description() {return $this->description;}
 		public function is_active() { return $this->is_active;}
 		public function img() {return $this->img;}
 		
-		public function categorie() { return $this->categorie;}
-		public function producteur() { return $this->producteur;}
+		public function categories() { return $this->categories;}
+		public function producteurs() { return $this->producteurs;}
 		
 		
 		//setter
@@ -66,9 +63,8 @@ class Product {
 		public function setTitre($titre) { $this->titre = $titre;}
 		public function setPrix_achat($prix_a) { $this->prix_achat =  $prix_a;}
 		public function setPrix_vente($prix_v) { $this->prix_vente =  $prix_v;}
+		public function setCategories($categories) { $this->categories =  $categories;}
 		public function setTva($tva) { $this->tva =  $tva;}
-		public function setId_producteur($id_producteur) { $this->id_producteur = (int) $id_producteur;}
-		public function setTag_cat($tag_cat) { $this->tag_cat = $tag_cat;}
 		public function setDescription($description) { 
 			if (is_string($description))
 				{$this->description = $description;}

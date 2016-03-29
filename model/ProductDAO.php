@@ -30,8 +30,8 @@ class ProductDAO extends AbstractDAO {
    *   is_active (on devrait trouver dans la base dolibarr)
    *   img (certainement a créer/browser les pj des obj dolibarr)
    */
-  public function get_product(int $product_id) {
-    $produit = NULL;
+  public function getProduct(int $product_id) {
+    $product = NULL;
     $sql_query = "SELECT
      llx_product.rowid  AS id_p,
      llx_product.label AS titre,
@@ -51,10 +51,11 @@ class ProductDAO extends AbstractDAO {
    if ($query->rowCount() == 1){
       while ($donnees = $query->fetch(PDO::FETCH_ASSOC))
         {
-          $produit = new Produit ($donnees);
+          $product = new Product($donnees);
+          $product->setCategories($this->catdao->getCategoriesProduct($product->id()));
         }
    }
-   return $produit;
+   return $product;
   }
   public function getListProduct($categorie=NULL) {
     $products = array();
@@ -67,10 +68,11 @@ class ProductDAO extends AbstractDAO {
      llx_product.description AS description,
      llx_product.tosell AS is_active
 
-     FROM llx_product, llx_categorie_product
+     FROM llx_product
     ";
     if ($categorie != NULL) {
-      $sql_query .= "WHERE llx_categorie_product.fk_categorie = :categorie
+      $sql_query .= ", llx_categorie_product 
+        WHERE llx_categorie_product.fk_categorie = :categorie
        AND llx_categorie_product.fk_product = llx_product.rowid"; 
     }
     $query = $this->bdd->prepare($sql_query);
@@ -80,7 +82,9 @@ class ProductDAO extends AbstractDAO {
     $query->execute();
     if ($query->rowCount() > 1) {
       while ($product_data = $query->fetch(PDO::FETCH_ASSOC)) {
-        array_push($products,new Product($product_data));
+        $product = new Product($product_data);
+        $product->setCategories($this->catdao->getCategoriesProduct($product->id()));
+        array_push($products,$product);
       }
     }
     return $products;

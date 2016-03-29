@@ -47,5 +47,28 @@ class CategorieDAO extends AbstractDAO {
     }
     return $categories;
   }
+  public function getCategoriesProduct(int $product_id) {
+    $categories = array();
+    $sql_query = "SELECT
+     categorie.rowid  AS id_cat,
+     categorie.fk_parent AS id_parent,
+     categorie.label AS tag
+     FROM llx_categorie AS categorie, llx_categorie_product AS cat_product
+     WHERE
+      categorie.rowid = cat_product.fk_categorie
+     AND
+       cat_product.fk_product = :product_id
+    ";
+    $query = $this->bdd->prepare($sql_query);
+    $query->bindValue(':product_id', $product_id, PDO::PARAM_INT);
+    $query->execute();
+    if ($query->rowCount() > 0) {
+      while ($cat_data = $query->fetch()) {
+        array_push($categories,new Categorie($cat_data));
+      }
+    }
+    return $categories;
+
+  }
 }
 ?>
