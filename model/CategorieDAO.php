@@ -1,16 +1,7 @@
 <?php
-require('./model/class/Categorie.class.php');
-class CategorieDAO {
-  public $bdd;
-  public function __construct(
-    string $dbstring='mysql:host=localhost;dbname=dolib_test',
-    string $dbuser='testuser',
-    string $dbpass='testpass' ) {
-    // initialize here dolibarr bdd
-    $this->bdd = new PDO($dbstring,$dbuser,$dbpass);
-    $this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    $this->bdd->exec("SET CHARACTER SET utf8");
-  }
+require_once('./model/AbstractDAO.php');
+require_once('./model/class/Categorie.class.php');
+class CategorieDAO extends AbstractDAO {
   /**
    * Get a category by ID
    */

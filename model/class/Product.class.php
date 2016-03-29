@@ -1,6 +1,6 @@
 <?php
 
-class Produit {
+class Product {
   /**
    * Représente un produit vs model dolibarr :
    * Un produit peut avoir plusieurs producteurs
@@ -27,8 +27,6 @@ class Produit {
 		public function __construct(array $donnees)
 		{
 			$this->hydrate($donnees);
-			$this->categorie = get_categorie($this->tag_cat());
-			$this->producteur = get_producteur($this->id_producteur());
 		}
     /**
      * loads data from a db record
