@@ -9,4 +9,4 @@ else
 fi
 
 php phpunit.phar --version
-php phpunit.phar tests/testCatDao.php
+php phpunit.phar tests/

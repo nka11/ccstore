@@ -14,7 +14,7 @@ class CategorieDAO {
   /**
    * Get a category by ID
    */
-  public function get_categorie(int $categorie_id) {
+  public function getCategorie(int $categorie_id) {
     $sql_query = "SELECT
      categorie.rowid  AS id_cat,
      categorie.fk_parent AS id_parent,
@@ -23,7 +23,7 @@ class CategorieDAO {
      WHERE categorie.rowid = :categorie_id
     ";
     $query = $this->bdd->prepare($sql_query);
-    $query->bindValue(':categorie_id', $product_id, PDO::PARAM_INT);
+    $query->bindValue(':categorie_id', $categorie_id, PDO::PARAM_INT);
     $query->execute();
    
    if ($query->rowCount() == 1){
@@ -36,7 +36,7 @@ class CategorieDAO {
      return NULL;
    }
   }
-  public function get_list_categories(int $parent=0) {
+  public function getListCategories(int $parent=0) {
     $categories = array();
     $sql_query = "SELECT
      categorie.rowid  AS id_cat,
