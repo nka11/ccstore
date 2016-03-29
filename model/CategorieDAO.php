@@ -1,20 +1,26 @@
 <?php
-require('./class/Produit.class.php');
+require('./model/class/Categorie.class.php');
 class CategorieDAO {
-  public function __construct() {
-  // initialize here dolibarr bdd
+  public $bdd;
+  public function __construct(
+    string $dbstring='mysql:host=localhost;dbname=dolib_test',
+    string $dbuser='testuser',
+    string $dbpass='testpass' ) {
+    // initialize here dolibarr bdd
+    $this->bdd = new PDO($dbstring,$dbuser,$dbpass);
+    $this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    $this->bdd->exec("SET CHARACTER SET utf8");
   }
   /**
    * Get a category by ID
    */
   public function get_categorie(int $categorie_id) {
     $sql_query = "SELECT
-     llx_categorie.rowid  AS id_cat,
-     llx_categorie.fk_parent AS id_parent,
-     llx_categorie.label AS tag,
-
-     FROM llx_categorie
-     WHERE llx_categorie.rowid = :categorie_id
+     categorie.rowid  AS id_cat,
+     categorie.fk_parent AS id_parent,
+     categorie.label AS tag
+     FROM llx_categorie AS categorie
+     WHERE categorie.rowid = :categorie_id
     ";
     $query = $this->bdd->prepare($sql_query);
     $query->bindValue(':categorie_id', $product_id, PDO::PARAM_INT);
@@ -33,20 +39,19 @@ class CategorieDAO {
   public function get_list_categories(int $parent=0) {
     $categories = array();
     $sql_query = "SELECT
-     llx_categorie.rowid  AS id_cat,
-     llx_categorie.fk_parent AS id_parent,
-     llx_categorie.label AS tag,
-
-     FROM llx_categorie
+     categorie.rowid  AS id_cat,
+     categorie.fk_parent AS id_parent,
+     categorie.label AS tag
+     FROM llx_categorie AS categorie
      WHERE
-      llx_categorie.fk_parent = :parent
+      fk_parent = :parent
     ";
     $query = $this->bdd->prepare($sql_query);
     $query->bindValue(':parent', $parent, PDO::PARAM_INT);
     $query->execute();
     if ($query->rowCount() > 0) {
       while ($cat_data = $query->fetch()) {
-        array_push($categories,new Categorie($data));
+        array_push($categories,new Categorie($cat_data));
       }
     }
     return $categories;
