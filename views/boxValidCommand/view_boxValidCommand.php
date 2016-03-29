@@ -1,5 +1,5 @@
 <?php ob_start();?>
 <div id='boxValid'>
-<a id='<?php echo $divId;?>' href='commander.php?step=<?php echo $session;?>'></a>
+<a id='<?php echo $divId;?>' href='<?php if ($panier->valeur() >=20) echo 'commander.php?step='.$session;?>'></a>
 </div>
 <?php $view_boxValidCommand	=	ob_get_clean();?>
