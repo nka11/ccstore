@@ -8,5 +8,4 @@ else
   wget https://phar.phpunit.de/phpunit.phar
 fi
 
-php phpunit.phar --version
 php phpunit.phar tests/
