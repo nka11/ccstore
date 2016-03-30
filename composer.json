@@ -1,0 +1,18 @@
+{
+    "name": "courtcircuit/dolistore",
+    "description": "An ecommerce frontend for dolibarr ERP using it's REST API (requires dolibarr 3.9)",
+    "require": {
+        "nategood/httpful": "^0.2.20",
+        "luracast/restler": "3.0.0-RC6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.2"
+    },
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "nka11",
+            "email": "nicolas@karageuzian.com"
+        }
+    ]
+}
