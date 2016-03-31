@@ -20,6 +20,8 @@
 		// Chargement du navigateur
 		require 'ctrl/leftNav/ctrl_leftNav.php';
 
+		// Chargement de la box_ValidCommand
+		require 'ctrl/boxValidCommand/ctrl_boxValidCommand.php';
 		
 		//RECUPERATION DES DONNEES
 		
@@ -48,3 +50,5 @@
 		require 'views/gabarit/gabarit.php';
 		
 		//PASSAGE DE SESSION
+		
+$_SESSION['panier'] = (!empty($panier))	?	$panier	:	NULL;

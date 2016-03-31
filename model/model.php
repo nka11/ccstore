@@ -271,6 +271,21 @@
 		$q->execute();
 	}
 	
+	function add_panierOnly(Panier $panier){
+		
+		$bdd = getBdd();
+		
+		$q = $bdd->prepare('INSERT INTO paniers SET id_c= :id_c, date_crea= NOW()');
+		// Assignation des valeurs à la requête.
+		$q->bindValue(':id_c', $panier->id_c(), PDO::PARAM_INT);
+		//$q->bindValue(':date_crea', $panier->date_crea());
+		
+		// Exécution de la requête.
+		$q->execute();
+		
+	}
+	
+	
 	function add_panier(Panier $panier){
 		
 		$bdd = getBdd();
@@ -285,7 +300,7 @@
 		
 		foreach( $panier->list_lc() as $lc){
 		$p = $bdd->prepare('INSERT INTO lignes_commande SET id_pa= :id_pa, id_p= :id_p, quantite= :quantite');
-		$p->bindValue('id_pa', $lc->id_pa(), PDO::PARAM_INT);
+		$p->bindValue('id_pa', $panier->id_pa(), PDO::PARAM_INT);
 		$p->bindValue('id_p', $lc->id_p(), PDO::PARAM_INT);
 		$p->bindValue('quantite', $lc->quantite(), PDO::PARAM_INT);
 		$p->execute();}

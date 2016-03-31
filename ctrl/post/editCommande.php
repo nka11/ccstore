@@ -29,8 +29,15 @@
 													'id_c'				=>	$user->id_c(),
 													'mode_liv'			=>	$mode_liv,
 													'mode_paimement'	=>	$mode_paiement,
-													'commentaire'		=>	$commentaire));
+													'commentaire'		=>	$commentaire,
+													'statut'			=>	'En attente de validation'));
 													
+		if($validation_requise) {
+			
+			$_SESSION['panier']	=	$commande;
+			
+		}
+		
 		
 		
 	}

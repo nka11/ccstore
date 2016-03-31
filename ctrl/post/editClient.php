@@ -58,5 +58,5 @@ if($session_admin_open){
 					$_SESSION['panier']		=	$user->get_panierEnCours();				// On charge le nouveau panier dans la session.
 			}
 	
-	header('Location: commander.php?step=client&formAnswer='.$formAnswer);exit();					//	Redirection vers la page commande.
+	header('Location: commander.php?step=parametrage&formAnswer='.$formAnswer);exit();					//	Redirection vers la page commande.
 }

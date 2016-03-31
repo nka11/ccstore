@@ -13,7 +13,7 @@
 
 
 	if(isset($_POST['connexion_admin'])){ require 'ctrl/admin/authentification.php';} // S'il y a une demande pour acces BACKOFFICE: il lance le traitement de la demande avec 'authentification.php';
-	if(isset($_POST['connexion'])){ require 'ctrl/client/authentification.php';} // S'il y a une demande de connexion client.
+	if(isset($_POST['Connexion'])){ require 'ctrl/client/authentification.php';} // S'il y a une demande de connexion client.
 	
 	$session 	= (empty($_SESSION['statut']))		?	'visitor' 			:	$_SESSION['statut'];
 	

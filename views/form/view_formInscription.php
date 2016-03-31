@@ -1,6 +1,6 @@
 <?php ob_start();?>
 
-<form class='form_admin' action='commander.php?step=visitor' method='POST'>
+<form class='form_admin' action=<?php echo $form_action;?> method='POST'>
 
 <input id='nom_c' name='nom_c' placeholder='Nom' type='text' value='<?php if(isset($t)) echo $t->nom();?>'/>
 <input id='prenom_c' name='prenom_c' placeholder='Prenom' type='text' value='<?php if(isset($t)) echo $t->prenom();?>'/>
@@ -15,8 +15,8 @@
 		<input type='hidden' value='<?php echo $t->id_c();?>' name='id_c'/>
 <?php endif;?>
 <a href='commander.php?step=annuler'>Annuler</a>
-<input type='submit' value='Enregistrer' name='Enregistrer'/>
+<input type='submit' value='Inscription' name='Inscription'/>
 
 </form>
 
-<?php $view_section = ob_get_clean();?>
+<?php $view_formInscription = ob_get_clean();?>

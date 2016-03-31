@@ -61,7 +61,7 @@ class Commande {
 	public function setId_com($id) { $this->id_com = (int) $id;}
 	public function setId_pa($id_pa) { $this->id_pa = (int) $id_pa;}
 	public function setId_c($id_c) { $this->id_c = (int) $id_c;}
-	public function setDate_liv($date_crea) { $this->date_liv = $date_crea;}
+	public function setDate_crea($date_crea) { $this->date_crea = $date_crea;}
 	public function setDate_liv($date_liv) { $this->date_liv = $date_liv;}
 	public function setMode_liv($mode_liv) { $this->mode_liv = $mode_liv;}
 	public function setMode_paiement($mode_paiement) { $this->mode_paiement = $mode_paiement;}

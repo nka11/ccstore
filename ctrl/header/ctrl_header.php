@@ -6,12 +6,12 @@
 	
 	if($session_visitor_open){
 		
-		require 'views/header/view_formConnexion.php';
-	
+		require 'views/form/view_formConnexion.php';
+		$view_boxUser	=	$view_formConnexion;
 	}elseif($session_client_open){
 	
 		require 'views/client/view_boxClient.php';
-	
+		$view_boxUser	=	$view_boxClient;
 	}elseif($session_admin_open){
 		
 		require 'views/admin/view_boxAdmin.php';

@@ -16,8 +16,10 @@
 			
 			$target		=	$user->get_panierEnCours();				// Pose le pblm des paniers deja commandés... attribut "statut" au panier -> valeur "en cours" "valide".
 			
-			delete_panier($target);
-			
+			if (!empty($target)) {
+				
+				delete_panier($target);								// Echappe le cas dou le panier demandé n'existe plus (supprimé manuellement en base par exemple.)
+			}
 		}
 		
 		
@@ -27,7 +29,7 @@
 	// Recuperation en cas de suppression de ligne : 
 	if(isset($_GET['supLigne_com'])){
 		
-		$id_lc		=	(isset($_GET['id_lc'])) 	?	intval($_GET['id_lc'])	:	NULL;
+		$id_lc		=	(isset($_GET['id_lc'])) 	?	intval($_GET['id_lc'])			:	NULL;
 		$ligne_com	= (!empty($id_lc))				?	$panier->get_ligne_com($id_lc)	:	NULL;
 		if(!empty($ligne_com)){	$panier->delete_ligne_com($ligne_com);}
 		
@@ -97,10 +99,7 @@
 		}
 	}
 	
-	// Chargement de la box_ValidCommand
-	require 'ctrl/boxValidCommand/ctrl_boxValidCommand.php';
-	
 	// Chargement de la vue panier
 	require 'views/panier/view_panier.php';
 
-	$_SESSION['panier'] = $panier;
+	//$_SESSION['panier'] = $panier;
