@@ -3,7 +3,7 @@
 <div id='boxAlert'>
 	Vous aviez un panier "en cours" : 
 
-<form id='form_boxAlert'>
+<form id='form_boxAlert' action='' method='POST'>
 
 	Fusionner les paniers<input type='checkbox' value='fusionner' name='ChoixUser'/>
 	Ecraser mon ancien panier<input type='checkbox' value='ecraser' name='ChoixUser'/>
