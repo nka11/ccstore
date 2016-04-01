@@ -14,11 +14,11 @@
 		
 		if($session_client_open){
 			
-			$target		=	$user->get_panierEnCours();				// Pose le pblm des paniers deja commandés... attribut "statut" au panier -> valeur "en cours" "valide".
+			$target		=	$user->get_panierEnCours();				
 			
-			if (!empty($target)) {
+			if (!empty($target)) {									// Echappe le cas ou le panier demandé n'existe plus (supprimé manuellement en base par exemple.)
 				
-				delete_panier($target);								// Echappe le cas dou le panier demandé n'existe plus (supprimé manuellement en base par exemple.)
+				delete_panier($target);								
 			}
 		}
 		
@@ -101,5 +101,3 @@
 	
 	// Chargement de la vue panier
 	require 'views/panier/view_panier.php';
-
-	//$_SESSION['panier'] = $panier;

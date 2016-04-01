@@ -37,6 +37,18 @@
 			$_SESSION['panier']	=	$commande;
 			
 		}
+		else {
+			
+			switch ($action){
+				
+				case	'ajouter'	:	add_commande($commande); $formAnswer =  ' Votre commande a bien été enregistrée';
+				break;
+				case	'modifier'	:	set_commande($commande); $formAnswer = 'Votre commande a bien été modifiée';
+				break;
+	
+			}
+			
+		}
 		
 		
 		

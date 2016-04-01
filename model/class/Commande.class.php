@@ -19,7 +19,7 @@ class Commande {
 	{
 		$this->hydrate($donnees);
 
-		parent::setList_lc();
+		$this->setList_lc();
 
 	}
 	
@@ -68,4 +68,13 @@ class Commande {
 	public function setStatut($statut) { $this->statut = $statut;}
 	public function setCommentaire($com) { $this->commentaore = $com;}
 	public function setTotal($total) { $this->total = $total;}
+	
+//others
+
+	public function clearPanier() {
+		
+		$bdd = getBdd();
+		$bdd->exec('DELETE FROM paniers WHERE id_pa = '.$this->id_pa());
+				
+	}
 }

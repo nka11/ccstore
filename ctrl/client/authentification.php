@@ -52,7 +52,6 @@
 						$lc->setId_pa($newId_pa);
 						$_SESSION['panier']->add_ligne_commande($lc);
 						
-						
 					}
 				}
 				
