@@ -527,8 +527,11 @@
 			/*-------------SECTION---------------commander-----------------------------------*/
 
 #boxAlert{
-
-	border				:	1px solid red;
+	
+	position			:	fixed;
+	width				:	50%;
+	border				:	1px solid black;
+	box-shadow			:	8px 8px black;
 
 }
 			

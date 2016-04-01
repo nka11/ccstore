@@ -34,7 +34,8 @@
 				}
 				else {
 					
-					require 'ctrl/boxAlert/ctrl_boxAlert.php';						// S'il y a un panier en session et un panier en base --> ctrl conflit
+					$show_boxAlert = TRUE;
+					//require 'ctrl/boxAlert/ctrl_boxAlert.php';						// S'il y a un panier en session et un panier en base --> ctrl conflit
 				}	
 			}
 			else {																	// Si pas de panier en base
@@ -56,6 +57,5 @@
 				}
 				
 			}
-			
 				
 	}}

@@ -11,6 +11,11 @@
 		// Ouverture et/ou récupération de session ouverte ( chargement du User / ouverte-fermeture de session)
 		require "ctrl/session.php";
 		
+		// Chargement de la boxAlert si besoin
+		if($show_boxAlert) {
+			
+			require 'ctrl/boxAlert/ctrl_boxAlert.php';
+		}
 		// Chargement de la liste des catégories.
 		require "ctrl/categories.php"; 						// Le fichier appelle le model qui récupères la liste des catégories.
 		

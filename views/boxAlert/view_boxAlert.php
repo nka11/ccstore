@@ -3,13 +3,13 @@
 <div id='boxAlert'>
 	Vous aviez un panier "en cours" : 
 
-<form id='form_boxAlert' action='' method='POST'>
+<form id='form_boxAlert' action='boutique.php?exec_boxAlert' method='POST'>
 
-	Fusionner les paniers<input type='checkbox' value='fusionner' name='ChoixUser'/>
-	Ecraser mon ancien panier<input type='checkbox' value='ecraser' name='ChoixUser'/>
-	Conserver mon ancien panier<input type='checkbox' value='conserver' name='ChoixUser'/>
+	<input type='checkbox' value='fusionner' name='ChoixUser'/>Fusionner les paniers
+	<input type='checkbox' value='ecraser' name='ChoixUser'/>Ecraser mon ancien panier
+	<input type='checkbox' value='conserver' name='ChoixUser'/>Conserver mon ancien panier
 	
-<input type='submit' name='Sélectionner'/>
+<input type='submit' value='Confirmer' name='Selectionner'/>
 
 </div>
 
