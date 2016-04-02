@@ -27,10 +27,9 @@ require 'ctrl/leftNav/ctrl_leftNav.php';
 $step						= (isset($_GET['step']))												?	htmlentities($_GET['step'])	:	NULL;
 $is_form_completed			= (isset($_POST['Enregistrer']) || isset($_POST['Inscription']))		?	true	:	false;			// Un nouveau client à rempli le formulaire.
 $form_action				= 'commander.php?step='.$step;
-$is_commande_validated		= (isset($_POST['Confirmer']))											?	true	:	false;			// Une nouvelle commande à été validée.
+$is_command_validated		= (isset($_GET['Confirmer']))											?	true	:	false;			// Une nouvelle commande à été validée.
 
 $formAnswer = (isset($_GET['formAnswer'])) ? htmlentities($_GET['formAnswer']) : NULL;				//Si un formulaire à généré une erreur.
-
 
 // TRAITEMENT DES DONNEES ET APPEL DES VUES
 
@@ -58,32 +57,31 @@ if($session_client_open && $step == 'Parametrage') {
 		require 'views/form/view_formCommandeParametrage.php';															// Chargement de l'affichage du formulaire	parametrage commande.		
 	}
 	else {
-		$validation_required	=	TRUE;
 		require 'ctrl/post/editCommande.php';
+		$page = 'Validation de la commande';
 		require 'views/commande/view_recapCommande.php';																		// Gestion de la commande : -> Enregistrement en bdd.
+		$view_section = $view_recapCommande;
 	}
-		
 }
 
+if( $step == 'Validation' && $is_command_validated) {								// Etape de validation
+	
+	require 'ctrl/post/editCommande.php';
+	$step = ($_SESSION['panier']->mode_paiement() == 'En ligne')	?	'Paiement'	:	'Confirmation';										// Redirection vers etape de paiement si necessaire.
+}
 
-
-
-elseif ($step == 'paiement') {
+if ($step == 'Paiement') {
 	$page	=	'Paiement';
-	if ($is_commande_validated) {
-		
-		add_commande($panier);						// Si la commande est validée on l'ajoute à la base de donnée.
-		if ( $panier->mode_paiement() == 'En ligne') { 
-		/* REDIRECTION VERS PAYBOX/ paypal*/
-		} else {
-			require 'view_confirmationCommande.php';
-		}
-	} elseif (!$is_commande_validated){
-		
-		require 'views/commande/view_recapCommande.php';
-	}
-} elseif ($step == 'annuler') {
-	header('Location: boutique.php?$formAnswer=Commande annulée&show=list');
+	/* REDIRECTION VERS PAYBOX/ paypal*/		
+}
+
+if( $step == 'Confirmation'){
+	header('Location: boutique.php?formAnswer='.$formAnswer.'&show=list');
+	exit();
+}
+
+if ($step == 'Annuler') {
+	header('Location: boutique.php?formAnswer=Commande annulée&show=list');
 	exit();
 }
 
@@ -91,6 +89,11 @@ elseif ($step == 'paiement') {
 require 'views/gabarit/gabarit.php';
 
 //PASSAGE DE SESSION
-
-$_SESSION['panier'] = (!empty($panier))	?	$panier	:	NULL;
+if(isset($commande)){
+	
+	$_SESSION['panier'] = (!empty($commande))	?	$commande	:	NULL;	
+}
+else {
+	$_SESSION['panier'] = (!empty($panier))	?	$panier	:	NULL;
+}
 		?>

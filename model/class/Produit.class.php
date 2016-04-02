@@ -45,16 +45,17 @@ class Produit {
 		
 		//getter
 		
-		public function id_p() {return $this->id_p;}
-		public function titre() {return $this->titre;}
-		public function prix_achat() {return $this->prix_achat;}
-		public function prix_vente() {return $this->prix_vente;}
-		public function tva() {return $this->tva;}
-		public function id_producteur() { return $this->id_producteur;}
-		public function tag_cat() { return $this->tag_cat;}
-		public function description() {return $this->description;}
-		public function is_active() { return $this->is_active;}
-		public function img() {return $this->img;}
+		public function id_p() 			{return $this->id_p;}
+		public function titre() 		{return $this->titre;}
+		public function prix_achat() 	{return $this->prix_achat;}
+		public function prix_vente() 	{return $this->prix_vente;}
+		public function tva() 			{return $this->tva;}
+		public function id_producteur() {return $this->id_producteur;}
+		public function tag_cat() 		{return $this->tag_cat;}
+		public function description() 	{return $this->description;}
+		public function is_active() 	{return $this->is_active;}
+		public function img() 			{return $this->img;}
+		public function prix_HT() 		{return ($this->prix_vente)-((($this->prix_vente)*($this->tva))/100);}
 		
 		public function categorie() { return $this->categorie;}
 		public function producteur() { return $this->producteur;}

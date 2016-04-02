@@ -1,6 +1,6 @@
 <?php ob_start();?>
 
-<div id='boxPanier'>
+<div id='boxDetailPanier'>
 <ul id='ul_boxPanier'>
 	<?php if(!empty($panier->list_lc())):?>
 	<?php foreach ($panier->list_lc() as $lc):?>

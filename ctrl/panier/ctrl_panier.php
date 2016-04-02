@@ -4,11 +4,11 @@
 //					-> Récupération des données ajouts/ modification / suppression d'un article au panier.
 //					-> Enregistrement du panier dans $_SESSION['panier']
 	
-	$panier		= (!empty($_SESSION['panier']) AND !isset($_GET['vider']))		?	$_SESSION['panier']	:	new Panier( array(	'id_pa'		=>	0,
-																																'id_c'		=> 	$user->id_c(),
-																																'date_crea'	=>	date('d-m-Y'),
-																																'montant'	=>	0,
-																																'list_lc'	=>	array()));
+	$panier		= (!empty($_SESSION['panier']) AND !isset($_GET['vider']))		?	$_SESSION['panier']	:	new Panier( array(	'id_pa'			=>	0,
+																																'id_c'			=> 	$user->id_c(),
+																																'date_crea_pa'	=>	date('d-m-Y'),
+																																'montant'		=>	0,
+																																'list_lc'		=>	array()));
 	
 	if(isset($_GET['vider'])){
 		

@@ -260,7 +260,7 @@
 		
 		$bdd = getBdd();
 		// Prépare une requête de type UPDATE.
-		$q = $bdd->prepare('UPDATE paniers SET id_c= :id_c, date_crea= NOW() WHERE id_pa = :id_pa');
+		$q = $bdd->prepare('UPDATE paniers SET id_c= :id_c, date_crea_pa= NOW() WHERE id_pa = :id_pa');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':id_c', $panier->id_c(), PDO::PARAM_INT);
 		//$q->bindValue(':date_crea', date());
@@ -275,7 +275,7 @@
 		
 		$bdd = getBdd();
 		
-		$q = $bdd->prepare('INSERT INTO paniers SET id_c= :id_c, date_crea= NOW()');
+		$q = $bdd->prepare('INSERT INTO paniers SET id_c= :id_c, date_crea_pa= NOW()');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':id_c', $panier->id_c(), PDO::PARAM_INT);
 		//$q->bindValue(':date_crea', $panier->date_crea());
@@ -290,7 +290,7 @@
 		
 		$bdd = getBdd();
 		
-		$q = $bdd->prepare('INSERT INTO paniers SET id_c= :id_c, date_crea= NOW()');
+		$q = $bdd->prepare('INSERT INTO paniers SET id_c= :id_c, date_crea_pa= NOW()');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':id_c', $panier->id_c(), PDO::PARAM_INT);
 		//$q->bindValue(':date_crea', $panier->date_crea());
@@ -362,10 +362,10 @@
 		
 		$bdd = getBdd();
 		// Prépare une requête de type UPDATE.
-		$q = $bdd->prepare('UPDATE commandes SET id_c= :id_c, date_crea= :date_crea, date_liv= :date_liv, list_prod= :list_prod, mode_liv= :mode_liv, total= :total, commentaire = :commentaire, statut= :statut WHERE id_com = :id_com');
+		$q = $bdd->prepare('UPDATE commandes SET id_c= :id_c, date_crea_com = NOW(), date_liv= :date_liv, list_prod= :list_prod, mode_liv= :mode_liv, total= :total, commentaire = :commentaire, statut= :statut WHERE id_com = :id_com');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':id_c', $commande->client()->id_c(), PDO::PARAM_INT);
-		$q->bindValue(':date_crea', date());
+		//$q->bindValue(':date_crea_com', date());
 		$q->bindValue(':date_liv', $commande->date_liv());
 		$q->bindValue(':list_prod', $commande->list_prod());
 		$q->bindValue(':mode_liv', $commande->mode_liv());
@@ -379,15 +379,24 @@
 	
 	function add_commande(Commande $commande){
 		
+		//echo 'je suis dans la fn : add_commande';
+		//echo '<br/> je rentre les valeurs suivantes : <br/>';
+		//echo $commande->id_pa();
+		//echo '<br/>'.$commande->id_c();
+		//echo '<br/>'.$commande->mode_liv();
+		//echo '<br/>'.$commande->mode_paiement();
+		//echo '<br/>'.$commande->calculTotal();
+		//echo '<br/>'.$commande->commentaire();
+		//echo '<br/>'.$commande->statut();exit();
 		$bdd = getBdd();
 		
-		$q = $bdd->prepare('INSERT INTO commandes SET id_pa= :id_pa, id_c= :id_c, date_crea= NOW(), date_liv= NOW(), mode_liv= :mode_liv, mode_paiement= :mode_paiement, total= :total, commentaire= :commentaire, statut= :statut');
+		$q = $bdd->prepare('INSERT INTO commandes SET id_pa= :id_pa, id_c= :id_c, date_crea_com= NOW(), date_liv= NOW(), mode_liv= :mode_liv, mode_paiement= :mode_paiement, total= :total, commentaire= :commentaire, statut= :statut');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':id_pa', $commande->id_pa(), PDO::PARAM_INT);
 		$q->bindValue(':id_c', $commande->id_c(), PDO::PARAM_INT);
 		$q->bindValue(':mode_liv', $commande->mode_liv());
 		$q->bindValue(':mode_paiement', $commande->mode_paiement());
-		$q->bindValue(':total', $commande->total());
+		$q->bindValue(':total', $commande->calculTotal());
 		$q->bindValue(':commentaire', $commande->commentaire());
 		$q->bindValue(':statut', $commande->statut());
 		

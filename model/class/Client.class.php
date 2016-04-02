@@ -68,6 +68,27 @@
 			
 		}
 		
+		public function get_lastPanierCree(){
+			
+			$bdd = getBdd();
+			
+			$q = $bdd->prepare('SELECT * FROM paniers WHERE id_pa = MAX(id_pa) AND id_c = :id_c');
+			$q->bindValue(':id_c', $this->id_c, PDO::PARAM_INT);
+			$q->execute();
+		
+			if ($q->rowCount() == 1){
+			
+				while ($donnees = $q->fetch(PDO::FETCH_ASSOC)) {
+				  $panier = new Panier ($donnees);
+				}
+				return $panier;
+			}
+			else { 
+			
+				return NULL;
+			}
+		}
+		
 		
 		//setter
 		

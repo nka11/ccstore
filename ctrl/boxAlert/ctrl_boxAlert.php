@@ -21,7 +21,7 @@
 										$_SESSION['panier']->add_ligne_commande($lc);
 									}
 			break;
-			case	'conserver'	:	$SESSION['panier']	=	$user->get_panierEnCours();
+			case	'conserver'	:	$SESSION['panier']	=	$user->get_panierEnCours();							// Chargement du panier en base (écrasement du panier session).
 			break;
 
 		}
