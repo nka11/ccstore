@@ -51,6 +51,10 @@
 		max-width			:	1366px;
 		margin				:	auto;
 		font-family			:	'PoetsenOne-Regular';
+		background-image	:	url('img/design/bandeau3.jpg');
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	100%;
 	}
 }
 
@@ -60,17 +64,22 @@
 	
 	min-width				:	1290px;
 	max-width				:	1366px;
+	background-image		:	url('img/design/bandeau3.jpg');
+	background-repeat		:	no-repeat;
+	background-size			:	100%;
+	min-height				:	100%;
 	}
 	
 	#header_container{
 
 		position			:	relative;
-		background-image	:	url('img/design/bandeau.jpg');
+		/*background-image	:	url('img/design/bandeau3.jpg');
 		background-repeat	:	no-repeat;
-		background-size		:	100%;
+		background-size		:	100%;*/
 		/*min-height			:	475px;*/
 		min-height			:	475px;
 		width				:	100%;
+		
 	}
 	
 	#ul_mainNav{
@@ -108,14 +117,16 @@
 	#wrap{
 
 	min-width			:	1024px;
+	background-image	:	url('img/design/bandeau3.jpg');
+	background-repeat	:	no-repeat;
+	background-size		:	100%;
+	min-height				:	100%;
 }
 	
 	#header_container{
 	
 		position			:	relative;
-		background-image	:	url('img/design/bandeau.jpg');
-		background-repeat	:	no-repeat;
-		background-size		:	100%;
+		
 		min-height			:	380px;
 	}
 	
@@ -224,7 +235,7 @@
 	top					:	50px;
 	height				:	50px;
 	line-height			:	50px;
-	color				:	white;
+	color				:	black;
 	font-size			:	30px;
 	text-align			:	center;
 	width				:	50%;
@@ -581,20 +592,118 @@
 #box_formInscription, #box_formConnexion {
 
 	display				:	inline-block;
-	vertival-align		:	top;
-	width				:	45%;
+	vertical-align		:	top;
+	padding				:	10px;
+	border				: 	1px solid #000000;
+	border-radius		: 	10px;
+	-moz-border-radius	: 	10px;
+	-webkit-border-radius: 	10px;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	margin				:	0px 10px 0px 10px;
+}
+
+#box_formInscription {
+
+	text-align			:	center;
+	width				:	40%;
+}
+
+#box_formConnexion {
+	
+	background-color	:	white;
+	text-align			:	center;
+	width				:	30%;
+
+}
+
+#box_formInscription #formInscription .input_formInsc {
+
+	height				:	30px;
+	margin-bottom		:	10px;
+	width				:	95%;
+}
+
+#box_formConnexion #formConnexion .input_formConnexion{
+
+	height				:	30px;
+	display				:	block;
+	margin				:	10px auto;
+	width				:	60%;
+}
+
+.text_formAuth p{
+
+	font-size			:	10px;
+	text-align			:	left;
+	margin-bottom		:	10px;
+}
+
+.text_formAuth h3{
+
+	font-size			:	20px;
+	margin-bottom		:	10px;
+}
+
+.formInsc_innerBox {
+
+	display				:	inline-block;
+	vertical-align		:	top;
+	width				:	50%;
 
 }	
 
+#box_formConnexion #boutonConnexion {
+
+	width				:	197px;
+	height				:	81px;
+	background-image	:	url('img/design/boutonConnexion.png');
+	border				:	none;
+	text-decoration		:	none;
+	/border-radius		: 	60px;
+	-moz-border-radius	: 	60px;
+	-webkit-border-radius: 	60px;
+	cursor				:	pointer;
+
+}
+
+#box_formConnexion #boutonConnexion:hover{
+
+	border				: none;
+	background-image	:	url('img/design/boutonConnexionHover.png');
+
+}
+
+#boutonInsc {
+
+	width				:	200px;
+	height				:	108px;
+	background-image	:	url('img/design/boutonInscription.png');
+	border				:	none;
+	border-radius		: 	52px;
+	-moz-border-radius	: 	52px;
+	-webkit-border-radius: 	52px;
+	cursor				:	pointer;
+}
+
+#boutonInsc:hover {
+
+	background-image	:	url('img/design/boutonInscriptionHover.png');
+
+}
 /*----------------------------------------------FOOTER------------------------------------------------*/
 
 #div_footerIndexContainer{
 
-	position			:	relative;
+	position			:	fixed;
+	bottom				:	0px;
 	font-family			:	'PoetsenOne-Regular';
-	height				:	206px;
+	height				:	150px;
 	background-color	:	rgba(40, 40, 40, 0.75);
 	padding				:	10px;
+	width				:	100%;
+	margin				:	auto;
 
 }
 

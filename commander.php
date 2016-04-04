@@ -81,7 +81,7 @@ if( $step == 'Confirmation'){
 }
 
 if ($step == 'Annuler') {
-	header('Location: boutique.php?formAnswer=Commande annulée&show=list');
+	header('Location: boutique.php?formAnswer=Commande annulée&what=produit&show=list');
 	exit();
 }
 
