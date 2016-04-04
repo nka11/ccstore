@@ -20,6 +20,7 @@
 		--><div id='wrap_section'><!--
 			--><h2><?php echo $page;?></h2>
 			<?php if(isset($view_section)) echo $view_section;?>
+			<?php if(isset($view_panier)) echo $view_panier;?>
 			<?php if(isset($view_boxAlert)) echo $view_boxAlert;?>
 			<?php if(isset($view_boxValidCommand)) echo $view_boxValidCommand;?>			<?php // NE POURRA PAS RESTER LA!!!?>
 			</div><!--

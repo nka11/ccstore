@@ -7,7 +7,7 @@
 		<?php	foreach($listProduit as $pro):?>
 			<li class='li_produit'>
 				<a href="boutique.php?show=detail&where=<?php echo $pro->id_p();?>">
-					<div class='container_img'><img src='img/produit/<?php echo $pro->img();?>'/></div>
+					<div class='container_img'><img src='<?php echo $pro->img();?>'/></div>
 					<strong class='titre_produit'><?php echo $pro->titre();?></strong><br/>
 					<i><?php echo $pro->producteur()->denom();?></i><br/>
 					<strong class='prix_vente_produit'><?php echo $pro->prix_vente();?>€</strong>

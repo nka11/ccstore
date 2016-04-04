@@ -368,32 +368,21 @@
 	height				:	30px;
 	margin-bottom		:	10px;
 }
-
+/*
 #boxPanier #imgPanier{
 
 	width				:	80px;
 }
 
-#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{
+#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{				
 
 	display				:	inline-block;
 	vertical-align		:	top;
 }
 
-#boxPanier #bouton_viderPanier a{
 
-	display				:	block;
-	width				:	25px;
-	height				:	25px;
-	background-image	:	url('img/design/vider.png');
-	background-size		:	100%;
-}
 
-#boxPanier #bouton_viderPanier a:hover{
-
-	background-image	:	url('img/design/viderHover.png');
-	background-size		:	100%;
-}
+*/
 /*----------------------------------------------SECTION-----------------------------------------------*/
 
 @media sreen and (min-width : 1366px){
@@ -449,30 +438,58 @@
 
 }
 
-#ul_produit{
+		/*---------------SECTION----------boutonPanier--------------------------------*/
 
-	margin				:	20px;
-}
+#boxDetailPanier {
 
-.li_produit{
-
-	width				:	20%;
-	border				:	solid 1px black;
-	text-align			:	center;
+	position			:	fixed;
+	right				:	0px;
+	top					:	0px;
 
 }
-
-.li_produit .titre_produit{
-
-	font-size			:	12px;
-
+		
+#boutonPanier {
+	float				:	right;
+	width				:	100px;
+	height				:	83px;
+	background-image	:	url('img/design/boutonPanier.png');
+	background-size		:	100%;
+	cursor				:	pointer;
 }
 
-.li_produit i{
+#ul_boxPanier {
 
+	margin-top			:	83px;
 	font-size			:	10px;
+
 }
 
+#miniImg {
+
+	width				:	50px;
+}
+
+#bouton_viderPanier a{
+
+	display				:	block;
+	width				:	25px;
+	height				:	25px;
+	background-image	:	url('img/design/vider.png');
+	background-size		:	100%;
+}
+
+#bouton_viderPanier a:hover{
+
+	background-image	:	url('img/design/viderHover.png');
+	background-size		:	100%;
+}
+
+#boutonPanier, #bouton_viderPanier{				
+
+	display				:	inline-block;
+	vertical-align		:	top;
+}		
+		
 		/*----------------SECTION--------bouton validation de commande----------------*/
 	
 #boxValid a{
@@ -507,6 +524,30 @@
 }
 		
 		/*-----------------SECTION-------------boutique-------------------------------------*/
+
+#ul_produit{
+
+	margin				:	20px;
+}
+
+.li_produit{
+
+	width				:	20%;
+	border				:	solid 1px black;
+	text-align			:	center;
+
+}
+
+.li_produit .titre_produit{
+
+	font-size			:	12px;
+
+}
+
+.li_produit i{
+
+	font-size			:	10px;
+}
 		
 #form_lc input{
 
@@ -534,7 +575,16 @@
 	box-shadow			:	8px 8px black;
 
 }
+
+			/*-------------SECTION--------------commander/authentification--------------------*/
 			
+#box_formInscription, #box_formConnexion {
+
+	display				:	inline-block;
+	vertival-align		:	top;
+	width				:	45%;
+
+}	
 
 /*----------------------------------------------FOOTER------------------------------------------------*/
 
