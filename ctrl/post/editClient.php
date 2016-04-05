@@ -5,12 +5,12 @@
 // Edit la base de donnée
 // Renvoie vers la page admin avec un message $formAnswer
 
-$action 	= (!empty($_POST['Enregistrer']))	?	$_POST['Enregistrer']			:	NULL;
+$action 	= (isset($_POST['Inscription']) AND !empty($_POST['action']))	?	$_POST['action']			:	NULL;
 
 $id_c		= (isset($_POST['id_c']))			?	$_POST['id_c']					:	NULL;
 $e			=	false;
 
-$listAtt	= array('nom_c', 'prenom_c', 'email_c', 'adresse_c', 'cp_c', 'ville_c', 'departement_c', 'telephone_c');
+$listAtt	= array('nom_c', 'prenom_c', 'email_c','mdp_c', 'adresse_c', 'cp_c', 'ville_c', 'departement_c', 'telephone_c');
 
 foreach($listAtt as $att){
 	
@@ -25,11 +25,13 @@ if(!$e){
 										'nom'			=>	$nom_c,
 										'prenom'		=>	$prenom_c,
 										'email'			=>	$email_c,
+										'mdp'			=>	$mdp_c,
 										'adresse'		=>	$adresse_c,
 										'code_postal'	=>	$cp_c,
 										'ville'			=>	$ville_c,
 										'departement'	=>	$departement_c,
 										'telephone'		=>	$telephone_c));
+	
 	
 	switch($action){
 		
@@ -54,9 +56,12 @@ if($session_admin_open){
 					
 					$_SESSION['statut']	= 'client';										//  Changement du statut de la session.
 					$_SESSION['user']	= get_clientByEmail($email_c);					//	Chargement du nouveau client en base de donnée.
+					$panier->setId_c($_SESSION['user']->id_c());						// Déclaration de l'id_c du nouveau client.
 					add_panier($panier);												//	Enregistrement direct du panier en bdd	
 					$_SESSION['panier']		=	$user->get_panierEnCours();				// On charge le nouveau panier dans la session.
+					
+					header('Location: commander.php?step=Parametrage&formAnswer='.$formAnswer);exit(); // redirection vers parametrage.
 			}
 	
-	header('Location: commander.php?step=parametrage&formAnswer='.$formAnswer);exit();					//	Redirection vers la page commande.
+	header('Location: commander.php?step=Authentification&formAnswer='.$formAnswer);exit();					//	Redirection vers la page commande.
 }

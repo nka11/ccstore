@@ -495,11 +495,12 @@
 		
 		$bdd = getBdd();
 		
-		$q = $bdd->prepare('INSERT INTO clients SET nom= :nom, prenom= :prenom, email= :email, adresse= :adresse, code_postal= :cp_c, ville= :ville, departement= :departement, telephone= :telephone');
+		$q = $bdd->prepare('INSERT INTO clients SET nom= :nom, prenom= :prenom, email= :email, mdp= :mdp, adresse= :adresse, code_postal= :cp_c, ville= :ville, departement= :departement, telephone= :telephone');
 		// Assignation des valeurs à la requête.
 		$q->bindValue(':nom', $client->nom());
 		$q->bindValue(':prenom', $client->prenom());
 		$q->bindValue(':email', $client->email());
+		$q->bindValue(':mdp', $client->mdp());
 		$q->bindValue(':adresse', $client->adresse());
 		$q->bindValue(':cp_c', $client->code_postal());
 		$q->bindValue(':ville', $client->ville());

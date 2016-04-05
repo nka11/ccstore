@@ -38,7 +38,8 @@ if($step=='Authentification') {
 	$page				= 'Authentification';
 	$step				= ($session_client_open)	?	'Parametrage'	:	'Authentification';							// --> Declaration de l'étape à la valeur 'Parametrage'
 	
-	if(!$is_form_completed && !$session_client_open) {					
+	if(!$is_form_completed && !$session_client_open) {	
+		$action = 'ajouter';																							// Declaration de l'action.
 		require 'views/form/view_formInscription.php';																	// Chargement vue du formulaire "nouveau client" 
 		require 'views/form/view_formConnexion.php';																	// et du formulaire d'authentification
 		require 'views/form/view_formCommandeAuthentification.php';
@@ -63,6 +64,7 @@ if($session_client_open && $step == 'Parametrage') {
 		$view_section = $view_recapCommande;
 	}
 }
+
 
 if( $step == 'Validation' && $is_command_validated) {								// Etape de validation
 	
