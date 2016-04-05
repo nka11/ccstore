@@ -10,6 +10,7 @@
 																																'montant'		=>	0,
 																																'list_lc'		=>	array()));
 	
+	
 	if(isset($_GET['vider'])){
 		
 		if($session_client_open){

@@ -12,11 +12,11 @@
 <input class='input_formInsc' id='ville_c' name='ville_c' placeholder='Ville' type='text' value='<?php if(isset($t)) echo $t->ville();?>'/>*
 <input class='input_formInsc' id='departement_c' name='departement_c' placeholder='Departement' type='text' value='<?php if(isset($t)) echo $t->departement();?>'/>
 <input class='input_formInsc' id='telephone_c' name='telephone_c' placeholder='Telephone' type='text' value='<?php if(isset($t)) echo $t->telephone();?>'/>
-</div>
+</div><!--
 <?php	if(isset($t)):?>
-		<input type='hidden' value='<?php echo $t->id_c();?>' name='id_c'/>
+		--><input type='hidden' value='<?php echo $t->id_c();?>' name='id_c'/><!--
 <?php endif;?>
-<input id='boutonInsc' type='submit' value='' name='Inscription'/>
+--><input id='boutonInsc' type='submit' value='' name='Inscription'/>
 
 </form>
 
