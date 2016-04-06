@@ -272,9 +272,13 @@ width: 100%;
 
 #wrap_leftNav{
 
-	background-color	:	rgba(40, 40, 40, 0.75);
-	width				:	20%;
+	background-color	:	rgba(0, 0, 0, 0.55);
+	width				:	18%;
 	min-height			:	100%;
+	border				:	1px solid white;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 
 }
 
@@ -339,7 +343,7 @@ width: 100%;
 
 	text-align			:	center;
 	width				:	80%;
-	border-top			:	1px solid black;
+	border-top			:	1px solid white;
 	margin				:	auto;
 }
 
@@ -455,10 +459,26 @@ width: 100%;
 		/*---------------SECTION----------boutonPanier--------------------------------*/
 
 #boxDetailPanier {
+	width				:	100px;
+	height				:	83px;
+	max-height			:	530px;
 	position			:	fixed;
-	right				:	0px;
+	right				:	10px;
 	top					:	0px;
-
+	text-align			:	center;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	border				:	1px white solid;
+	border-radius		: 	55px;
+	-moz-border-radius	: 	55px;
+	-webkit-border-radius: 	55px;
+	background-color	:	white;
+	font-size			:	11px;
+	transition			:	width 2s, height 2s;
+	transition-delay	:	1s;
+	transition-timing-function: ease;
+	overflow			:	hidden;
 }
 		
 #boutonPanier {
@@ -471,12 +491,69 @@ width: 100%;
 }
 
 #ul_boxPanier {
-	margin-top			:	83px;
+	max-height			:	400px;
+	overflow			:	auto;
+}
+
+#ul_boxPanier, #boxPanier_th, #boxPanier_total {
 	font-size			:	10px;
 }
 
+#boxDetailPanier:hover {
+	width				:	250px;
+	height				:	inherit;
+}
+
+#boxPanier_th {
+	margin-top			:	58px;
+}
+
+#boxPanier_th li {
+	display				:	inline-block;
+	vertical-align		:	middle;
+	text-align			:	center;
+	margin				:	0px 3px;
+}
+
+#boxPanier_tr li {
+	display				:	inline-block;
+	vertical-align		:	middle;
+	margin				:	0px 2px;
+}
+
+.boxPanier_thProduit {
+	width				:	60%;
+}
+
+.boxPanier_thPU {
+	width				:	10%;
+}
+
+.boxPanier_thQte {
+	width				:	10%;
+}
+
+.boxPanier_thTotal {
+	width				:	10%;
+}
+
+#ul_boxPanier li {
+	height				:	35px;
+	border-bottom		:	black solid 1px;
+	text-align			:	center;
+	line-height			:	35px;
+}
+
 #miniImg {
-	width				:	50px;
+	width				:	35px;
+}
+
+#miniImg, #ul_boxPanier li b {
+	vertical-align		:	middle;
+}
+
+#boxPanier_total {
+	margin-top			:	30px;
 }
 
 #bouton_viderPanier a{
@@ -496,7 +573,8 @@ width: 100%;
 	display				:	inline-block;
 	vertical-align		:	top;
 }		
-		
+
+
 		/*----------------SECTION--------bouton validation de commande----------------*/
 	
 #boxValid a{
@@ -654,7 +732,7 @@ width: 100%;
 		
 #form_command {
 	width				:	75%;
-	margin-left			:	20px;
+	margin-left			:	10px;
 	background-color	:	white;
 	padding				:	10px;
 	border				: 	1px solid #000000;
