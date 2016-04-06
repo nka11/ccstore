@@ -12,7 +12,8 @@
 				$ville,
 				$departement,
 				$telephone,
-				$is_adh;
+        $is_adh,
+        $id_contact;
 				
 		
 		public function __construct(array $donnees)
@@ -46,6 +47,7 @@
 		public function departement() {return $this->departement;}
 		public function telephone() { return $this->telephone;}
 		public function is_adh() { return $this->is_adh;}
+		public function id_contact() { return $this->id_contact;}
 		
 		public function get_panierEnCours() {
 			
@@ -103,5 +105,6 @@
 		public function setDepartement($departement) { $this->departement = $departement;}
 		public function setTelephone($telephone) { $this->telephone = $telephone;}
 		public function setIs_adh($is_adh) { $this->is_adh = $is_adh;}
+		public function setId_contact($id_contact) { $this->is_adh = $id_contact;}
 				
 	}
