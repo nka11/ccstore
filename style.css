@@ -44,46 +44,31 @@
 
 /*--------------------------------------------------------------------------HEADER---------------------------------------------------------------------------*/
 
-@media screen and (min-width : 1366px){
+html{
+height: 100%;
+width: 100%;
+}
 
+@media screen and (min-width : 1366px){
 	#wrap{
-	
+		width				:	100%;
+		height				:	100%;
 		max-width			:	1366px;
 		margin				:	auto;
 		font-family			:	'PoetsenOne-Regular';
-	}
-}
-
-@media screen and (min-width : 1024px){
-	
-	#wrap{
-	
-	min-width				:	1290px;
-	max-width				:	1366px;
+		background-image	:	url('img/design/bandeau4.jpg');
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	608px;
+		max-height			:	908px;
 	}
 	
 	#header_container{
-
-		position			:	relative;
-		background-image	:	url('img/design/bandeau.jpg');
-		background-repeat	:	no-repeat;
-		background-size		:	100%;
-		/*min-height			:	475px;*/
 		min-height			:	475px;
 		width				:	100%;
 	}
 	
-	#ul_mainNav{
-
-		position			:	absolute;
-		left				:	20px;
-		bottom				:	20px;
-		max-width			:	780px;
-
-}
-
 	#ul_mainNav .li_mainNav{
-
 		width				:	170px;
 		height				:	68px;
 		display				:	inline-block;
@@ -96,7 +81,49 @@
 	}
 	
 	#ul_mainNav .li_mainNav:hover{
+		cursor				:	pointer;
+		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
+	}
 	
+}
+
+@media screen and (min-width : 1024px) and (max-width : 1365px) {
+	
+	#wrap{
+		min-width			:	1290px;
+		max-width			:	1366px;
+		background-image	:	url('img/design/bandeau4.jpg');
+		font-family			:	'PoetsenOne-Regular';
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	100%;
+		margin				:	auto;
+	}
+	
+	#header_container{
+		min-height			:	475px;
+		width				:	100%;
+	}
+	
+	#ul_mainNav{
+		left				:	20px;
+		bottom				:	20px;
+		max-width			:	780px;
+	}
+
+	#ul_mainNav .li_mainNav{
+		width				:	170px;
+		height				:	68px;
+		display				:	inline-block;
+		background-image	:	url('img/design/nav/bckgrdButton2.png');
+		line-height			:	68px;
+		color				:	white;
+		font-family			:	'PoetsenOne-Regular';
+		text-align			:	center;
+		margin				:	0 10px;
+	}
+	
+	#ul_mainNav .li_mainNav:hover{
 		cursor				:	pointer;
 		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
 	}
@@ -104,36 +131,28 @@
 
 @media screen and (max-width : 1024px)
 {
-
 	#wrap{
-
-	min-width			:	1024px;
-}
-	
-	#header_container{
-	
-		position			:	relative;
-		background-image	:	url('img/design/bandeau.jpg');
+		min-width			:	1024px;
+		background-image	:	url('img/design/bandeau4.jpg');
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
+		min-height			:	100%;
+	}
+	
+	#header_container{
 		min-height			:	380px;
 	}
 	
-		#ul_mainNav{
-
-		position			:	absolute;
+	#ul_mainNav{
 		left				:	5px;
 		bottom				:	5px;
 		min-width			:	40%;
-
 	}
 
 	#ul_mainNav .li_mainNav{
-
 		width				:	100px;
 		height				:	48px;
 		display				:	inline-block;
-		/*background-image	:	url('img/design/nav/bckgrdButton2.png');*/
 		line-height			:	48px;
 		color				:	white;
 		font-family			:	'PoetsenOne-Regular';
@@ -142,9 +161,20 @@
 	}
 }
 
+#header_container{
+	position			:	relative;
+}
+
+#ul_mainNav{
+	position			:	absolute;
+	left				:	20px;
+	bottom				:	20px;
+	max-width			:	780px;
+}
+
 #header_bandeauTop{
 
-	background-color	:	rgba(150, 150, 150, 0.25);
+	background-color	:	rgba(40, 40, 40, 0.75);
 	height				:	50px;
 	position			:	absolute;
 	top					:	0px;
@@ -224,7 +254,7 @@
 	top					:	50px;
 	height				:	50px;
 	line-height			:	50px;
-	color				:	white;
+	color				:	black;
 	font-size			:	30px;
 	text-align			:	center;
 	width				:	50%;
@@ -242,9 +272,13 @@
 
 #wrap_leftNav{
 
-	background-color	:	rgba(40, 40, 40, 0.75);
-	width				:	20%;
+	background-color	:	rgba(0, 0, 0, 0.55);
+	width				:	18%;
 	min-height			:	100%;
+	border				:	1px solid white;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 
 }
 
@@ -309,7 +343,7 @@
 
 	text-align			:	center;
 	width				:	80%;
-	border-top			:	1px solid black;
+	border-top			:	1px solid white;
 	margin				:	auto;
 }
 
@@ -368,66 +402,42 @@
 	height				:	30px;
 	margin-bottom		:	10px;
 }
-
+/*
 #boxPanier #imgPanier{
 
 	width				:	80px;
 }
 
-#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{
+#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{				
 
 	display				:	inline-block;
 	vertical-align		:	top;
 }
 
-#boxPanier #bouton_viderPanier a{
 
-	display				:	block;
-	width				:	25px;
-	height				:	25px;
-	background-image	:	url('img/design/vider.png');
-	background-size		:	100%;
-}
 
-#boxPanier #bouton_viderPanier a:hover{
-
-	background-image	:	url('img/design/viderHover.png');
-	background-size		:	100%;
-}
+*/
 /*----------------------------------------------SECTION-----------------------------------------------*/
 
 @media sreen and (min-width : 1366px){
-
 	#wrap_leftNav{
-	
 		width			:	273.2px;
-	
 	}
-
 	#wrap_section{
-	
 		width			:	1092.8px;
 	}
-	
 }
 
 @media screen and (max-width	:	1024px){
-
 	#wrap_leftNav{
-	
 		width			:	204.8px;
-	
 	}
-
 	#wrap_section{
-	
 		width			:	819.2px;
 	}
-
 }
 
 #wrap_section{
-
 	width				:	80%;
 	height				:	100%;
 	/*background-image	:	url('img/design/bandeau.jpg');*/
@@ -436,47 +446,138 @@
 }
 
 #wrap_leftNav, #wrap_section{
-
 	display				:	inline-block;
 	vertical-align		:	top;
-
 }
 
 #wrap_section h2{
-
 	margin				:	20px;
 	font-size			:	32px;
 
 }
 
-#ul_produit{
+		/*---------------SECTION----------boutonPanier--------------------------------*/
 
-	margin				:	20px;
-}
-
-.li_produit{
-
-	width				:	20%;
-	border				:	solid 1px black;
+#boxDetailPanier {
+	width				:	100px;
+	height				:	83px;
+	max-height			:	530px;
+	position			:	fixed;
+	right				:	10px;
+	top					:	0px;
 	text-align			:	center;
-
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	border				:	1px white solid;
+	border-radius		: 	55px;
+	-moz-border-radius	: 	55px;
+	-webkit-border-radius: 	55px;
+	background-color	:	white;
+	font-size			:	11px;
+	transition			:	width 2s, height 2s;
+	transition-delay	:	1s;
+	transition-timing-function: ease;
+	overflow			:	hidden;
+}
+		
+#boutonPanier {
+	float				:	right;
+	width				:	100px;
+	height				:	83px;
+	background-image	:	url('img/design/boutonPanier.png');
+	background-size		:	100%;
+	cursor				:	pointer;
 }
 
-.li_produit .titre_produit{
-
-	font-size			:	12px;
-
+#ul_boxPanier {
+	max-height			:	400px;
+	overflow			:	auto;
 }
 
-.li_produit i{
-
+#ul_boxPanier, #boxPanier_th, #boxPanier_total {
 	font-size			:	10px;
 }
 
-		/*--------------------------------------bouton validation de commande----------------*/
+#boxDetailPanier:hover {
+	width				:	250px;
+	height				:	inherit;
+}
+
+#boxPanier_th {
+	margin-top			:	58px;
+}
+
+#boxPanier_th li {
+	display				:	inline-block;
+	vertical-align		:	middle;
+	text-align			:	center;
+	margin				:	0px 3px;
+}
+
+#boxPanier_tr li {
+	display				:	inline-block;
+	vertical-align		:	middle;
+	margin				:	0px 2px;
+}
+
+.boxPanier_thProduit {
+	width				:	60%;
+}
+
+.boxPanier_thPU {
+	width				:	10%;
+}
+
+.boxPanier_thQte {
+	width				:	10%;
+}
+
+.boxPanier_thTotal {
+	width				:	10%;
+}
+
+#ul_boxPanier li {
+	height				:	35px;
+	border-bottom		:	black solid 1px;
+	text-align			:	center;
+	line-height			:	35px;
+}
+
+#miniImg {
+	width				:	35px;
+}
+
+#miniImg, #ul_boxPanier li b {
+	vertical-align		:	middle;
+}
+
+#boxPanier_total {
+	margin-top			:	30px;
+}
+
+#bouton_viderPanier a{
+	display				:	block;
+	width				:	25px;
+	height				:	25px;
+	background-image	:	url('img/design/vider.png');
+	background-size		:	100%;
+}
+
+#bouton_viderPanier a:hover{
+	background-image	:	url('img/design/viderHover.png');
+	background-size		:	100%;
+}
+
+#boutonPanier, #bouton_viderPanier{				
+	display				:	inline-block;
+	vertical-align		:	top;
+}		
+
+
+		/*----------------SECTION--------bouton validation de commande----------------*/
 	
 #boxValid a{
-
 	width				:	325px;
 	height				:	158px;
 	position			:	fixed;
@@ -488,131 +589,266 @@
 }
 		
 #boxValid #notavailable{
-
 	display				:	block;
 	background-image	:	url('img/design/validButtonNotAvailable.png');
 	background-size		:	100%;
 }
 
 #boxValid #available{
-
 	display				:	block;
 	background-image	:	url('img/design/validButton.png');
 	background-size		:	100%;
 }
 
 #boxValid #available:hover{
-
 	background-image	:	url('img/design/validButtonHover.png');
 }
 		
-		/*--------------------------------------boutique-------------------------------------*/
+		/*-----------------SECTION-------------boutique-------------------------------------*/
+
+#ul_produit{
+	margin				:	20px;
+}
+
+.li_produit{
+	width				:	20%;
+	border				:	solid 1px black;
+	text-align			:	center;
+}
+
+.li_produit .titre_produit{
+	font-size			:	12px;
+}
+
+.li_produit i{
+	font-size			:	10px;
+}
 		
 #form_lc input{
-
 	width				:	30px;
 }
 
-
 .container_img{
-
 	border-bottom		:	solid 1px black;
 }
 
 .li_produit img{
-
 	width				:	150px;
 }
 
+			/*-------------SECTION---------------commander-----------------------------------*/
 
-
-
-/*----------------------------------------------FOOTER------------------------------------------------*/
-
-#div_footerIndexContainer{
-
-	position			:	relative;
-	font-family			:	'PoetsenOne-Regular';
-	height				:	206px;
-	background-color	:	rgba(40, 40, 40, 0.75);
-	padding				:	10px;
+#boxAlert{
+	position			:	fixed;
+	width				:	50%;
+	border				:	1px solid black;
+	box-shadow			:	8px 8px black;
 
 }
 
-#div_footerIndexContainer ul:last-child{
+			/*-------------SECTION--------------commander/authentification--------------------*/
+			
+#box_formInscription, #box_formConnexion {
+	display				:	inline-block;
+	vertical-align		:	top;
+	padding				:	10px;
+	border				: 	1px solid #000000;
+	border-radius		: 	10px;
+	-moz-border-radius	: 	10px;
+	-webkit-border-radius: 	10px;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	margin				:	0px 10px 0px 10px;
+}
 
+#box_formInscription {
+	text-align			:	center;
+	width				:	40%;
+}
+
+#box_formConnexion {
+	background-color	:	white;
+	text-align			:	center;
+	width				:	30%;
+}
+
+#box_formInscription #formInscription .input_formInsc {
+	height				:	30px;
+	margin-bottom		:	10px;
+	width				:	95%;
+}
+
+#box_formConnexion #formConnexion .input_formConnexion{
+	height				:	30px;
+	display				:	block;
+	margin				:	10px auto;
+	width				:	60%;
+}
+
+.text_formAuth p{
+	font-size			:	10px;
+	text-align			:	left;
+	margin-bottom		:	10px;
+}
+
+.text_formAuth h3{
+	font-size			:	20px;
+	margin-bottom		:	10px;
+}
+
+.formInsc_innerBox {
+	display				:	inline-block;
+	vertical-align		:	top;
+	width				:	50%;
+}	
+
+#box_formConnexion #boutonConnexion {
+	width				:	197px;
+	height				:	81px;
+	background			:	url('img/design/boutonConnexion.png');
+	border				:	none;
+	cursor				:	pointer;
+}
+
+#box_formConnexion #boutonConnexion:hover{
+	border				: none;
+	background			:	url('img/design/boutonConnexionHover.png');
+}
+
+#boutonInsc {
+	width				:	200px;
+	height				:	108px;
+	background			:	url('img/design/boutonInscription.png');
+	border				:	none;
+	cursor				:	pointer;
+}
+
+#boutonInsc:hover {
+	background			:	url('img/design/boutonInscriptionHover.png');
+}
+
+		/*----------------SECTION--------commander---formPARAM----------------------*/
+		
+#form_command {
+	width				:	75%;
+	margin-left			:	10px;
+	background-color	:	white;
+	padding				:	10px;
+	border				: 	1px solid #000000;
+	border-radius		: 	10px;
+	-moz-border-radius	: 	10px;
+	-webkit-border-radius: 	10px;
+	box-shadow			: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
+	text-align			:	center;
+}
+	
+#submit_formParam {
+	background-image	:	url('img/design/boutonEnregistrer.png');
+	border				:	none;
+	width				:	200px;
+	height				:	120px;
+	border-radius		: 	200px;
+	-moz-border-radius	: 	200px;
+	-webkit-border-radius: 	200px;
+	cursor				:	pointer;
+}
+
+#submit_formParam:hover {
+	background-image	:	url('img/design/boutonEnregistrerHover.png');
+}
+
+/*----------------------------------------------FOOTER------------------------------------------------*/
+
+footer{
+	position			:	absolute;
+	bottom				:	0px;
+	font-family			:	'PoetsenOne-Regular';
+	min-height			:	150px;
+	background-color	:	rgba(40, 40, 40, 0.75);
+	width				:	100%;
+	margin				:	auto;
+	max-width			:	1366px;
+}
+
+@media screen and (max-width : 1024px) {
+	footer{	
+		position		:	relative;
+	}
+}
+
+@media screen and (min-width : 1024px) and (max-width : 1365px) {
+	footer{	
+		position		:	relative;
+	}
+}
+
+#div_footerIndexContainer {
+	position			:	relative;
+	left				:	0px;
+	top					:	0px;
+}
+
+#div_footerIndexContainer ul:last-child{
 	border				:	none;
 }
 
 .ul_footerIndex{
-
 	display				:	inline-block;
 	vertical-align		:	top;
 	width				:	30%;
 	border-right		:	black 1px solid;
-	height				:	206px;
 	margin				:	0 10px;
-
 }
 
 .ul_footerIndex h3{
-
 	width				:	70%;
 	border-bottom		:	solid 1px black;
 }
 
 .ul_footerIndex li{
-
 	height				:	25px;
 	line-height			:	25px;
 }
 
 .ul_footerIndex li a{
-
-	
 	color				:	black;
 }
 
 
 .ul_footerIndex li a:visited{
-
 	color				:	black;
 	height				:	25px;
 	line-height			:	25px;
 }
 
 .ul_footerIndex li:hover{
-
 	background-color	:	green;
-
 }
 
 #padlock{
-
 	position			:	absolute;
 	bottom				:	0px;
 	right				:	0px;
 }
 
 #padlock img{
-
 	width				:	30px;
 }
 
 #rechercher{
-
 	margin-top			:	50px;
 	text-align			:	center;
 }
 
 #rechercher input, #rechercher img{
-
 	display				:	inline-block;
 	vertical-align		:	top;
 }
 
 #rechercher input{
-
 	width				:	250px;
 	height				:	30px;
 	margin-right		:	10px;

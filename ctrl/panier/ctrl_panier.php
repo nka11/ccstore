@@ -4,20 +4,23 @@
 //					-> Récupération des données ajouts/ modification / suppression d'un article au panier.
 //					-> Enregistrement du panier dans $_SESSION['panier']
 	
-	$panier		= (!empty($_SESSION['panier']) AND !isset($_GET['vider']))		?	$_SESSION['panier']	:	new Panier( array(	'id_pa'		=>	0,
-																																'id_c'		=> 	$user->id_c(),
-																																'date_crea'	=>	date('d-m-Y'),
-																																'montant'	=>	0,
-																																'list_lc'	=>	array()));
+	$panier		= (!empty($_SESSION['panier']) AND !isset($_GET['vider']))		?	$_SESSION['panier']	:	new Panier( array(	'id_pa'			=>	0,
+																																'id_c'			=> 	$user->id_c(),
+																																'date_crea_pa'	=>	date('d-m-Y'),
+																																'montant'		=>	0,
+																																'list_lc'		=>	array()));
+	
 	
 	if(isset($_GET['vider'])){
 		
 		if($session_client_open){
 			
-			$target		=	$user->get_panierEnCours();				// Pose le pblm des paniers deja commandés... attribut "statut" au panier -> valeur "en cours" "valide".
+			$target		=	$user->get_panierEnCours();				
 			
-			delete_panier($target);
-			
+			if (!empty($target)) {									// Echappe le cas ou le panier demandé n'existe plus (supprimé manuellement en base par exemple.)
+				
+				delete_panier($target);								
+			}
 		}
 		
 		
@@ -27,7 +30,7 @@
 	// Recuperation en cas de suppression de ligne : 
 	if(isset($_GET['supLigne_com'])){
 		
-		$id_lc		=	(isset($_GET['id_lc'])) 	?	intval($_GET['id_lc'])	:	NULL;
+		$id_lc		=	(isset($_GET['id_lc'])) 	?	intval($_GET['id_lc'])			:	NULL;
 		$ligne_com	= (!empty($id_lc))				?	$panier->get_ligne_com($id_lc)	:	NULL;
 		if(!empty($ligne_com)){	$panier->delete_ligne_com($ligne_com);}
 		
@@ -97,10 +100,5 @@
 		}
 	}
 	
-	// Chargement de la box_ValidCommand
-	require 'ctrl/boxValidCommand/ctrl_boxValidCommand.php';
-	
 	// Chargement de la vue panier
 	require 'views/panier/view_panier.php';
-
-	$_SESSION['panier'] = $panier;

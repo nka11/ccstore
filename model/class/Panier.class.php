@@ -4,7 +4,7 @@
 		
 		private $id_pa,
 				$id_c,
-				$date_crea,
+				$date_crea_pa,
 				
 				$list_lc;
 		
@@ -113,6 +113,29 @@
 			
 		}
 		
+		public function prevTarifLiv($modeLiv) {
+			
+			$tarif = ($modeLiv == 'livraison')	?	($this->valeur()*40)/100	:	($this->valeur()*20)/100;
+			
+			if($modeLiv == 'livraison' && $tarif < 10) {
+				
+				$tarif = 10;
+			}
+			elseif($modeLiv == 'livraison' && $tarif>20) {
+				
+				$tarif = 20;
+			}
+			elseif($modeLiv == 'retrait' && $tarif<5) {
+				
+				$tarif = 5;
+			}
+			elseif($modeLiv == 'retrait' && $tarif>10) {
+				
+				$tarif = 10;
+			}
+			return $tarif;
+		}
+		
 	//setter
 
 		public function setId_pa($id_pa) { $this->id_pa = (int) $id_pa;}
@@ -128,8 +151,6 @@
 			$q->execute();
 		
 			if ($q->rowCount() > 0){
-			
-			//print_r($donnees);exit();
 			
 			while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
 				{

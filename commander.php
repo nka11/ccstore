@@ -24,56 +24,78 @@ require 'ctrl/leftNav/ctrl_leftNav.php';
 
 //RECUPERATION DES DONNEES
 
-$step						= (isset($_GET['step']))				?	htmlentities($_GET['step'])	:	NULL;
-$is_form_completed			= (isset($_POST['Enregistrer']))		?	true	:	false;			// Un nouveau client à rempli le formulaire.
-
-$is_commande_validated		= (isset($_POST['Valider']))			?	true	:	false;			// Une nouvelle commande à été validée.
+$step						= (isset($_GET['step']))												?	htmlentities($_GET['step'])	:	NULL;
+$is_form_completed			= (isset($_POST['Enregistrer']) || isset($_POST['Inscription']))		?	true	:	false;			// Un nouveau client à rempli le formulaire.
+$form_action				= 'commander.php?step='.$step;
+$is_command_validated		= (isset($_GET['Confirmer']))											?	true	:	false;			// Une nouvelle commande à été validée.
 
 $formAnswer = (isset($_GET['formAnswer'])) ? htmlentities($_GET['formAnswer']) : NULL;				//Si un formulaire à généré une erreur.
 
-
 // TRAITEMENT DES DONNEES ET APPEL DES VUES
 
-if ($step == 'visitor') {	// PARAMETRE CLIENT
-	$page = "Authentification client";
-	if (!$is_form_completed) {			// Si utilisateur inconnu et pas de données "nouveau client" reçues
-		require 'views/form/view_formClient.php';				// Chargement vue du formulaire "nouveau client"
-		
-	} else {			//Sinon, si formulaire "nouveau client" rempli.
-		require 'ctrl/post/editClient.php';						// Traitement du formulaire "nouveau client"
+if($step=='Authentification') {
+	
+	$page				= 'Authentification';
+	$step				= ($session_client_open)	?	'Parametrage'	:	'Authentification';							// --> Declaration de l'étape à la valeur 'Parametrage'
+	
+	if(!$is_form_completed && !$session_client_open) {	
+		$action = 'ajouter';																							// Declaration de l'action.
+		require 'views/form/view_formInscription.php';																	// Chargement vue du formulaire "nouveau client" 
+		require 'views/form/view_formConnexion.php';																	// et du formulaire d'authentification
+		require 'views/form/view_formCommandeAuthentification.php';
+		$view_section = $view_formCommandeAuthentification;	
 	}
-} elseif ($step == 'client') {						//Si Client deja renseigné.
-	if (!$is_form_completed) {					// Sinon si CLIENT IDENTIFIE et pas de renseignement sur method livraison et paiement
-		
-		require 'views/form/view_formCommande.php';								// Chargement de l'affichage du formulaire	parametrage commande.		
-	} elseif ($is_form_completed) {
-		
+	else {
+		require 'ctrl/post/editClient.php';																				// Traitement du formulaire "nouveau client"
+	}
+}
+
+if($session_client_open && $step == 'Parametrage') {
+	
+	$page			=	'Parametrage';
+	
+	if (!$is_form_completed) {																							// Si pas de renseignement sur method livraison et paiement
+		require 'views/form/view_formCommandeParametrage.php';															// Chargement de l'affichage du formulaire	parametrage commande.		
+	}
+	else {
 		require 'ctrl/post/editCommande.php';
-		
+		$page = 'Validation de la commande';
+		require 'views/commande/view_recapCommande.php';																		// Gestion de la commande : -> Enregistrement en bdd.
+		$view_section = $view_recapCommande;
 	}
-} elseif ($step == 'paiement') {
-	if ($is_commande_validated) {
-		
-		add_commande($panier);					// Si la commande est validée on l'ajoute à la base de donnée.
-		if ( $panier->mode_paiement() == 'En ligne') { 
-		/* REDIRECTION VERS PAYBOX/ paypal*/
-		} else {
-			require 'view_confirmationCommande.php';
-		}
-	} elseif (!$is_commande_validated){
-		
-		require 'views/commande/view_recapCommande.php';
-	}
-} elseif ($step == 'annuler') {
-	header('Location: boutique.php?$formAnswer=Commande annulée&show=list');
+}
+
+
+if( $step == 'Validation' && $is_command_validated) {								// Etape de validation
+	
+	require 'ctrl/post/editCommande.php';
+	$step = ($_SESSION['panier']->mode_paiement() == 'En ligne')	?	'Paiement'	:	'Confirmation';										// Redirection vers etape de paiement si necessaire.
+}
+
+if ($step == 'Paiement') {
+	$page	=	'Paiement';
+	/* REDIRECTION VERS PAYBOX/ paypal*/		
+}
+
+if( $step == 'Confirmation'){
+	header('Location: boutique.php?formAnswer='.$formAnswer.'&show=list');
 	exit();
 }
 
+if ($step == 'Annuler') {
+	header('Location: boutique.php?formAnswer=Commande annulée&what=produit&show=list');
+	exit();
+}
 
 //Chargement de la page
 require 'views/gabarit/gabarit.php';
 
 //PASSAGE DE SESSION
-
-		
+if(isset($commande)){
+	
+	$_SESSION['panier'] = (!empty($commande))	?	$commande	:	NULL;	
+}
+else {
+	$_SESSION['panier'] = (!empty($panier))	?	$panier	:	NULL;
+}
 		?>

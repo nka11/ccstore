@@ -10,12 +10,9 @@
 		<ul id='leftNav_ul'>
 			<li id='leftNav_boxUser'><?php echo $view_boxUser;?></li>
 			<ul class='leftNav_li'><h3>Catégories</h3><?php echo $view_listCat;?></ul>
-			<?php if(!$session_admin_open):?>
-			<li class='leftNav_li'><?php if( isset($view_boxPanier)) echo $view_boxPanier;?></li>
-			<?php else:?>
+			<?php if($session_admin_open):?>
 			<li class='leftNav_li'><?php echo $view_headBand;?></li>
-			<?php endif;?>
-			<?php if(!$session_admin_open):?>
+			<?php else:?>
 			<li class='leftNav_li'>
 				<h3>A propos</h3>
 				<ul id='leftNav_ul_about'>
