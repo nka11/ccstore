@@ -97,7 +97,6 @@ class ClientDAO extends AbstractRestClient {
     if ($res->code != 200) {
       return false;
     }
-    //echo "\ncreate client result : [".$res->body."]";
     $client->setId_c((int)$res->body);
     $cdata = $this->mapDataContact($client);
     $req = $this->req();
@@ -106,18 +105,14 @@ class ClientDAO extends AbstractRestClient {
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
-      echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
-    //echo "\ncreate client contact result : ".json_encode($res->body,JSON_PRETTY_PRINT);
     $req = $this->req();
     $req->uri("$this->api_url/customer/".$client->id_c()
       ."/addCategory/$dolibarr_web_customer_catid?api_key=$this->api_key");
     $req->method("GET");
     $res = $req->send();
-    echo "\nadd cat : $res->code\n".json_encode($res->body,JSON_PRETTY_PRINT);
     if ($res->code != 200) {
-      echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
     
