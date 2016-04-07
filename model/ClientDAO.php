@@ -23,15 +23,24 @@ class ClientDAO extends AbstractRestClient {
     return $this->mapClient($resp->body);
   }
 
-  public function getClientById($Id) {
+  public function getClientById($clid) {
     $req = $this->req();
     $req->method("GET");
-    $req->uri("$this->api_url/customer/$id?api_key=$this->api_key");
+    $req->uri("$this->api_url/customer/$clid?api_key=$this->api_key");
     $resp = $req->send();
     if ($resp->code == 404) {
       return false;
     }
-    return $this->mapClient($resp->body);
+    $cldata = $resp->body;
+    $req = $this->req();
+    $req->method("GET");
+    $req->uri("$this->api_url/customer/$clid/contacts?api_key=$this->api_key");
+    $resp = $req->send();
+    if ($resp->code == 404) {
+      return false;
+    }
+    $cldata->contacts = $resp->body;
+    return $this->mapClient($cldata);
   }
   public function updateClient($client) {
     if ($client->id_c() == null 
@@ -41,8 +50,8 @@ class ClientDAO extends AbstractRestClient {
     $cldata = $this->mapDataClient($client);
     $req = $this->req();
     $req->sendJson();
-    $req->body(json_encode($reqData));
-    $req->uri("$this->api_url/customer/".$this->id_c()."?api_key=$this->api_key");
+    $req->body(json_encode($cldata));
+    $req->uri("$this->api_url/customer/".$client->id_c()."?api_key=$this->api_key");
     $req->method("PUT");
     $res = $req->send();
     if ($res->code != 200) {
@@ -72,9 +81,10 @@ class ClientDAO extends AbstractRestClient {
 
   }
   public function createClient($client) {
+    global $dolibarr_web_customer_catid, $dolibarr_clientadherent_catid;
     $existing = $this->getClientByEmail($client->email());
     // a client exist with that email, returning null
-    if ($existing != null) {
+    if ($existing != false) {
       return false;
     }
     $req = $this->req();
@@ -96,15 +106,27 @@ class ClientDAO extends AbstractRestClient {
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
+      echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
     //echo "\ncreate client contact result : ".json_encode($res->body,JSON_PRETTY_PRINT);
+    $req = $this->req();
+    $req->uri("$this->api_url/customer/".$client->id_c()
+      ."/addCategory/$dolibarr_web_customer_catid?api_key=$this->api_key");
+    $req->method("GET");
+    $res = $req->send();
+    echo "\nadd cat : $res->code\n".json_encode($res->body,JSON_PRETTY_PRINT);
+    if ($res->code != 200) {
+      echo json_encode($res->body,JSON_PRETTY_PRINT);
+      return false;
+    }
+    
     return $client;
   }
 
   public function mapDataContact($client) {
     $data = array(
-      "socid" => json_encode($res->body),
+      "socid" => json_encode($client->id_c()),
       "socname" => $client->nom()." ".$client->prenom(),
       "address" => $client->adresse(),
       "zip" => $client->code_postal(),
@@ -148,16 +170,23 @@ class ClientDAO extends AbstractRestClient {
     return (object)$data;
   }
   public function mapClient($data) {
-    return new Client(array(
+    $client = new Client(array(
       "id_c" => (int)$data->id,
       "email" => $data->email,
-      "nom" => $data->contacts[0]->lastname,
-      "prenom" => $data->contacts[0]->firstname,
-      "id_contact" => $data->contacts[0]->id,
+      "nom" => $data->name,
       "adresse" => $data->address,
       "code_postal" => $data->zip,
       "departement" => $data->departement,
       "telephone" => $data->phone
     ));
+    if (array_key_exists("id",$data)) {
+      $client->setId_c((int)$data->id);
+    }
+    if (array_key_exists("contacts",$data)) {
+      $client->setPrenom($data->contacts[0]->firstname);
+      $client->setNom($data->contacts[0]->lastname);
+      $client->setId_contact($data->contacts[0]->id);
+    }
+    return $client;
   }
 }

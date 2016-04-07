@@ -13,7 +13,8 @@ class ClientDAOTest extends PHPUnit_Framework_TestCase
   public function testGetUnexistingClientByEmail() {
     $cldao = new ClientDAO();
     $client = $cldao->getClientByEmail("noclient@testDomain.com");
-    echo "\nUnexisting : ".$client->id_c();
+    $this->assertInternalType('boolean',$client);
+    $this->assertFalse($client);
   }
   public function testGetClientAdherentByEmail() {
     $cldao = new ClientDAO();
@@ -41,6 +42,8 @@ class ClientDAOTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($client->nom(),$newClient->nom());
     $this->assertEquals($client->email(),$newClient->email());
     $client->setAdresse("123 arava");
+    $client->setCode_postal("12345");
+    $client->setVille("Paris");
     $cldao->updateClient($client);
     $newClient = $cldao->getClientById($client->id_c());
     $this->assertEquals($client->adresse(),$newClient->adresse());

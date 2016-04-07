@@ -2,4 +2,6 @@
   $dolibarr_api_url = "http://localhost/dolibarr/htdocs/api/index.php";
   $dolibarr_user_login = "admin";
   $dolibarr_user_password = "admin";
+  $dolibarr_web_customer_catid = 3;
+  $dolibarr_clientadherent_catid = 2;
 
