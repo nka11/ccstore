@@ -16,9 +16,9 @@
 			<li class='leftNav_li'>
 				<h3>A propos</h3>
 				<ul id='leftNav_ul_about'>
-					<li class='leftNav_li_about'><a href=''>Comment ça marche?</a></li>
-					<li class='leftNav_li_about'><a href=''>Vos producteurs</a></li>
-					<li class='leftNav_li_about'><a href=''>Notre équipe</a></li>
+					<li id='leftNav_li_aboutFAQ'><a href='' title='Comment ça marche?'></a></li>
+					<li id='leftNav_li_aboutProd'><a href='' title='Vos producteurs'></a></li>
+					<li id='leftNav_li_aboutTeam'><a href='' title='Notre équipe'></a></li>
 				</ul>
 			</li>
 			<?php endif;?>
