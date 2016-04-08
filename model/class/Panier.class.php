@@ -163,7 +163,9 @@
 		}
 				
 		public function addIn_lc($lc){ $this->list_lc[] = $lc;}
-
+		public function supIn_lc($id_lc) {
+			unset($this->list_lc[$id_lc]);
+		}
 			
 			
 			

@@ -5,7 +5,7 @@
 		<h1 id='leftNav_titre'>COURT-CIRCUIT</h1>
 		<div id='leftNav_recherche'>
 			<h3>Rechercher</h3>
-			<div id='leftNav_rechercher'><input type='search' placeholder='Mot clé' name='rechercher'/><a href=''><img src='img/design/footer/loupe.png'/></a></div>
+			<div id='leftNav_rechercher'><input type='search' placeholder='Mot clé' name='rechercher'/><a href=''><img src='img/design/footer/loupe.png' width='35px'/></a></div>
 		</div>
 		<ul id='leftNav_ul'>
 			<li id='leftNav_boxUser'><?php echo $view_boxUser;?></li>
@@ -21,6 +21,7 @@
 					<li id='leftNav_li_aboutTeam'><a href='' title='Notre équipe'></a></li>
 				</ul>
 			</li>
+			<li id='left_Nav_insc'><a href='inscription.php'></a></li>
 			<?php endif;?>
 		</ul>
 

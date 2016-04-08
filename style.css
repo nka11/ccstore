@@ -310,15 +310,14 @@ width: 100%;
 #leftNav_recherche input, #leftNav_recherche a{
 	margin-top			:	10px;
 	display				:	inline-block;
-	vertical-align		:	top;
+	vertical-align		:	middle;
 
 }
 
 #leftNav_recherche input{
-	width				:	160px;
+	width				:	150px;
 	height				:	30px;
-	margin-right		:	10px;
-	background-color	:	rgba(68,68,171, 0,5);
+	margin-right		:	5px;
 }
 
 #leftNav_ul{
@@ -352,6 +351,11 @@ width: 100%;
 	display				:	block;
 	width				:	40px;
 	height				:	40px;
+}
+
+#leftNav_ul_about {
+	border-bottom		:	solid white 1px;
+	margin-bottom		:	10px;
 }
 
 #leftNav_ul .leftNav_li #leftNav_ul_about li{
@@ -403,19 +407,24 @@ width: 100%;
 	height				:	30px;
 	margin-bottom		:	10px;
 }
-/*
-#boxPanier #imgPanier{
 
-	width				:	80px;
+#left_Nav_insc {
+	width				:	200px;
+	height				:	108px;
+	margin				:	auto;
 }
 
-#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{				
-
-	display				:	inline-block;
-	vertical-align		:	top;
+#left_Nav_insc a {
+	display				:	block;
+	width				:	200px;
+	height				:	108px;
+	background-image	:	url('img/design/boutonInscription.png');
+	background-size		:	100%;
 }
 
-
+#left_Nav_insc a:hover {
+	background-image	:	url('img/design/boutonInscriptionHover.png');
+}
 
 */
 /*----------------------------------------------SECTION-----------------------------------------------*/
@@ -471,14 +480,14 @@ width: 100%;
 	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 	border				:	1px white solid;
-	border-radius		: 	55px;
-	-moz-border-radius	: 	55px;
-	-webkit-border-radius: 	55px;
+	border-radius		: 	100px;
+	-moz-border-radius	: 	100px;
+	-webkit-border-radius: 	100px;
 	background-color	:	white;
 	font-size			:	11px;
 	transition			:	width 2s, height 2s;
-	transition-delay	:	1s;
-	transition-timing-function: ease;
+	
+	transition-timing-function: ease-in-out;
 	overflow			:	hidden;
 }
 		
@@ -520,6 +529,11 @@ width: 100%;
 	display				:	inline-block;
 	vertical-align		:	middle;
 	margin				:	0px 2px;
+}
+
+#redCross img{
+	width				:	20px;
+	margin-top			:	8px;
 }
 
 .boxPanier_thProduit {
