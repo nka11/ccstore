@@ -56,7 +56,7 @@ width: 100%;
 		max-width			:	1366px;
 		margin				:	auto;
 		font-family			:	'PoetsenOne-Regular';
-		background-image	:	url('img/design/bandeau4.jpg');
+		/*background-image	:	url('img/design/bandeau4.png');*/
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
 		min-height			:	608px;
@@ -92,7 +92,7 @@ width: 100%;
 	#wrap{
 		min-width			:	1290px;
 		max-width			:	1366px;
-		background-image	:	url('img/design/bandeau4.jpg');
+		/*background-image	:	url('img/design/bandeau4.jpg');*/
 		font-family			:	'PoetsenOne-Regular';
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
@@ -133,7 +133,7 @@ width: 100%;
 {
 	#wrap{
 		min-width			:	1024px;
-		background-image	:	url('img/design/bandeau4.jpg');
+		/*background-image	:	url('img/design/bandeau4.jpg');*/
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
 		min-height			:	100%;
@@ -241,7 +241,6 @@ width: 100%;
 }
 
 #header_boxUser input{	/* Les input du formulaire de connexion client.*/
-
 	width				:	190px;
 	height				:	30px;
 	margin				:	10px;
@@ -249,7 +248,6 @@ width: 100%;
 }
 
 #header_slogan{
-
 	position			:	absolute;
 	top					:	50px;
 	height				:	50px;
@@ -262,7 +260,6 @@ width: 100%;
 }
 
 #boxVideo{
-
 	position			:	absolute;
 	top					:	115px;
 	left				:	50px;
@@ -271,8 +268,7 @@ width: 100%;
 /*---------------------------------------------LEFTNAV-------------------------------------------------*/
 
 #wrap_leftNav{
-
-	background-color	:	rgba(0, 0, 0, 0.55);
+	background-color	:	rgba(0, 0, 0, 0.75);
 	width				:	18%;
 	min-height			:	100%;
 	border				:	1px solid white;
@@ -283,20 +279,17 @@ width: 100%;
 }
 
 #leftNav_logo{
-
 	width				:	100%;
 	text-align			:	center;
 	margin-bottom		:	10px;
 }
 
 #leftNav_logo img{
-
 	height				:	100px;
 
 }
 
 #leftNav_titre{
-
 	color				:	black;
 	font-family			: 	'METAG___';
 	text-align			:	center;
@@ -306,7 +299,6 @@ width: 100%;
 }
 
 #leftNav_recherche{
-
 	width				:	80%;
 	margin				:	auto;
 	text-align			:	center;
@@ -316,23 +308,19 @@ width: 100%;
 }
 
 #leftNav_recherche input, #leftNav_recherche a{
-
 	margin-top			:	10px;
 	display				:	inline-block;
-	vertical-align		:	top;
+	vertical-align		:	middle;
 
 }
 
 #leftNav_recherche input{
-
-	width				:	160px;
+	width				:	150px;
 	height				:	30px;
-	margin-right		:	10px;
-
+	margin-right		:	5px;
 }
 
 #leftNav_ul{
-
 	margin-top			:	10px;
 	width				:	100%;
 	text-align			:	center;
@@ -340,7 +328,6 @@ width: 100%;
 }
 
 #leftNav_ul .leftNav_li{
-
 	text-align			:	center;
 	width				:	80%;
 	border-top			:	1px solid white;
@@ -348,44 +335,62 @@ width: 100%;
 }
 
 #leftNav_ul .li_navCat a:visited{
-
 	color				:	black;
 }
 
 #leftNav_ul .li_navCat a:hover{
-
 	background-color	:	green;
 }
 
 #leftNav_ul .li_navCat a{
-
 	display				:	block;
 	color				:	black;
 }
 
-#leftNav_ul .leftNav_li #leftNav_ul_about .leftNav_li_about a:visited{
-
-	color				:	black;
-}
-
-#leftNav_ul .leftNav_li #leftNav_ul_about .leftNav_li_about a:hover{
-
-	background-color	:	green;
-}
-
-#leftNav_ul .leftNav_li #leftNav_ul_about .leftNav_li_about a{
-
+#leftNav_ul .leftNav_li #leftNav_ul_about li a{
 	display				:	block;
-	color				:	black;
+	width				:	40px;
+	height				:	40px;
 }
 
-#leftNav_ul .leftNav_li #leftNav_ul_about .leftNav_li_about{
+#leftNav_ul_about {
+	border-bottom		:	solid white 1px;
+	margin-bottom		:	10px;
+}
 
-	width				:	100%;
-	text-align			:	left;
-	height				:	25px;
-	line-height			:	25px;
+#leftNav_ul .leftNav_li #leftNav_ul_about li{
+	display				:	inline-block;
+	vertical-align		:	top;
+}
 
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutFAQ a{
+	background			:	url('img/design/FAQ.png');
+	background-size		:	100%;
+}
+
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutFAQ a:hover{
+	background			:	url('img/design/FAQHover.png');
+	background-size		:	100%;
+}
+
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutTeam a{
+	background			:	url('img/design/boutonTeam.png');
+	background-size		:	100%;
+}
+
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutTeam a:hover{
+	background			:	url('img/design/boutonTeamHover.png');
+	background-size		:	100%;
+}
+
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutProd a{
+	background			:	url('img/design/boutonFerme.png');
+	background-size		:	100%;
+}
+
+#leftNav_ul .leftNav_li #leftNav_ul_about #leftNav_li_aboutProd a:hover{
+	background			:	url('img/design/boutonFermeHover.png');
+	background-size		:	100%;
 }
 
 #leftNav_ul .li_navCat{
@@ -402,19 +407,24 @@ width: 100%;
 	height				:	30px;
 	margin-bottom		:	10px;
 }
-/*
-#boxPanier #imgPanier{
 
-	width				:	80px;
+#left_Nav_insc {
+	width				:	200px;
+	height				:	108px;
+	margin				:	auto;
 }
 
-#boxPanier #imgPanier, #boxPanier #bouton_viderPanier{				
-
-	display				:	inline-block;
-	vertical-align		:	top;
+#left_Nav_insc a {
+	display				:	block;
+	width				:	200px;
+	height				:	108px;
+	background-image	:	url('img/design/boutonInscription.png');
+	background-size		:	100%;
 }
 
-
+#left_Nav_insc a:hover {
+	background-image	:	url('img/design/boutonInscriptionHover.png');
+}
 
 */
 /*----------------------------------------------SECTION-----------------------------------------------*/
@@ -440,9 +450,9 @@ width: 100%;
 #wrap_section{
 	width				:	80%;
 	height				:	100%;
-	/*background-image	:	url('img/design/bandeau.jpg');*/
-	/*background-repeat	:	no-repeat;*/
-	/*background-size		:	cover;*/
+	background-image	:	url('img/design/martin.png');
+	background-repeat	:	no-repeat;
+	background-size		:	cover;
 }
 
 #wrap_leftNav, #wrap_section{
@@ -470,14 +480,14 @@ width: 100%;
 	-moz-box-shadow		: 	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 	-webkit-box-shadow	:	5px 7px 10px 2px rgba(0, 0, 0, 0.7);
 	border				:	1px white solid;
-	border-radius		: 	55px;
-	-moz-border-radius	: 	55px;
-	-webkit-border-radius: 	55px;
+	border-radius		: 	100px;
+	-moz-border-radius	: 	100px;
+	-webkit-border-radius: 	100px;
 	background-color	:	white;
 	font-size			:	11px;
 	transition			:	width 2s, height 2s;
-	transition-delay	:	1s;
-	transition-timing-function: ease;
+	
+	transition-timing-function: ease-in-out;
 	overflow			:	hidden;
 }
 		
@@ -519,6 +529,11 @@ width: 100%;
 	display				:	inline-block;
 	vertical-align		:	middle;
 	margin				:	0px 2px;
+}
+
+#redCross img{
+	width				:	20px;
+	margin-top			:	8px;
 }
 
 .boxPanier_thProduit {

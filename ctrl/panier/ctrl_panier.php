@@ -31,12 +31,19 @@
 	if(isset($_GET['supLigne_com'])){
 		
 		$id_lc		=	(isset($_GET['id_lc'])) 	?	intval($_GET['id_lc'])			:	NULL;
-		$ligne_com	= (!empty($id_lc))				?	$panier->get_ligne_com($id_lc)	:	NULL;
-		if(!empty($ligne_com)){	$panier->delete_ligne_com($ligne_com);}
-		
-		$panier = get_panier($panier->id_pa());		// Mise à jour du panier apres manipulation.
+				
+		if($panier->id_pa()==0) {
+			$panier->supIn_lc($id_lc);
+			$_SESSION['panier']= $panier;
+		}
+		else {
+			if(!empty($ligne_com)){	
+				$ligne_com	= (!empty($id_lc))				?	$panier->get_ligne_com($id_lc)	:	NULL;
+				$panier->delete_ligne_com($ligne_com);
+				$panier = get_panier($panier->id_pa());		// Mise à jour du panier apres manipulation.
+			}
+		}
 	}
-	
 	
 	// Reception d'un article à ajouter/modifier au panier
 	if(isset($_POST['submitToPanier'])){

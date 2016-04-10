@@ -7,10 +7,10 @@
 </ul>
 <ul id='ul_boxPanier'>
 	<?php if(!empty($panier->list_lc())):?>
-	<?php foreach ($panier->list_lc() as $lc):?>
+	<?php foreach ($panier->list_lc() as $v=>$lc):?>
 	<li class='li_boxPanier'>
 		<ul id='boxPanier_tr'>
-			<li class='boxPanier_thProduit'><strong><img id='miniImg' src='<?php echo $lc->img();?>'/><?php echo $lc->titre();?></<strong></li><li class='boxPanier_thPU'><strong><?php echo $lc->prix_vente();?></strong></li><li class='boxPanier_thQte'><strong><?php echo $lc->quantite();?></<strong></li><li class='boxPanier_thTotal'><strong><?php echo $lc->valeur();?>€</strong></li>
+			<li id='redCross'><a href='boutique.php?supLigne_com&id_lc=<?php echo $v;?>'><img src='img/design/croixRed.png'/></a></li><li class='boxPanier_thProduit'><strong><?php echo $lc->titre();?></<strong></li><li class='boxPanier_thPU'><strong><?php echo $lc->prix_vente();?></strong></li><li class='boxPanier_thQte'><strong><?php echo $lc->quantite();?></<strong></li><li class='boxPanier_thTotal'><strong><?php echo $lc->valeur();?>€</strong></li>
 		</ul>
 	</li>
 	<?php endforeach;?>
