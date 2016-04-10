@@ -15,6 +15,9 @@ class AbstractRestClient {
     $this->api_url = $dolibarr_api_url;
     $req->uri("$this->api_url/login?login=$dolibarr_user_login&password=$dolibarr_user_password");
     $resp = $req->send();
+    if ($resp->code != 200) {
+      throw new Exception("API not initialized");
+    }
     $this->api_key = $resp->body->success->token;
 //    echo $this->api_key;
   }

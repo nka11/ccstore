@@ -12,4 +12,5 @@ if (is_file("conf/dolirest.cnf.php")) {
   $dolibarr_user_password = "admin";
   $dolibarr_web_customer_catid = 1;
   $dolibarr_clientadherent_catid = 2;
+  $dolibarr_anonymous_client_id = 2;
 }
