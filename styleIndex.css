@@ -1,0 +1,291 @@
+/*--------------------------------CSS--- PAGE INDEX --------------------------------------------------------------*/
+
+/* Gestion de l'affichage de la page d'index.
+
+/*-------------------------------------------GENERAL--------------------------------------------------------------*/
+
+	#wrapIndex{
+		margin				:	auto;
+	}
+
+/*------------------------------------------HEADER--------------------------------------*/
+	#header_bandeauTop{
+		position			:	absolute;
+		top					:	0px;
+		height				:	50px;
+		width				:	100%;
+		line-height			:	50px;
+		background-color	:	rgba(40, 40, 40, 0.75);
+	}
+	#header_logo_cc a{
+		display				:	block;
+	}
+	#header_logo_cc, #header_boxUser{
+		display 			: 	inline-block;
+		vertical-align		:	top;
+		width				:	50%;
+	}
+	#header_logo_cc #header_titre{
+		text-shadow			: 	0px 0px 9px #ffffff;
+	}
+	#header_logo_cc img{
+		max-height				:	50px;
+	}
+	#header_logo_cc #header_titre{
+		text-align			:	center;
+		color				:	black;
+		font-family			: 	'METAG___';
+		display				:	inline-block;
+		vertical-align		:	top;
+		width				:	50%;
+	}
+	#header_boxUser{																					/* La box client du header*/
+		position			:	absolute;
+		right				:	0px;
+		top					:	0px;
+		display				:	block;
+		height				:	50px;
+		text-align			:	right;
+	}
+	#header_boxUser #formConnexion{
+		display				:	block;
+		height				:	50px;
+		line-height			:	50px;
+	}
+	#header_boxUser input {																					/* Les input du formulaire de connexion client.*/
+		width				:	190px;
+		height				:	30px;
+		border				:	none;
+		background-color	:	red;
+		margin-right		:	10px;
+		vertical-align		:	bottom;
+	}
+	#header_boxUser input textarea {
+		background-color	:	red;
+	}
+	#header_boxUser input textarea:focus{
+		background-color	:	red;
+	}
+	#header_boxUser #boutonConnexion{
+		width				:	100px;
+	}
+	#header_slogan{
+		position			:	absolute;
+		top					:	50px;
+		height				:	50px;
+		line-height			:	50px;
+		color				:	black;
+		font-size			:	30px;
+		text-align			:	center;
+		width				:	50%;
+	}
+	#boxVideo{
+		position			:	absolute;
+		top					:	115px;
+		left				:	50px;
+	}
+/*----------------------------------------FOOTER-------------------------------------*/
+	footer{
+		background-color	:	rgba(40, 40, 40, 0.75);
+		width				:	100%;
+		min-height			:	150px;
+	}
+	#div_footerIndexContainer {
+		position			:	relative;
+		left				:	0px;
+		top					:	0px;
+	}
+	#div_footerIndexContainer ul:last-child{
+		border				:	none;
+	}
+	.ul_footerIndex{
+		display				:	inline-block;
+		vertical-align		:	top;
+		width				:	30%;
+		border-right		:	black 1px solid;
+		margin				:	0 10px;
+	}
+	.ul_footerIndex h3{
+		width				:	70%;
+		border-bottom		:	solid 1px black;
+	}
+	.ul_footerIndex li{
+		height				:	25px;
+		line-height			:	25px;
+	}
+	.ul_footerIndex li a{
+		color				:	black;
+	}
+	.ul_footerIndex li a:visited{
+		color				:	black;
+		height				:	25px;
+		line-height			:	25px;
+	}
+	.ul_footerIndex li:hover{
+		background-color	:	green;
+	}
+	#padlock{
+		position			:	absolute;
+		bottom				:	0px;
+		right				:	0px;
+	}
+	#padlock img{
+		width				:	30px;
+	}
+	#rechercher{
+		margin-top			:	50px;
+		text-align			:	center;
+	}
+	#rechercher input, #rechercher img{
+		display				:	inline-block;
+		vertical-align		:	top;
+	}
+	#rechercher input{
+		width				:	250px;
+		height				:	30px;
+		margin-right		:	10px;
+	}
+
+/*--------------------------------------------MEDIAQUERIES-INDEX--------------------------------------------------*/
+
+@media screen and (min-width : 1366px){
+	
+/*----------------------------WRAP GENERAL--------------------------------------------*/	
+	#wrapIndex {
+		max-width			:	1366px;
+		background-image	:	url('img/design/bandeau4.jpg');
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	100%;
+	}
+/*---------------------------HEADER---------------------------------------------------*/
+	#header_container{
+		min-height			:	475px;
+		width				:	100%;
+		position			:	relative;
+	}
+	#header_bandeauTop{
+	
+	}
+	#header_boxUser #emailUser, #header_boxUser #decoButton{
+		vertical-align		:	top;
+	}
+	#ul_mainNav{
+		position			:	absolute;
+		left				:	20px;
+		bottom				:	20px;
+		max-width			:	780px;
+	}
+	#ul_mainNav .li_mainNav{
+		width				:	170px;
+		height				:	68px;
+		display				:	inline-block;
+		background-image	:	url('img/design/nav/bckgrdButton2.png');
+		line-height			:	68px;
+		color				:	white;
+		font-family			:	'PoetsenOne-Regular';
+		text-align			:	center;
+		margin				:	0 10px;
+	}
+	#ul_mainNav .li_mainNav:hover{
+		cursor				:	pointer;
+		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
+	}
+/*----------------------------FOOTER--------------------------------------------------*/
+	footer{
+		position			:	absolute;
+		bottom				:	0px;
+		min-height			:	150px;
+		width				:	100%;
+		max-width			:	1366px;
+		margin				:	auto;
+	}
+}
+
+@media screen and (min-width : 1024px) and (max-width : 1365px) {
+
+/*----------------------------WRAP GENERAL--------------------------------------------*/	
+	#wrapIndex{
+		min-width			:	1224px;
+		max-width			:	1365px;
+		background-image	:	url('img/design/bandeau4.jpg');
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	100%;
+		margin				:	auto;
+	}
+/*----------------------------HEADER---------------------------------------------------*/
+	#header_container{
+		min-height			:	475px;
+		width				:	100%;
+	}
+	#header_logo_cc{
+		width				:	50%;
+	}
+	#header_boxUser{
+		min-width			:	500px;
+	}
+	#ul_mainNav{
+		left				:	20px;
+		bottom				:	20px;
+		max-width			:	780px;
+	}
+	#ul_mainNav .li_mainNav{
+		width				:	170px;
+		height				:	68px;
+		display				:	inline-block;
+		background-image	:	url('img/design/nav/bckgrdButton2.png');
+		line-height			:	68px;
+		color				:	white;
+		text-align			:	center;
+		margin				:	0 10px;
+	}
+	#ul_mainNav .li_mainNav:hover{
+		cursor				:	pointer;
+		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
+	}
+/*-----------------------------FOOTER---------------------------------------------------*/
+	footer {
+		position			:	absolute;
+		bottom				:	0px;
+	}
+}
+
+@media screen and (max-width : 1024px) {
+/*----------------------------WRAP GENERAL----------------------------------------------*/
+	#wrapIndex{
+		min-width			:	1024px;
+		background-image	:	url('img/design/bandeau4.jpg');
+		background-repeat	:	no-repeat;
+		background-size		:	100%;
+		min-height			:	100%;
+	}
+/*----------------------------HEADER----------------------------------------------------*/
+	#header_container{
+		min-height			:	380px;
+	}
+	#header_logo_cc{
+		width				:	50%;
+	}
+	#ul_mainNav{
+		left				:	5px;
+		bottom				:	5px;
+		min-width			:	40%;
+	}
+	#ul_mainNav .li_mainNav{
+		width				:	100px;
+		height				:	48px;
+		display				:	inline-block;
+		line-height			:	48px;
+		color				:	white;
+		text-align			:	center;
+		margin				:	0 10px;
+	}
+/*----------------------------FOOTER----------------------------------------------------*/
+	footer{	
+		position		:	relative;
+	}
+
+}
+
+
