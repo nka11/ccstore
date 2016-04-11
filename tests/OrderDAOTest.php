@@ -43,7 +43,6 @@ class OrderDAOTest extends PHPUnit_Framework_TestCase
       "id_p" => 1,
       "quantite" => 0.4
     ));
-    $order->addLigne_c($orderline);
-    $odao->updateOrder($order);
+    $order = $odao->addOrderLine($order,$orderline);
   }
 }

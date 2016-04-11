@@ -53,8 +53,8 @@ class OrderDAO extends AbstractRestClient {
     if ($res->code == 200) {
       foreach ($res->body as $orderdata) {
         array_push($result, $this->mapOrder($orderdata));
-        return $result;
       }
+      return $result;
     }
     return false;
   }
@@ -64,7 +64,7 @@ class OrderDAO extends AbstractRestClient {
    * Anonymous basked cannot be created with dolibarr
    *
    */
-  public function createOrder($commande,$client=NULL) {
+  public function createOrder($order,$client=NULL) {
     if ($this->client == NULL && $client == NULL) {
       // pas de client, pas de chocolat
       throw new Exception("Client must be specified");
@@ -74,7 +74,7 @@ class OrderDAO extends AbstractRestClient {
     } else {
       $this->_authenticateClient($client);
     }
-    $reqdata = $this->mapDataOrder($commande,$this->client);
+    $reqdata = $this->mapDataOrder($order,$this->client);
     $req = $this->req();
     $req->sendJson();
     $req->method("POST");
@@ -83,12 +83,75 @@ class OrderDAO extends AbstractRestClient {
     $req->uri("$this->api_url/order?api_key=$this->api_key");
     $res = $req->send();
     if ($res->code != 200) {
-      echo json_encode($res->body, JSON_PRETTY_PRINT);
+      return false;
+      //echo json_encode($res->body, JSON_PRETTY_PRINT);
     }
-    echo json_encode($res->body, JSON_PRETTY_PRINT);
-    $commande->setId_com((int)$res->body);
-    return $commande;
+    //echo json_encode($res->body, JSON_PRETTY_PRINT);
+    $order = $this->getOrderById((int)$res->body);
+    return $order;
   }
+
+  public function addOrderLine($order,$orderline,$client=NULL) {
+    if ($this->client == NULL && $client == NULL) {
+      // pas de client, pas de chocolat
+      throw new Exception("Client must be specified");
+    }
+    if ($order->id_com() == NULL) {
+      throw new Exception("Can't update unreferenced order");
+    }
+    if ($client == NULL) {
+      $client = $this->client;
+    } else {
+      $this->_authenticateClient($client);
+    }
+    $reqdata = $this->mapDataLineOrder($orderline);
+    $req = $this->req();
+    $req->sendJson();
+    $req->method("POST");
+    $req->body(json_encode($reqdata));
+    echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    $req->uri("$this->api_url/order/".$order->id_com()."/line?api_key=$this->api_key");
+    $res = $req->send();
+    if ($res->code != 200) {
+      // echo json_encode($res->body, JSON_PRETTY_PRINT);
+      return false;
+    }
+      //echo json_encode($res->body, JSON_PRETTY_PRINT);
+    return (int) $res->body;
+  }
+
+  public function changeOrderLine($order,$orderline,$client=NULL) {
+    if ($this->client == NULL && $client == NULL) {
+      // pas de client, pas de chocolat
+      throw new Exception("Client must be specified");
+    }
+    if ($order->id_com() == NULL) {
+      throw new Exception("Can't update unreferenced order");
+    }
+    if ($client == NULL) {
+      $client = $this->client;
+    } else {
+      $this->_authenticateClient($client);
+    }
+    $reqdata = $this->mapDataLineOrder($orderline);
+    $req = $this->req();
+    $req->sendJson();
+    $req->method("PUT");
+    $req->body(json_encode($reqdata));
+    echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    $req->uri("$this->api_url/order/".$order->id_com()."/line/".$orderline->id_lc()."?api_key=$this->api_key");
+    $res = $req->send();
+    echo json_encode($res->body, JSON_PRETTY_PRINT);
+    if ($res->code != 200) {
+      return false;
+    }
+    return $this->mapOrder($res->body);
+  }
+
+  public function delOrderLine($order, $orderline, $client=NULL) {
+  }
+
+
 
 
   public function updateOrder($commande,$client=NULL) {
