@@ -2,10 +2,10 @@
 
 	class Client {
 		
-		private $id_c,
+		private $id_c, //dolibarr client id
 				$nom,
 				$prenom,
-				$email, //UNIQUE
+				$email, //UNIQUE, used as login for dolibarr user
 				$mdp,
 				$adresse,
 				$code_postal,
@@ -13,7 +13,9 @@
 				$departement,
 				$telephone,
         $is_adh,
-        $id_contact;
+        $id_contact, // dolibarr contact id
+        $api_key, // key for api access (after ClientDAO->login($client);)
+        $id_user = 0; // dolibarr user id, 0 means anonymous user (not authentified nor created in dolibarr)
 				
 		
 		public function __construct(array $donnees)
@@ -48,6 +50,8 @@
 		public function telephone() { return $this->telephone;}
 		public function is_adh() { return $this->is_adh;}
 		public function id_contact() { return $this->id_contact;}
+		public function id_user() { return $this->id_user;}
+		public function api_key() { return $this->api_key;}
 		
 		public function get_panierEnCours() {
 			
@@ -105,6 +109,8 @@
 		public function setDepartement($departement) { $this->departement = $departement;}
 		public function setTelephone($telephone) { $this->telephone = $telephone;}
 		public function setIs_adh($is_adh) { $this->is_adh = $is_adh;}
-		public function setId_contact($id_contact) { $this->is_adh = $id_contact;}
+		public function setId_contact($id_contact) { $this->id_contact = $id_contact;}
+		public function setId_user($id_user) { $this->id_user = $id_user;}
+		public function setApi_key($api_key) { $this->api_key = $api_key;}
 				
 	}
