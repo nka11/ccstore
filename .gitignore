@@ -2,3 +2,4 @@ phpunit.phar
 *swp
 
 /vendor/
+conf/dolirest.cnf.php
