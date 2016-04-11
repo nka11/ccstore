@@ -17,6 +17,17 @@ class ProduitDAO extends AbstractRestClient {
     return $result;
   }
   /**
+   * @param id $id Id produit a récupérer
+   */
+  public function getProduitById($id) {
+    $req = $this->req();
+    $req->method("GET");
+    $req->uri("$this->api_url/product/".$id."?api_key=$this->api_key");
+    $res = $req->send();
+    $produit = $this->_mapProduct($res->body);
+    return $produit;
+  }
+  /**
    * @param Product $produit Objet Produit a completer
    */
   public function getProduitCategories($produit) {
@@ -46,10 +57,11 @@ class ProduitDAO extends AbstractRestClient {
   private function _mapProduct($data) {
     $product = new Product(array(
       "id_p" => (int)$data->id,
+      "ref" => $data->ref,
       "titre" => $data->label,
       "description" => $data->description,
       "tva" => (float)$data->tva_tx,
-      "prix_vente" => (float)$data->price_ttc
+      "prix_vente" => (float)$data->price
     ));
     return $product;
   }

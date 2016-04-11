@@ -15,7 +15,7 @@
         $is_adh,
         $id_contact, // dolibarr contact id
         $api_key, // key for api access (after ClientDAO->login($client);)
-        $id_user; // dolibarr user id
+        $id_user = 0; // dolibarr user id, 0 means anonymous user (not authentified nor created in dolibarr)
 				
 		
 		public function __construct(array $donnees)

@@ -1,6 +1,6 @@
 <?php
 
-require("./model/ProduitDAO.php");
+require_once("./model/ProduitDAO.php");
 class ProduitDAOTest extends PHPUnit_Framework_TestCase
 {
 

@@ -1,7 +1,7 @@
 <?php
 
-require("./model/ClientDAO.php");
-require("./model/class/Client.class.php");
+require_once("./model/ClientDAO.php");
+require_once("./model/class/Client.class.php");
 class ClientDAOTest extends PHPUnit_Framework_TestCase
 {
     // ...

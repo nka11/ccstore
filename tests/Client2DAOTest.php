@@ -1,14 +1,14 @@
 <?php
 
-require("./model/ClientDAO.php");
-require("./model/class/Client.class.php");
+require_once("./model/ClientDAO.php");
+require_once("./model/class/Client.class.php");
 class Client2DAOTest extends PHPUnit_Framework_TestCase
 {
   public function testCreateClient() {
     $clientData = new Client(array(
-      "nom" => "test deux",
-      "prenom" => "test prenom",
-      "email" => "test2@email.test",
+      "nom" => "test deux bis",
+      "prenom" => "test prenom bis",
+      "email" => "test3@email.test",
       "mdp" => "testPassword"
     ));
     $cldao = new ClientDAO();
@@ -31,7 +31,6 @@ class Client2DAOTest extends PHPUnit_Framework_TestCase
     $newClient->setMdp("testPassword");
     $newClient = $cldao->login($newClient);
     $this->assertInternalType('string',$newClient->api_key());
-    echo $newClient->api_key();
     $delres = $cldao->deleteClient($newClient);
     $this->assertInternalType('boolean',$delres);
     $this->assertTrue($delres);

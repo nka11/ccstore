@@ -10,10 +10,11 @@ class Product {
 		
 		private $id_p,
 				$titre,
+				$ref, // reference produit
 				$prix_achat,
 				$prix_vente,
 				$tva,
-				$description,
+				$description = "",
 				$is_active,
 				$img,
 				
@@ -52,6 +53,7 @@ class Product {
 		public function description() {return $this->description;}
 		public function is_active() { return $this->is_active;}
 		public function img() {return $this->img;}
+		public function ref() {return $this->ref;}
 		
 		public function categories() { return $this->categories;}
 		public function producteurs() { return $this->producteurs;}
@@ -71,6 +73,7 @@ class Product {
 		}
 		public function setIs_active($is_active) { $this->is_active = $is_active;}
 		public function setImg($img) { $this->img = $img;}
+		public function setRef($ref) { $this->ref = $ref;}
 		
 		
 		// Html_formulaire
