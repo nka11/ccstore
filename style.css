@@ -42,227 +42,46 @@
 
 
 
-/*--------------------------------------------------------------------------HEADER---------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------GENERAL---------------------------------------------------------------------------*/
 
 html{
-height: 100%;
-width: 100%;
+	height: 100%;
+	width: 100%;
+	font-family			:	'PoetsenOne-Regular';
 }
 
 @media screen and (min-width : 1366px){
 	#wrap{
-		width				:	100%;
-		height				:	100%;
 		max-width			:	1366px;
 		margin				:	auto;
-		font-family			:	'PoetsenOne-Regular';
-		/*background-image	:	url('img/design/bandeau4.png');*/
+		background-image	:	url('img/design/martin.png');
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
-		min-height			:	608px;
-		max-height			:	908px;
-	}
-	
-	#header_container{
-		min-height			:	475px;
-		width				:	100%;
-	}
-	
-	#ul_mainNav .li_mainNav{
-		width				:	170px;
-		height				:	68px;
-		display				:	inline-block;
-		background-image	:	url('img/design/nav/bckgrdButton2.png');
-		line-height			:	68px;
-		color				:	white;
-		font-family			:	'PoetsenOne-Regular';
-		text-align			:	center;
-		margin				:	0 10px;
-	}
-	
-	#ul_mainNav .li_mainNav:hover{
-		cursor				:	pointer;
-		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
-	}
-	
+	}	
 }
 
 @media screen and (min-width : 1024px) and (max-width : 1365px) {
-	
 	#wrap{
 		min-width			:	1290px;
 		max-width			:	1366px;
-		/*background-image	:	url('img/design/bandeau4.jpg');*/
+		background-image	:	url('img/design/martin.png');
+		background-repeat	:	no-repeat;
 		font-family			:	'PoetsenOne-Regular';
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
 		min-height			:	100%;
 		margin				:	auto;
 	}
-	
-	#header_container{
-		min-height			:	475px;
-		width				:	100%;
-	}
-	
-	#ul_mainNav{
-		left				:	20px;
-		bottom				:	20px;
-		max-width			:	780px;
-	}
-
-	#ul_mainNav .li_mainNav{
-		width				:	170px;
-		height				:	68px;
-		display				:	inline-block;
-		background-image	:	url('img/design/nav/bckgrdButton2.png');
-		line-height			:	68px;
-		color				:	white;
-		font-family			:	'PoetsenOne-Regular';
-		text-align			:	center;
-		margin				:	0 10px;
-	}
-	
-	#ul_mainNav .li_mainNav:hover{
-		cursor				:	pointer;
-		background-image	:	url('img/design/nav/bckgrdButton_hover.png');
-	}
 }
 
-@media screen and (max-width : 1024px)
-{
+@media screen and (max-width : 1024px){
 	#wrap{
 		min-width			:	1024px;
-		/*background-image	:	url('img/design/bandeau4.jpg');*/
+		background-image	:	url('img/design/martin.png');
 		background-repeat	:	no-repeat;
 		background-size		:	100%;
 		min-height			:	100%;
 	}
-	
-	#header_container{
-		min-height			:	380px;
-	}
-	
-	#ul_mainNav{
-		left				:	5px;
-		bottom				:	5px;
-		min-width			:	40%;
-	}
-
-	#ul_mainNav .li_mainNav{
-		width				:	100px;
-		height				:	48px;
-		display				:	inline-block;
-		line-height			:	48px;
-		color				:	white;
-		font-family			:	'PoetsenOne-Regular';
-		text-align			:	center;
-		margin				:	0 10px;
-	}
-}
-
-#header_container{
-	position			:	relative;
-}
-
-#ul_mainNav{
-	position			:	absolute;
-	left				:	20px;
-	bottom				:	20px;
-	max-width			:	780px;
-}
-
-#header_bandeauTop{
-
-	background-color	:	rgba(40, 40, 40, 0.75);
-	height				:	50px;
-	position			:	absolute;
-	top					:	0px;
-	width				:	100%;
-
-}
-
-#header_logo_cc, #header_boxUser{
-
-	display 			: 	inline-block;
-	vertical-align		:	top;
-}
-
-#header_logo_cc{
-
-	width				:	50%;
-}
-
-#header_logo_cc #header_titre{
-
-	min-width			:	310px;
-	text-shadow			: 	0px 0px 9px #ffffff;
-}
-
-#header_logo_cc img{
-
-	height				:	50px;
-
-}
-
-#header_logo_cc #header_titre{
-
-	text-align			:	center;
-	color				:	black;
-	font-family			: 	'METAG___';
-	display				:	inline-block;
-	vertical-align		:	top;
-	width				:	50%;
-	height				:	50px;
-	line-height			:	50px;
-}
-
-#header_boxUser{		/* La box client du header*/
-	
-	/*margin-left			:	-300px;*/
-	/*float				:	right;*/
-	position			:	absolute;
-	right				:	0px;
-	top					:	0px;
-	min-width			:	650px;
-	max-width			:	50%;
-	width				:	480px;
-	text-align			:	right;
-}
-
-#header_boxUser #emailUser{
-
-	line-height			:	50px;
-}
-
-#header_boxUser #emailUser, #header_boxUser #decoButton{
-
-	vertical-align		:	top;
-}
-
-#header_boxUser input{	/* Les input du formulaire de connexion client.*/
-	width				:	190px;
-	height				:	30px;
-	margin				:	10px;
-
-}
-
-#header_slogan{
-	position			:	absolute;
-	top					:	50px;
-	height				:	50px;
-	line-height			:	50px;
-	color				:	black;
-	font-size			:	30px;
-	text-align			:	center;
-	width				:	50%;
-	font-family			:	'PoetsenOne-Regular';
-}
-
-#boxVideo{
-	position			:	absolute;
-	top					:	115px;
-	left				:	50px;
 }
 
 /*---------------------------------------------LEFTNAV-------------------------------------------------*/
@@ -426,7 +245,6 @@ width: 100%;
 	background-image	:	url('img/design/boutonInscriptionHover.png');
 }
 
-*/
 /*----------------------------------------------SECTION-----------------------------------------------*/
 
 @media sreen and (min-width : 1366px){
@@ -450,7 +268,7 @@ width: 100%;
 #wrap_section{
 	width				:	80%;
 	height				:	100%;
-	background-image	:	url('img/design/martin.png');
+	/*background-image	:	url('img/design/martin.png');*/
 	background-repeat	:	no-repeat;
 	background-size		:	cover;
 }
@@ -773,98 +591,4 @@ width: 100%;
 
 #submit_formParam:hover {
 	background-image	:	url('img/design/boutonEnregistrerHover.png');
-}
-
-/*----------------------------------------------FOOTER------------------------------------------------*/
-
-footer{
-	position			:	absolute;
-	bottom				:	0px;
-	font-family			:	'PoetsenOne-Regular';
-	min-height			:	150px;
-	background-color	:	rgba(40, 40, 40, 0.75);
-	width				:	100%;
-	margin				:	auto;
-	max-width			:	1366px;
-}
-
-@media screen and (max-width : 1024px) {
-	footer{	
-		position		:	relative;
-	}
-}
-
-@media screen and (min-width : 1024px) and (max-width : 1365px) {
-	footer{	
-		position		:	relative;
-	}
-}
-
-#div_footerIndexContainer {
-	position			:	relative;
-	left				:	0px;
-	top					:	0px;
-}
-
-#div_footerIndexContainer ul:last-child{
-	border				:	none;
-}
-
-.ul_footerIndex{
-	display				:	inline-block;
-	vertical-align		:	top;
-	width				:	30%;
-	border-right		:	black 1px solid;
-	margin				:	0 10px;
-}
-
-.ul_footerIndex h3{
-	width				:	70%;
-	border-bottom		:	solid 1px black;
-}
-
-.ul_footerIndex li{
-	height				:	25px;
-	line-height			:	25px;
-}
-
-.ul_footerIndex li a{
-	color				:	black;
-}
-
-
-.ul_footerIndex li a:visited{
-	color				:	black;
-	height				:	25px;
-	line-height			:	25px;
-}
-
-.ul_footerIndex li:hover{
-	background-color	:	green;
-}
-
-#padlock{
-	position			:	absolute;
-	bottom				:	0px;
-	right				:	0px;
-}
-
-#padlock img{
-	width				:	30px;
-}
-
-#rechercher{
-	margin-top			:	50px;
-	text-align			:	center;
-}
-
-#rechercher input, #rechercher img{
-	display				:	inline-block;
-	vertical-align		:	top;
-}
-
-#rechercher input{
-	width				:	250px;
-	height				:	30px;
-	margin-right		:	10px;
 }

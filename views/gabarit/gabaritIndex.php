@@ -5,6 +5,7 @@
 		
 		<link href="reset.css" rel="stylesheet" type="text/css"/>
 		<link href="style.css" rel="stylesheet" type="text/css"/>
+		<link href='styleIndex.css' rel='stylesheet' type='text/css'/>
 		<title><?php //echo $page->titre();?></title>
 		<meta name="Content-Language" content="fr">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -13,7 +14,7 @@
 		<meta name="Subject" content="<?php //echo $page->subject();?>">
 	</head>
 	<body>
-		<div id='wrap'>
+		<div id='wrapIndex'>
 			<header>
 			<?php echo $view_header;?>
 			</header><!--
