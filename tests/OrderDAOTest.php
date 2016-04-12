@@ -7,23 +7,16 @@ require_once("./model/class/Order.class.php");
 require_once("./model/class/Client.class.php");
 class OrderDAOTest extends PHPUnit_Framework_TestCase
 {
-  public function testGetOrders() {
-    $odao = new OrderDAO();
-    $orders = $odao->getOrders();
-    $order = $orders[0];
-    $this->assertInstanceOf('Order',$order);
-    $this->assertInternalType('int',$order->id_com());
-  }
-  public function testClientCreateOrder() {
+  public function testClientOrder() {
     $clientData = new Client(array(
-      "nom" => "test deux",
+      "nom" => "test 5",
       "prenom" => "test prenom",
-      "email" => "test2@email.test",
+      "email" => "test5@email.test",
       "mdp" => "testPassword"
     ));
     $cldao = new ClientDAO();
     $client = $cldao->createClient($clientData);
-    $client = $cldao->getClientByEmail("test2@email.test");
+    $client = $cldao->getClientByEmail("test5@email.test");
     $client->setMdp("testPassword");
     $odao = new OrderDAO($client);
     $orderData = new Order(array(
@@ -38,11 +31,16 @@ class OrderDAOTest extends PHPUnit_Framework_TestCase
     ));
     $orderData->setList_lc([$orderline]);
     $oid = $odao->createOrder($orderData);
+    $this->assertInternalType('int',$oid);
     $order = $odao->getOrderById($oid->id_com());
     $orderline = new OrderLine(array(
       "id_p" => 1,
       "quantite" => 0.4
     ));
     $order = $odao->addOrderLine($order,$orderline);
+    $orders = $odao->getOrders();
+    $order = $orders[0];
+    $this->assertInstanceOf('Order',$order);
+    $this->assertInternalType('int',$order->id_com());
   }
 }

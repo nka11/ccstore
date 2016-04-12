@@ -111,7 +111,9 @@ class ClientDAO extends AbstractRestClient {
   }
 
   public function createClient($client) {
-    global $dolibarr_web_customer_catid, $dolibarr_clientadherent_catid;
+    global $dolibarr_web_customer_catid,
+           $dolibarr_clientadherent_catid,
+           $dolibarr_web_customer_groupid;
     $existing = $this->getClientByEmail($client->email());
     // a client exist with that email, returning null
     if ($existing != false) {
@@ -157,6 +159,17 @@ class ClientDAO extends AbstractRestClient {
       return false;
     }
     $client->setId_user($res->body);
+
+    $req = $this->req();
+    $req->uri("$this->api_url/user/".$client->id_user()."/setGroup/"
+      ."$dolibarr_web_customer_groupid?api_key=$this->api_key");
+    $req->method("GET");
+    $res = $req->send();
+    if ($res->code != 200) {
+      echo json_encode($res->body,JSON_PRETTY_PRINT);
+      return false;
+    }
+
     
     return $client;
   }
