@@ -45,7 +45,6 @@ class ProduitDAO extends AbstractRestClient {
     $req->method("GET");
     $req->uri("$this->api_url/product/list/category/$category?api_key=$this->api_key");
     $resp = $req->send();
-    //echo json_encode($resp->body, JSON_PRETTY_PRINT);
     foreach ($resp->body as $data) {
       array_push($result, $this->_mapProduct($data));
     }

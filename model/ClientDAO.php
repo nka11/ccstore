@@ -87,7 +87,7 @@ class ClientDAO extends AbstractRestClient {
       return false;
     }
     $req = $this->req();
-    $req->uri("$this->api_url/account/".$client->id_user()."?api_key=$this->api_key");
+    $req->uri("$this->api_url/user/".$client->id_user()."?api_key=$this->api_key");
     $req->method("DELETE");
     $res = $req->send();
     if ($res->code != 200) {
@@ -104,7 +104,6 @@ class ClientDAO extends AbstractRestClient {
     $req->method("GET");
     $res = $req->send();
     if ($res->code != 200) {
-      //echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
     $client->setApi_key($res->body->success->token);
@@ -112,7 +111,9 @@ class ClientDAO extends AbstractRestClient {
   }
 
   public function createClient($client) {
-    global $dolibarr_web_customer_catid, $dolibarr_clientadherent_catid;
+    global $dolibarr_web_customer_catid,
+           $dolibarr_clientadherent_catid,
+           $dolibarr_web_customer_groupid;
     $existing = $this->getClientByEmail($client->email());
     // a client exist with that email, returning null
     if ($existing != false) {
@@ -149,14 +150,26 @@ class ClientDAO extends AbstractRestClient {
     }
 
     $req = $this->req();
-    $req->uri("$this->api_url/contact/".$client->id_contact()."/createAccount?api_key=$this->api_key");
+    $req->uri("$this->api_url/contact/".$client->id_contact()."/createUser?api_key=$this->api_key");
     $req->body("{\"login\":\"".$client->email()."\",\"password\":\"".$client->mdp()."\"}");
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
+      //echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
     $client->setId_user($res->body);
+
+    $req = $this->req();
+    $req->uri("$this->api_url/user/".$client->id_user()."/setGroup/"
+      ."$dolibarr_web_customer_groupid?api_key=$this->api_key");
+    $req->method("GET");
+    $res = $req->send();
+    if ($res->code != 200) {
+      echo json_encode($res->body,JSON_PRETTY_PRINT);
+      return false;
+    }
+
     
     return $client;
   }
