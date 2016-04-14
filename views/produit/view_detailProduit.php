@@ -1,6 +1,6 @@
 <?php ob_start();?>
 
-<?php // Vue section "detail" d'une produit en particulier.
+<?php // Affiche un produit en partixulier
 		// Variable du produit : $t (pour target).
 ?>
 <div id='div_detailProduit'>

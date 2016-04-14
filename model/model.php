@@ -4,7 +4,7 @@
 		
 	function getBdd() {
 		
-		$bdd = new PDO('mysql:host=localhost;dbname=courtCircuit', 'admin', 'cc2016');
+		$bdd = new PDO('mysql:host=localhost;dbname=dolibarr', 'yoyo', 'tibrun77');
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 		
 		return $bdd;
