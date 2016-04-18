@@ -549,18 +549,6 @@ html{
 	background			:	url('img/design/boutonConnexionHover.png');
 }
 
-#boutonInsc {
-	width				:	200px;
-	height				:	108px;
-	background			:	url('img/design/boutonInscription.png');
-	border				:	none;
-	cursor				:	pointer;
-}
-
-#boutonInsc:hover {
-	background			:	url('img/design/boutonInscriptionHover.png');
-}
-
 		/*----------------SECTION--------commander---formPARAM----------------------*/
 		
 #form_command {

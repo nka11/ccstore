@@ -1,5 +1,6 @@
 <?php
 require_once("./model/AbstractRestClient.php");
+require_once("./model/class/Client.class.php");
 include_once './vendor/autoload.php';
 use \nategood\httpful;
 use \Httpful\Request;

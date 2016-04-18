@@ -12,8 +12,11 @@
 	<head>
 		<meta charset="utf-8"/>
 		
-		<link href="reset.css" rel="stylesheet" type="text/css"/>
-		<link href="style.css" rel="stylesheet" type="text/css"/>
+		<link href="css/reset.css" rel="stylesheet" type="text/css"/>
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<?php foreach($linkshead as $cssfilename):?>
+		<link href="css/<?php echo $cssfilename;?>" rel="stylesheet" type="text/css"/>
+<?php endforeach;?>
 		<title><?php echo $page;?></title>
 		<meta name="Content-Language" content="fr">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
