@@ -1,0 +1,4 @@
+<?php
+  $db_string = "mysql:host=localhost;dbname=ccstore";
+  $db_user = "ccstore";
+  $db_password = "ccstore";

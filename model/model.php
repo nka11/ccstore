@@ -1,10 +1,10 @@
 <?php
-
+require_once "conf/database.cnf.default.php";
 	//CONNEXION DATA BASE
 		
 	function getBdd() {
-		
-		$bdd = new PDO('mysql:host=localhost;dbname=dolibarr', 'yoyo', 'tibrun77');
+		global $db_string, $db_user, $db_password;
+    $bdd = new PDO($db_string, $db_user, $db_password);
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 		
 		return $bdd;
