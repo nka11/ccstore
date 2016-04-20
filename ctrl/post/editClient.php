@@ -10,13 +10,31 @@ $action 	= (isset($_POST['Inscription']) AND !empty($_POST['action']))	?	$_POST[
 $id_c		= (isset($_POST['id_c']))			?	$_POST['id_c']					:	NULL;
 $e			=	false;
 
-$listAtt	= array('nom_c', 'prenom_c', 'email_c','mdp_c', 'adresse_c', 'cp_c', 'ville_c', 'departement_c', 'telephone_c');
+$listAtt	= array('nom_c', 'prenom_c', 'email_c','mdp_c', 'adresse_c', 'cp_c', 'ville_c', 'telephone_c');
 
 foreach($listAtt as $att){
 	
 	$$att 	= (!empty($_POST[$att]))	?	htmlentities($_POST[$att])	:	NULL;		
 	$e		= (!empty($$att))			?	FALSE						:	TRUE;
 	
+}
+
+$dept = substr($cp_c, 0, 2);
+switch($dept){
+	case '77' : $departement_c = 'Seine-et-Marne';
+	break;
+	case '78' : $departement_c = 'Yvelines';
+	break;
+	case '91' : $departement_c = 'Essonne';
+	break;
+	case '92' : $departement_c = 'Hauts-de-Seine';
+	break;
+	case '93' : $departement_c = 'Seine-Saint-Denis';
+	break;
+	case '95' : $departement_c = "Val-d'Oise";
+	break;
+	default	  : $departement_c = NULL;
+	break;
 }
 
 if(!$e){
