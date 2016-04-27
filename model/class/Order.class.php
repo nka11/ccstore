@@ -61,4 +61,14 @@ class Order {
   public function setList_lc($list_lc) { $this->list_lc = $list_lc; }
 
   public function addLigne_c($orderline) { array_push($this->list_lc, $orderline);}
+
+  public function getLine(int $lid) { 
+    $findLine = function($orderLine) use (&$lid) {
+      return ((int) $orderLine->id_lc()) == $lid;
+    };
+    $resarray = array_filter($this->list_lc, $findLine);
+    if (count($resarray) == 1) return $resarray[array_keys($resarray)[0]];
+    if (count($resarray) == 0) return null;
+    throw new Exception("Integrity error, more than one line with same Id");
+  }
 }

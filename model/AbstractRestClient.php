@@ -17,7 +17,7 @@ class AbstractRestClient {
     $req->uri("$this->api_url/login?login=$dolibarr_user_login&password=$dolibarr_user_password");
     $resp = $req->send();
     if ($resp->code != 200) {
-      throw new Exception("API not initialized");
+      throw new RestException("API not initialized");
     }
     $this->api_key = $resp->body->success->token;
 //    echo $this->api_key;
@@ -28,4 +28,8 @@ class AbstractRestClient {
     $req->mime("application/json");
     return $req;
   }
+}
+
+class RestException extends Exception {
+
 }

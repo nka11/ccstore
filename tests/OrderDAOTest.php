@@ -30,17 +30,31 @@ class OrderDAOTest extends PHPUnit_Framework_TestCase
       "quantite" => 1
     ));
     $orderData->setList_lc([$orderline]);
-    $oid = $odao->createOrder($orderData);
-    $this->assertInternalType('int',$oid);
-    $order = $odao->getOrderById($oid->id_com());
+    $order = $odao->createOrder($orderData);
+    $this->assertInstanceOf('Order',$order);
     $orderline = new OrderLine(array(
       "id_p" => 1,
       "quantite" => 0.4
     ));
-    $order = $odao->addOrderLine($order,$orderline);
+    $orderline = $odao->addOrderLine($order,$orderline);
+    $this->assertInternalType('int',$orderline->id_lc());
+    $lineId = $orderline->id_lc();
+    $orderline->setQuantite(2);
+    $orderBis = $odao->changeOrderLine($order,$orderline);
+    $this->assertEquals($order->id_c(),$orderBis->id_c());
+    $order = $orderBis;
+    $orderline = $order->getLine($lineId);
+    $this->assertEquals($orderline->quantite(), 2);
+    $order = $odao->delOrderLine($order,$lineId);
+    $this->assertEquals(count($order->list_lc()), 1);
+
+    $order = $odao->resetOpenOrder($order);
+    $this->assertEquals(count($order->list_lc()), 0);
+
     $orders = $odao->getOrders();
-    $order = $orders[0];
-    $this->assertInstanceOf('Order',$order);
-    $this->assertInternalType('int',$order->id_com());
+    $order2 = $orders[0];
+    $this->assertInstanceOf('Order',$order2);
+    $this->assertInternalType('int',$order2->id_com());
+    
   }
 }
