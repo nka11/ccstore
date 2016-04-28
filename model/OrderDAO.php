@@ -84,18 +84,20 @@ class OrderDAO extends AbstractRestClient {
     $req->sendJson();
     $req->method("POST");
     $req->body(json_encode($reqdata));
-    echo json_encode($reqdata, JSON_PRETTY_PRINT);
-    $req->uri("$this->api_url/order?api_key=$this->client_key");
+    //echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    $req->uri("$this->api_url/order/?api_key=$this->client_key");
     $res = $req->send();
     if ($res->code != 200) {
-      echo json_encode($res->body, JSON_PRETTY_PRINT);
+      //echo json_encode($res->body, JSON_PRETTY_PRINT);
       return false;
     }
     //echo json_encode($res->body, JSON_PRETTY_PRINT);
     $order = $this->getOrderById((int)$res->body);
     return $order;
   }
-
+  /**
+   * Add line to basket
+   */
   public function addOrderLine($order,$orderline,$client=NULL) {
     $this->_authenticateClient($client);
     $reqdata = $this->mapDataLineOrder($orderline);
@@ -103,7 +105,7 @@ class OrderDAO extends AbstractRestClient {
     $req->sendJson();
     $req->method("POST");
     $req->body(json_encode($reqdata));
-    echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    //echo json_encode($reqdata, JSON_PRETTY_PRINT);
     $req->uri("$this->api_url/order/".$order->id_com()."/line?api_key=$this->client_key");
     $res = $req->send();
     if ($res->code != 200) {
@@ -111,9 +113,12 @@ class OrderDAO extends AbstractRestClient {
       return false;
     }
       //echo json_encode($res->body, JSON_PRETTY_PRINT);
-    return (int) $res->body;
+    $orderline->setId_lc((int) $res->body);
+    return $orderline;
   }
-
+  /**
+   * Modify a basket line (for quantity)
+   */
   public function changeOrderLine($order,$orderline,$client=NULL) {
     $this->_authenticateClient($client);
     $reqdata = $this->mapDataLineOrder($orderline);
@@ -121,17 +126,29 @@ class OrderDAO extends AbstractRestClient {
     $req->sendJson();
     $req->method("PUT");
     $req->body(json_encode($reqdata));
-    echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    //echo json_encode($reqdata, JSON_PRETTY_PRINT);
     $req->uri("$this->api_url/order/".$order->id_com()."/line/".$orderline->id_lc()."?api_key=$this->client_key");
     $res = $req->send();
-    echo json_encode($res->body, JSON_PRETTY_PRINT);
+    //echo json_encode($res->body, JSON_PRETTY_PRINT);
     if ($res->code != 200) {
       return false;
     }
     return $this->mapOrder($res->body);
   }
-
-  public function delOrderLine($order, $orderline, $client=NULL) {
+  /**
+   * Remove line from basket
+   */
+  public function delOrderLine($order, $lineid, $client=NULL) {
+    $this->_authenticateClient($client);
+    $req = $this->req();
+    $req->method("DELETE");
+    $req->uri("$this->api_url/order/".$order->id_com()."/line/".$lineid."?api_key=$this->client_key");
+    $res = $req->send();
+    //echo json_encode($res->body, JSON_PRETTY_PRINT);
+    if ($res->code != 200) {
+      return false;
+    }
+    return $this->mapOrder($res->body);
   }
 
 
@@ -144,21 +161,37 @@ class OrderDAO extends AbstractRestClient {
     $req->sendJson();
     $req->method("PUT");
     $req->body(json_encode($reqdata));
-    echo json_encode($reqdata, JSON_PRETTY_PRINT);
+    //echo json_encode($reqdata, JSON_PRETTY_PRINT);
     $req->uri("$this->api_url/order/".$commande->id_com()."?api_key=$this->client_key");
     $res = $req->send();
     if ($res->code != 200) {
-      echo json_encode($res->body, JSON_PRETTY_PRINT);
+      //echo json_encode($res->body, JSON_PRETTY_PRINT);
+      return false;
     }
-      echo json_encode($res->body, JSON_PRETTY_PRINT);
+      //echo json_encode($res->body, JSON_PRETTY_PRINT);
     return $commande;
 
   }
-  public function resetOpenOrder($client) {
 
+  /**
+   * Delete all lines of an order
+   */
+  public function resetOpenOrder($order, $client=null) {
+    $this->_authenticateClient($client);
+    foreach ($order->list_lc() as $orderline) {
+      $order = $this->delOrderLine($order,$orderline->id_lc());
+    }
+    return $order;
   }
 
   public function mapDataOrder($commande,$client) {
+    if ($client == null) {
+      $client = $this->client;
+    }
+    if ($client == null) {
+      throw new Exception("Client unavailable");
+    }
+
     $data = array(
       "socid" => $commande->id_c(),
       "date_commande" => $commande->date_crea_com(),
