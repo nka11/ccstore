@@ -1,30 +1,20 @@
 <?php
 
-spl_autoload_register(function ($class) {
-	include 'model/class/' . $class . '.class.php';
-});
+$path = $_REQUEST['path'];
+if ($path == "" || $path == null || $path == "index.php") {
+  $path = "/";
+}
 
-require "model/model.php";
-$form_action = 'index.php';
+require 'vendor/autoload.php';
 
-// Ouverture et/ou récupération de session ouverte
-require "ctrl/session.php";
+require_once 'controller/PagesController.php';
 
-// Chargement de la liste des catégories.
-require "ctrl/categories.php"; // Le fichier appelle le model qui récupères la liste des catégories.
+use Pux\Executor;
 
-// Récupération et création du panier client
-require 'ctrl/panier/ctrl_panier.php';
+$mux = new Pux\Mux;
 
-// Chargement du header
-require 'ctrl/header/ctrl_header.php';
+$mux->get('/', ['PagesController','index']);
 
 
-// Chargement du footer
-require 'views/footer/view_footer.php';		
-
-
-//Chargement de la page
-require 'views/gabarit/gabaritIndex.php';
-
-//PASSAGE DE SESSION
+$route = $mux->dispatch( $path );
+echo Executor::execute($route);
