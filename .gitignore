@@ -4,3 +4,4 @@ phpunit.phar
 /vendor/
 conf/dolirest.cnf.php
 template_cache/
+composer.lock
