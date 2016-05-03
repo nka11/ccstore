@@ -2,12 +2,14 @@
 
 require_once './vendor/autoload.php';
 require_once './model/class/Client.class.php';
-class AbstractController {
+use Pux\Mux;
+class AbstractController extends \Pux\Controller {
   private $loader;
  
   private $twig;
   public $session;
   public function __construct() {
+    //parent::__construct();
     $this->loader = new Twig_Loader_Filesystem('./templates');
 
     $this->twig = new Twig_Environment($this->loader, array(
@@ -15,10 +17,12 @@ class AbstractController {
       ));
     $this->handle_session();
   }
+
   public function render($template, $data=[]) {
     $data['session'] = $this->session;
     return $this->twig->render($template,$data);
   }
+
   public function handle_session() {
     session_start();
     $this->session['statut'] = (empty($_SESSION['statut']))
