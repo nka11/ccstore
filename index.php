@@ -10,11 +10,12 @@ if ($path == "" || $path == null || $path == "/index.php") {
 require 'vendor/autoload.php';
 
 require_once 'controller/PagesController.php';
+require_once 'controller/StoreController.php';
 
 use Pux\Executor;
 
 $mux = new Pux\Mux;
-//$mux->get('/', ['PagesController','index']);
+$mux->mount("/store", new StoreController());
 $mux->mount("", new PagesController());
 
 $route = $mux->dispatch( $path );
