@@ -13,18 +13,23 @@ class AbstractController extends \Pux\Controller {
     $this->loader = new Twig_Loader_Filesystem('./templates');
 
     $this->twig = new Twig_Environment($this->loader, array(
-        'cache' => './template_cache',
+//        'cache' => './template_cache',
       ));
     $this->handle_session();
   }
 
   public function render($template, $data=[]) {
     $data['session'] = $this->session;
+    $data['path'] = $_REQUEST['path'];
+    $data['base_path'] = substr($_SERVER['REQUEST_URI'],
+      0,
+      strripos($_SERVER['REQUEST_URI'],$_REQUEST['path']));
     return $this->twig->render($template,$data);
   }
 
   public function handle_session() {
-    session_start();
+    if(!isset($_SESSION))
+      session_start();
     $this->session['statut'] = (empty($_SESSION['statut']))
       ? 'visitor'
       : $_SESSION['statut'];
