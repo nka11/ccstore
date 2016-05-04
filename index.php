@@ -1,30 +1,36 @@
 <?php
 
-spl_autoload_register(function ($class) {
-	include 'model/class/' . $class . '.class.php';
-});
+$path = $_REQUEST['path'];
+if ($path == "" || $path == null || $path == "/index.php") {
+  $path = "/";
+}
 
-require "model/model.php";
-$form_action = 'index.php';
+//echo $path;
 
-// Ouverture et/ou récupération de session ouverte
-require "ctrl/session.php";
+require 'vendor/autoload.php';
 
-// Chargement de la liste des catégories.
-require "ctrl/categories.php"; // Le fichier appelle le model qui récupères la liste des catégories.
+require_once 'controller/PagesController.php';
+require_once 'controller/StoreController.php';
+require_once 'controller/DebugController.php';
+require_once 'controller/ErrorController.php';
 
-// Récupération et création du panier client
-require 'ctrl/panier/ctrl_panier.php';
+use Pux\Executor;
 
-// Chargement du header
-require 'ctrl/header/ctrl_header.php';
+$mux = new Pux\Mux;
+$mux->mount("/store", new StoreController());
+$mux->mount("/debug", new DebugController());
+$mux->mount("/error", new ErrorController());
+$mux->mount("", new PagesController());
 
-
-// Chargement du footer
-require 'views/footer/view_footer.php';		
-
-
-//Chargement de la page
-require 'views/gabarit/gabaritIndex.php';
-
-//PASSAGE DE SESSION
+try {
+  $route = $mux->dispatch( $path );
+  echo Executor::execute($route);
+} catch (Error $e) {
+  try {
+    $route = $mux->dispatch( "$path/" );
+    echo Executor::execute($route);
+  } catch (Error $ee) {
+    $route = $mux->dispatch( '/error/404' );
+    echo Executor::execute($route);
+  }
+}
