@@ -1,3 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
 <form id="contact" method="POST" action="#">
   <div class="form-group col-md-6 col-md-offset-3">
     <input type="text" placeholder="email" class="form-control" name=""/>
@@ -9,3 +16,5 @@
     <textarea>Votre message</textarea>
   </div>
 </form>
+</div>
+{% endblock %}
