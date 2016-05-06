@@ -8,6 +8,7 @@ class AbstractController extends \Pux\Controller {
  
   private $twig;
   public $session;
+  public $base_path;
   public function __construct() {
     //parent::__construct();
     $this->loader = new Twig_Loader_Filesystem('./templates');
@@ -16,14 +17,15 @@ class AbstractController extends \Pux\Controller {
 //        'cache' => './template_cache',
       ));
     $this->handle_session();
+    $this->base_path = substr($_SERVER['REQUEST_URI'],
+      0,
+      strripos($_SERVER['REQUEST_URI'],$_REQUEST['path']));
   }
 
   public function render($template, $data=[]) {
     $data['session'] = $this->session;
     $data['path'] = $_REQUEST['path'];
-    $data['base_path'] = substr($_SERVER['REQUEST_URI'],
-      0,
-      strripos($_SERVER['REQUEST_URI'],$_REQUEST['path']));
+    $data['base_path'] = $this->base_path;
     return $this->twig->render($template,$data);
   }
 
