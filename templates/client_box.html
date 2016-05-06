@@ -1,9 +1,19 @@
+<form id="logoutForm" method="POST" action="{{ base_path}}/user/logout" style="display:none">
+  <input type="hidden" name="forward" value="{{ base_path}}{{ path }}"/>
+</form>
+<script>
+function submitLogout () {
+  document.getElementById("logoutForm").submit();
+}
+</script>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>{{ session.user.email }}<span class="caret"></span></a>
 	<ul class="dropdown-menu">
     <li><a href="{{ base_path }}/user/">Profil</a></li>
 		<!-- li><a href="#">Historique des commandes</a></li -->
 		<li role="separator" class="divider"></li>
-    <li><a href="{{ base_path }}/user/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+    <li>
+        <a href="javascript: submitLogout()"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
+    </li>
 	</ul>
 </li>
