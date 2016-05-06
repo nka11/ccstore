@@ -36,20 +36,21 @@ body {
           <a class="navbar-brand" href="#">Court Circuit</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+					<li><a href="indexbsvisitor.php"><span class="glyphicon glyphicon-home"></span></a></li>
+					<li class="active"><a href="#Boutique">Boutique</a></li>
+					<li><a href="#traiteur">Traiteur</a></li>
+					<li><a href="#about">FAQ</a></li>
+					<li><a href="#contact">Contact</a></li>
+			</ul>
+			 <ul class="nav navbar-nav navbar-right">
+			   <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Panier <span class="badge">6</span></a></li>
           {% if session['statut'] == 'visitor' %}
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Se Connecter</button>
-          </form>
+          {% include "client_auth.html" %}
           {% else %}
-            <button type="submit" class="btn btn-success">Mon Profil</button>
-
+           {% include "client_box.html" %}
           {% endif %}
+		  </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
