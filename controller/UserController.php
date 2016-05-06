@@ -36,18 +36,66 @@ class UserController extends AbstractController {
     // verification des parametres
     if ($email != null && $email != "" 
       && $password != null && $password != "") {
-      return "parametres";
+      $cldao = new ClientDAO();
+      try {
+        $client = $cldao->getClientByEmail($email);
+        $client->setMdp($password);
+        $client = $cldao->login($client);
+        if ($client && $client->api_key() != null && $client->api_key() != "") {
+          // Login success
+          $_SESSION['statut'] = 'client';
+          $_SESSION['user'] = $client;
+          if ($this->isJson) {
+            return '{"success": true}';
+          }
+          if (array_key_exists('forward',$_REQUEST)) {
+            return header('Location: '.$_REQUEST['forward']);
+          }
+          return header('Location: '.$this->base_path);
+        } else {
+          // Login failure
+          $message = "Email ou mot de passe invalide";
+          if ($this->isJson) {
+            return '{"success": false, "error": '+
+              '{ "message" : "'.$message.'"}}';
+          }
+          http_response_code(403); //Unauthorized
+          return parent::render("error/403.html", array("message"=> $message));
+        }
+      } catch (Throwable $t) {
+        $message = "Email ou mot de passe invalide !";
+        if ($this->isJson) {
+          return '{"success": false, "error": '+
+            '{ "message" : "'.$message.'"}}';
+        } else {
+          http_response_code(403); //bad request
+          return parent::render("error/403.html", array("message"=> $message));
+        }
+      }
 
     } else { // Erreur de parametres
       $message = "Parametre email ou mot de passe manquant";
-      if (isset($_SERVER['HTTP_ACCEPT'])
-        && $_SERVER['HTTP_ACCEPT'] == "application/json") {
+      if ($this->isJson) {
         return '{"success": false, "error": '+
-          '{ "message" : '.$message.'}}';
+          '{ "message" : "'.$message.'"}}';
       } else {
         http_response_code(400); //bad request
         return parent::render("error/400.html", array("message"=> $message));
       }
     }
+  }
+
+  /**
+   * @Route("/logout")
+   */
+  function logoutAction () {
+    session_destroy();
+    if ($this->isJson) {
+      return '{"success": true}';
+    }
+    if (array_key_exists('forward',$_REQUEST)) {
+      return header('Location: '.$_REQUEST['forward']);
+    }
+    return header('Location: '.$this->base_path);
   }
 }

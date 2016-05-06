@@ -11,6 +11,7 @@ class ProduitDAO extends AbstractRestClient {
     $req->method("GET");
     $req->uri("$this->api_url/product/list?api_key=$this->api_key");
     $resp = $req->send();
+    //echo json_encode($resp->body,JSON_PRETTY_PRINT);
     foreach ($resp->body as $data) {
       array_push($result, $this->_mapProduct($data));
     }
@@ -60,7 +61,7 @@ class ProduitDAO extends AbstractRestClient {
       "titre" => $data->label,
       "description" => $data->description,
       "tva" => (float)$data->tva_tx,
-      "prix_vente" => (float)$data->price
+      "prix_vente" => (float)$data->price_ttc
     ));
     return $product;
   }

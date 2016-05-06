@@ -9,6 +9,7 @@ class AbstractController extends \Pux\Controller {
   private $twig;
   public $session;
   public $base_path;
+  public $isJson = false;
   public function __construct() {
     //parent::__construct();
     $this->loader = new Twig_Loader_Filesystem('./templates');
@@ -20,6 +21,11 @@ class AbstractController extends \Pux\Controller {
     $this->base_path = substr($_SERVER['REQUEST_URI'],
       0,
       strripos($_SERVER['REQUEST_URI'],$_REQUEST['path']));
+
+    if (isset($_SERVER['HTTP_ACCEPT'])
+      && $_SERVER['HTTP_ACCEPT'] == "application/json") {
+      $this->isJson = true;
+    }
   }
 
   public function render($template, $data=[]) {
