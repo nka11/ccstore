@@ -11,7 +11,7 @@ class UserController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-    return parent::render('user.html');
+    return parent::render('user.html', array("client" => $_SESSION['user']) );
   }
   /**
    * Login method
