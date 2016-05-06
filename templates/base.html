@@ -25,7 +25,6 @@ body {
   </head>
   <body>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -33,15 +32,14 @@ body {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Court Circuit</a>
+          <a class="navbar-brand" href="#">Court Circuit <span class="glyphicon glyphicon-home"></span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-					<li><a href="indexbsvisitor.php"><span class="glyphicon glyphicon-home"></span></a></li>
-          <li class="active"><a href="{{ base_path }}/store">Boutique</a></li>
-					<li><a href="#traiteur">Traiteur</a></li>
-					<li><a href="#about">FAQ</a></li>
-					<li><a href="#contact">Contact</a></li>
+				<li class="active"><a href="{{ base_path }}/store">Boutique</a></li>
+				<li><a href="#traiteur">Traiteur</a></li>
+				<li><a href="#about">FAQ</a></li>
+				<li><a href="#contact">Contact</a></li>
 			</ul>
 			 <ul class="nav navbar-nav navbar-right">
 			   <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Panier <span class="badge">6</span></a></li>
@@ -52,7 +50,6 @@ body {
           {% endif %}
 		  </ul>
         </div><!--/.navbar-collapse -->
-      </div>
     </nav>
     {% block content %}{% endblock %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
