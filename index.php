@@ -13,6 +13,7 @@ require_once 'controller/PagesController.php';
 require_once 'controller/StoreController.php';
 require_once 'controller/DebugController.php';
 require_once 'controller/ErrorController.php';
+require_once 'controller/UserController.php';
 
 use Pux\Executor;
 
@@ -20,6 +21,7 @@ $mux = new Pux\Mux;
 $mux->mount("/store", new StoreController());
 $mux->mount("/debug", new DebugController());
 $mux->mount("/error", new ErrorController());
+$mux->mount("/user", new UserController());
 $mux->mount("", new PagesController());
 
 try {
