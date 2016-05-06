@@ -1,12 +1,18 @@
-<form class="navbar-form navbar-right" role="form" 
-   method="POST" action="{{ base_path }}/user/login">
-	  <div class="form-group">
-		  <input name="email" type="text" class="form-control" placeholder="Adresse e-mail"/>
-		  <input name="password" type="password" class="form-control" placeholder="Mot de passe"/>
-      <input name="forward" type="hidden" class="form-control" value="{{ base_path }}{{ path }}"/>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Connexion</button>
- </form>
-<ul class="nav navbar-nav navbar-right">
-	<li><a href="forminscriptionbsvisitor.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-</ul>
+<li class="dropdown">
+	  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span>Connexion<span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<li>
+		<form class="navbar-form navbar-right" role="form" 
+		   method="POST" action="{{ base_path }}/user/login">
+			  <div class="form-group">
+				  <input name="email" type="text" class="form-control" placeholder="Adresse e-mail"/>
+				  <input name="password" type="password" class="form-control" placeholder="Mot de passe"/>
+			  <input name="forward" type="hidden" class="form-control" value="{{ base_path }}{{ path }}"/>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Connexion</button>
+		 </form>
+		 </li>
+	 </ul>
+</li>
+<li><a href="forminscriptionbsvisitor.php"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+
