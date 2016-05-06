@@ -84,4 +84,18 @@ class UserController extends AbstractController {
       }
     }
   }
+
+  /**
+   * @Route("/logout")
+   */
+  function logoutAction () {
+    session_destroy();
+    if ($this->isJson) {
+      return '{"success": true}';
+    }
+    if (array_key_exists('forward',$_REQUEST)) {
+      return header('Location: '.$_REQUEST['forward']);
+    }
+    return header('Location: '.$this->base_path);
+  }
 }
