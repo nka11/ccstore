@@ -6,10 +6,10 @@
 		<form role="form" 
 		   method="POST" action="{{ base_path }}/user/login">
 			 <div class="input-group col-md-12">
-				  <input name="email" type="text" class="form-control" placeholder="Adresse e-mail"/>
+				  <input name="email" type="text" class="form-control" placeholder="Adresse e-mail" required/>
 			</div><br/>
 			<div class="input-group col-md-12">
-				  <input name="password" type="password" class="form-control" placeholder="Mot de passe"/>
+				  <input name="password" type="password" class="form-control" placeholder="Mot de passe" required/>
 			</div>	  
 				<input name="forward" type="hidden" class="form-control" value="{{ base_path }}{{ path }}"/>
 			 <br/>
