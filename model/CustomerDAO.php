@@ -101,7 +101,7 @@ class CustomerDAO extends AbstractRestClient {
 
   public function login(Customer $customer) {
     $req = $this->req();
-    $req->uri("$this->api_url/login?login=".$customer->email()."&password=".$customer->mdp());
+    $req->uri("$this->api_url/login?login=".$customer->email()."&password=".$customer->password());
     $req->method("GET");
     $res = $req->send();
     if ($res->code != 200) {
