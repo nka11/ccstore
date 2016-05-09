@@ -38,7 +38,7 @@
 		public function address() {return $this->address;}
 		public function zip() {return $this->zip;}
 		public function town() {return $this->town;}
-		public function phonenumber() { return $this->phonenumber;}
+		public function phone() { return $this->phone;}
 		public function is_adh() { return $this->is_adh;}
 		public function id_contact() { return $this->id_contact;}
 		public function id_user() { return $this->id_user;}
