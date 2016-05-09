@@ -44,9 +44,9 @@ body {
 			 <ul class="nav navbar-nav navbar-right">
 			   <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Panier <span class="badge">6</span></a></li>
           {% if session['statut'] == 'visitor' %}
-          {% include "client_auth.html" %}
+          {% include "customer_auth.html" %}
           {% else %}
-           {% include "client_box.html" %}
+           {% include "customer_box.html" %}
           {% endif %}
 		  </ul>
         </div><!--/.navbar-collapse -->
