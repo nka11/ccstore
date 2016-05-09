@@ -1,7 +1,7 @@
 <?php
 
 require_once './vendor/autoload.php';
-require_once './model/class/Client.class.php';
+require_once './model/class/Customer.class.php';
 use Pux\Mux;
 class AbstractController extends \Pux\Controller {
   private $loader;
@@ -43,29 +43,28 @@ class AbstractController extends \Pux\Controller {
       : $_SESSION['statut'];
     $this->session['user'] = (!empty($_SESSION['user']))
       ? $_SESSION['user'] 
-      : new Client (  array(  'id_c'      =>  0,
-                              'nom'     =>  'Visiteur',
-                              'prenom'    =>  NULL,
+      : new Customer (  array(  'id_c'      =>  0,
+                              'name'     =>  'Visiteur',
+                              'firstname'    =>  NULL,
                               'email'     =>  NULL,
-                              'adresse'   =>  NULL,
-                              'code_postal' =>  NULL,
-                              'ville'     =>  NULL,
-                              'departement' =>  NULL,
-                              'telephone'   =>  NULL));
+                              'address'   =>  NULL,
+                              'zip' =>  NULL,
+                              'town'     =>  NULL,
+                              'phone'   =>  NULL));
 		switch($this->session['statut']){
 			case 'visitor'  : 
 					$this->session['admin_open']=false;
-					$this->session['client_open']=false;
+					$this->session['customer_open']=false;
 					$this->session['visitor_open']=true;
 			break;
 			case 'client' : 
 					$this->session['admin_open']=false;
-					$this->session['client_open']=true;
+					$this->session['customer_open']=true;
 					$this->session['visitor_open']=false;
 			break;
 			case 'admin'  : 
 					$this->session['admin_open']=true;
-					$this->session['client_open']=false;
+					$this->session['customer_open']=false;
 					$this->session['visitor_open']=false;
 			break;
 			default: break;

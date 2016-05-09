@@ -4,8 +4,8 @@ require_once("./model/class/Product.class.php");
 include_once './vendor/autoload.php';
 use \nategood\httpful;
 use \Httpful\Request;
-class ProduitDAO extends AbstractRestClient {
-  public function getProduits() {
+class ProductDAO extends AbstractRestClient {
+  public function getProducts() {
     $result = array();
     $req = $this->req();
     $req->method("GET");
@@ -20,27 +20,26 @@ class ProduitDAO extends AbstractRestClient {
   /**
    * @param id $id Id produit a récupérer
    */
-  public function getProduitById($id) {
+  public function getProductById($id) {
     $req = $this->req();
     $req->method("GET");
     $req->uri("$this->api_url/product/".$id."?api_key=$this->api_key");
     $res = $req->send();
-    $produit = $this->_mapProduct($res->body);
-    return $produit;
+    $product = $this->_mapProduct($res->body);
+    return $product;
   }
   /**
-   * @param Product $produit Objet Produit a completer
+   * @param Product $produit Objet Product a completer
    */
-  public function getProduitCategories($produit) {
+  public function getProductCategories(Product $product) {
     $req = $this->req();
     $req->method("GET");
-    $req->uri("$this->api_url/product/".$produit->id_p()."/categories?api_key=$this->api_key");
+    $req->uri("$this->api_url/product/".$product->id_p()."/categories?api_key=$this->api_key");
     $resp = $req->send();
-    $produit->setCategories($resp->body);
-    return $produit;
+    $product->setCategories($resp->body);
+    return $product;
   }
-
-  public function getProduitsByCategory($category) {
+  public function getProductsByCategory($category) {
     $result = array();
     $req = $this->req();
     $req->method("GET");
@@ -51,29 +50,24 @@ class ProduitDAO extends AbstractRestClient {
     }
     return $result;
   }
-
-
-
   private function _mapProduct($data) {
     $product = new Product(array(
       "id_p" => (int)$data->id,
       "ref" => $data->ref,
-      "titre" => $data->label,
+      "title" => $data->label,
       "description" => $data->description,
       "tva" => (float)$data->tva_tx,
-      "prix_vente" => (float)$data->price_ttc
+      "price" => (float)$data->price_ttc
     ));
     return $product;
   }
-
-  private function _getProduitCategories($product) {
+  private function _getProductCategories(Product $product) {
     $req = $this->req();
     $req->method("GET");
     $req->uri("$this->api_url/product/"
       .$product->id_p()
       ."/categories/?api_key=$this->api_key");
     $resp = $req->send();
-    
   }
 
 }

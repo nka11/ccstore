@@ -7,12 +7,10 @@ class Product {
    * Un produit peut avoir plusieures catégories
    *
    */
-		
 		private $id_p,
-				$titre,
+				$title,
 				$ref, // reference produit
-				$prix_achat,
-				$prix_vente,
+				$price,
 				$tva,
 				$description = "",
 				$is_active,
@@ -21,34 +19,27 @@ class Product {
 				//objets : 
 				
 				$categories,
-				$producteurs;
+				$producers;
 		
-		public function __construct(array $donnees)
-		{
-			$this->hydrate($donnees);
+		public function __construct(array $data)	{
+			$this->hydrate($data);
 		}
     /**
      * loads data from a db record
      */
-		public function hydrate(array $donnees)
-		{
-			foreach ($donnees as $key => $value)
-			{
+		public function hydrate(array $data){
+			foreach ($data as $key => $value){
 				$method = 'set'.ucfirst($key);
-				if (method_exists($this, $method))
-				{
+				if (method_exists($this, $method)){
 						$this->$method($value);
 				}
 			}
-		}
-		
+		}	
 		//getter
-		
 		public function id_p() {return $this->id_p;}
 		public function id() {return $this->id_p;}
-		public function titre() {return $this->titre;}
-		public function prix_achat() {return $this->prix_achat;}
-		public function prix_vente() {return $this->prix_vente;}
+		public function title() {return $this->title;}
+		public function price() {return $this->price;}
 		public function tva() {return $this->tva;}
 		public function description() {return $this->description;}
 		public function is_active() { return $this->is_active;}
@@ -56,15 +47,11 @@ class Product {
 		public function ref() {return $this->ref;}
 		
 		public function categories() { return $this->categories;}
-		public function producteurs() { return $this->producteurs;}
-		
-		
+		public function producers() { return $this->producers;}
 		//setter
-		
 		public function setId_p($id) { $this->id_p = (int) $id;}
-		public function setTitre($titre) { $this->titre = $titre;}
-		public function setPrix_achat($prix_a) { $this->prix_achat =  $prix_a;}
-		public function setPrix_vente($prix_v) { $this->prix_vente =  $prix_v;}
+		public function setTitle($title) { $this->title = $title;}
+		public function setPrice($price) { $this->price =  $price;}
 		public function setCategories($categories) { $this->categories =  $categories;}
 		public function setTva($tva) { $this->tva =  $tva;}
 		public function setDescription($description) { 
@@ -74,12 +61,5 @@ class Product {
 		public function setIs_active($is_active) { $this->is_active = $is_active;}
 		public function setImg($img) { $this->img = $img;}
 		public function setRef($ref) { $this->ref = $ref;}
-		
-		
-		// Html_formulaire
-		
-		public function html_form()	{ include	'views/form/produit.php';}
-		
-		
-		
-	}
+				
+}

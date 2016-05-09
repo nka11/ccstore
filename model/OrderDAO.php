@@ -2,8 +2,8 @@
 require_once("./model/AbstractRestClient.php");
 require_once("./model/class/Order.class.php");
 require_once("./model/class/OrderLine.class.php");
-require_once("./model/ClientDAO.php");
-require_once("./model/ProduitDAO.php");
+require_once("./model/CustomerDAO.php");
+require_once("./model/ProductDAO.php");
 include_once './vendor/autoload.php';
 use \nategood\httpful;
 use \Httpful\Request;
