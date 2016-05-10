@@ -10,17 +10,20 @@
 		<h3><span class="glyphicon glyphicon-wrench"></span> Gestion du compte</h3>
 		<ul class="nav nav-pills nav-stacked" role="tablist">
 			<li role="presentation" class="active"><a href="#account" aria-controls="account" role="tab" data-toggle="pill">Protection du compte</a></li>
-			<li  role="presentation"><a href="#address" aria-controls="address" role="tab" data-toggle="pill">Modifier mon adresse</a></li>
 			<li  role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="pill">Modifier mon adresse email</a></li>
 			<li  role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="pill">Modifier mon mot de passe</a></li>
+			<li  role="presentation"><a href="#address" aria-controls="address" role="tab" data-toggle="pill">Modifier mon adresse</a></li>
+			<li  role="presentation"><a href="#phone" aria-controls="phone" role="tab" data-toggle="pill">Modifier mon numéro de téléphone</a></li>
 			<li  role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="pill">Règlement intérieur</a></li>
 		</ul>
 	</div>
 	<div class="tab-content col-md-8" >
 		<div role="tabpanel" class="tab-pane fade in active" id="account">{% include "user_validEmail.html" %}</div>
-		<div role="tabpanel" class="tab-pane fade" id="address">{% include "user_setAddress.html" %}</div>
 		<div role="tabpanel" class="tab-pane fade" id="email">{% include "user_setEmail.html" %}</div>
 		<div role="tabpanel" class="tab-pane fade" id="password">{% include "user_setPassword.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="address">{% include "user_setAddress.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="phone">{% include "user_setPhone.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="rules">{% include "user_rules.html" %}</div>
 	</div>
 </div>
 {% endblock %}

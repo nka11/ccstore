@@ -274,5 +274,22 @@ class UserController extends AbstractController {
 				return parent::render("error/400.html", array("message"=> $message));
 			}
 		}
-	} // end postAction
+	} // end postAction method
+	/**
+	 * edit method
+	 * @Route("/edit") 
+	 */
+	function editAction() {
+		 $currentemail= null;
+		 $confirmemail=null;
+		 $newpassword=null;
+		 $currentpassword = null;
+		 $pwconfirm = null;
+		 $newaddress = null;
+		 $newzip = null;
+		 $newtown = null;
+		 $newphone = null;
+		 $confirmphone=null;
+		 
+	} // end editAction method
 }
