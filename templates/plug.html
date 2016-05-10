@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Fiche produit : {{product.title}}{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <!-- Example row of columns -->
+  <!-- div class="row" -->
+  {% include "store_sidebar.html" %}
+  <div class="col-md-9">
+    {% include "product_plug.html" %}
+  </div>
+</div>
+{% endblock %}
+

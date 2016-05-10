@@ -13,4 +13,13 @@ class StoreController extends AbstractController {
     $products = $pdao->getProducts();
     return parent::render('store.html', array("products" => $products));
   }
+  /**
+   * @Route("/:id")
+   * @Method("GET")
+   */
+   function itemAction($id) {
+	   $pdao = new ProductDAO();
+	   $product = $pdao->getProductById($id);
+	   return parent::render('plug.html', array("product" => $product));
+   }
 }
