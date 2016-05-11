@@ -94,6 +94,9 @@ class UserController extends AbstractController {
       return '{"success": true}';
     }
     if (array_key_exists('forward',$_REQUEST)) {
+		if($_REQUEST['forward'] == '/ccstore/user/'){		// Do not stay on profile page after logout.
+			return header('Location: '. $this->base_path);
+		}
       return header('Location: '.$_REQUEST['forward']);
     }
     return header('Location: '.$this->base_path);
@@ -277,9 +280,10 @@ class UserController extends AbstractController {
 	} // end postAction method
 	/**
 	 * edit method
-	 * @Route("/edit") 
+	 * @Route("/edit/:attribut") 
 	 */
-	function editAction() {
+	/**  CURRENT BUILT METHOD
+	function editAction($attribut) {
 		 $currentemail= null;
 		 $confirmemail=null;
 		 $newpassword=null;
@@ -290,6 +294,7 @@ class UserController extends AbstractController {
 		 $newtown = null;
 		 $newphone = null;
 		 $confirmphone=null;
-		 
-	} // end editAction method
+		 echo $attribut;exit(); 
+	} // end editAction method 
+	*/
 }
