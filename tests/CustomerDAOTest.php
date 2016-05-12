@@ -8,7 +8,7 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 
   public function testGetCustomers() {
     $custdao = new CustomerDAO();
-    $custdao->getCustomersList();
+    $custdao->getCustomers();
   }
   public function testGetUnexistingCustomerByEmail() {
     $custdao = new CustomerDAO();
