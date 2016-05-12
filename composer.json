@@ -16,6 +16,12 @@
         {
             "name": "nka11",
             "email": "nicolas@karageuzian.com"
+			"role" :   "Developer"
+        },
+        {
+            "name": "JohBernhard",
+            "email": "johann.bernhard26@gmail.com",
+            "role" :  "Developer"
         }
     ]
 }
