@@ -47,7 +47,7 @@
 		//setter
 		public function setId_c($id) { $this->id_c = (int) $id;}
 		public function setName($name) { $this->name = $name;}
-		public function setFirstname($prenom) { $this->firstname = $firstname;}
+		public function setFirstname($firstname) { $this->firstname = $firstname;}
 		public function setEmail($email) { $this->email = $email;}
 		public function setPassword($pw) { $this->password = $pw;}
 		public function setAddress($adress) { $this->address = $address;}
