@@ -1,26 +1,26 @@
 <?php
 
 require_once("./model/OrderDAO.php");
-require_once("./model/ClientDAO.php");
-require_once("./model/ProduitDAO.php");
+require_once("./model/CustomerDAO.php");
+require_once("./model/ProductDAO.php");
 require_once("./model/class/Order.class.php");
-require_once("./model/class/Client.class.php");
+require_once("./model/class/Customer.class.php");
 class OrderDAOTest extends PHPUnit_Framework_TestCase
 {
-  public function testClientOrder() {
-    $clientData = new Client(array(
-      "nom" => "test 5",
-      "prenom" => "test prenom",
+  public function testCustomerOrder() {
+    $custData = new Customer(array(
+      "name" => "test 5",
+      "firstname" => "test prenom",
       "email" => "test5@email.test",
-      "mdp" => "testPassword"
+      "password" => "testPassword"
     ));
-    $cldao = new ClientDAO();
-    $client = $cldao->createClient($clientData);
-    $client = $cldao->getClientByEmail("test5@email.test");
-    $client->setMdp("testPassword");
-    $odao = new OrderDAO($client);
+    $custdao = new CustomerDAO();
+    $customer = $custdao->createCustomer($custData);
+    $customer = $custdao->getCustomerByEmail("test5@email.test");
+    $customer->setPassword("testPassword");
+    $odao = new OrderDAO($customer);
     $orderData = new Order(array(
-      "id_c" => $client->id_c(),
+      "id_c" => $customer->id_c(),
       "mode_liv" => 2, // Livraison a domicile
       "cond_paiement" => 7, // Paiement a livraison
       "mode_paiement" =>7 // paiement par cheque
