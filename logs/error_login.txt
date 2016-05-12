@@ -1,0 +1,32 @@
+fiche bug post
+
+path = /inscription
+envoie du formulaire
+
+path = /user/post
+$email = tata@tata.ta
+$password = tatata
+$pwconfirm = tatata
+$nom = tata
+$prenom = tata
+$address = tata
+$zip = 77380
+$ville = Combs-la-Ville
+$telephone = 0658199304
+
+1. index.php ligne 28 : call UserController
+2. UserController ligne 110 : execute postAction()
+3. postAction ligne 256 : return parent::render("inscription_success.html",  array("customer"=>$customer));
+
+path = /user/login
+$email = tata@tata.ta
+$password = tatata
+$forward = /ccstore/user/post
+
+1. index.php ligne 28 : call UserController()
+2. UserController ligne 21 : execute loginAction()
+3. loginAction() ligne 52 : return header('Location: '.$_REQUEST['forward']);
+4. index.php ligne 28 : call UserController()
+5. UserController ligne 110 : execute postAction()
+6. postAction() ligne 278 : $message = "Un ou plusieurs parametre(s) manquants(s)"
+				return parent:render("error/400.html", array("message"=>$message"));

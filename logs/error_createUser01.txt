@@ -1,0 +1,22 @@
+Fiche erreur inscription
+
+path = /inscription
+envoie du formulaire
+
+path = /user/post
+$email = johann.bernhard26@gmail.com
+$password = tatata
+$pwconfirm = tatata
+$nom = Bernhard
+$prenom = Johann
+$address = 24 rue Erik Satie
+$zip = 77380
+$ville = Combs-la-Ville
+$telephone = 0658199304
+
+1. index.php l.28 : call UserController()
+2. UserController ligne 110 : execute postAction()
+3. postAction() l.240 : call CustomerDAO.php
+4. CustomerDAO l.114 : execute createCustomer()
+5. createCustomer l.160/161 : echo "error createUSER post method";exit();
+ ( Petite ligne que j'ai ajouté pour diférentier les différents return false)
