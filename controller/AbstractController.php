@@ -50,7 +50,7 @@ class AbstractController extends \Pux\Controller {
                               'address'   =>  NULL,
                               'zip' =>  NULL,
                               'town'     =>  NULL,
-                              'phone'   =>  NULL));
+                              'phone'   =>  NULL));			  
 		switch($this->session['statut']){
 			case 'visitor'  : 
 					$this->session['admin_open']=false;

@@ -83,7 +83,7 @@ class UserController extends AbstractController {
         return parent::render("error/400.html", array("message"=> $message));
       }
     }
-  }
+  } //end method login
 
   /**
    * @Route("/logout")
@@ -200,26 +200,28 @@ class UserController extends AbstractController {
 				  }
 			}
 			// Validation du code postal (zip)
-			elseif( filter_var($zip, FILTER_VALIDATE_REGEXP,	array("options"=>array("regexp"=>"#[0-9]{5}$#"))) === false){
-				$message = "Le code postal fourni n'est pas valide";
-				  if ($this->isJson) {
-					return '{"success": false, "error": '+
-					  '{ "message" : "'.$message.'"}}';
-				  } else {
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
-				  }
+			elseif( filter_var($zip, FILTER_VALIDATE_REGEXP,	array(
+				"options"=>array("regexp"=>"#[0-9]{5}$#"))) === false){
+					$message = "Le code postal fourni n'est pas valide";
+					  if ($this->isJson) {
+						return '{"success": false, "error": '+
+						  '{ "message" : "'.$message.'"}}';
+					  } else {
+						http_response_code(400); //bad request
+						return parent::render("error/400.html", array("message"=> $message));
+					  }
 			}
 			// Validation du telephone
-			elseif( filter_var($phone, FILTER_VALIDATE_REGEXP, array("options" =>array("regexp"=>"#^0[1-9]([-. ]?[0-9]{2}){4}$#"))) === false) { // Phone non valide
-				$message = "Le numero de téléphone fourni n'est pas valide";
-				  if ($this->isJson) {
-					return '{"success": false, "error": '+
-					  '{ "message" : "'.$message.'"}}';
-				  } else {
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
-				  }
+			elseif( filter_var($phone, FILTER_VALIDATE_REGEXP, array(
+				"options" =>array("regexp"=>"#^0[1-9]([-. ]?[0-9]{2}){4}$#"))) === false) { // Phone non valide
+					$message = "Le numero de téléphone fourni n'est pas valide";
+					  if ($this->isJson) {
+						return '{"success": false, "error": '+
+						  '{ "message" : "'.$message.'"}}';
+					  } else {
+						http_response_code(400); //bad request
+						return parent::render("error/400.html", array("message"=> $message));
+					  }
 			}
 			else { // All param OK
 				$customer = new Customer( array(
@@ -249,7 +251,6 @@ class UserController extends AbstractController {
 				if($customer) {
 						// New customer created successfully
 						/**
-						 *
 						 * Send mail to customer->email to confirm that email exist.
 						 */
 					 return parent::render("inscription_success.html",  array("customer"=>$customer));
@@ -265,7 +266,7 @@ class UserController extends AbstractController {
 						return parent::render("error/400.html", array("message"=> $message));
 					}
 				}
-			}
+			} // END ALL PARAM OK
 		} else{ 
 			// Erreur de parametres
 			$message = "Un ou plusieurs parametre(s) manquant(s)";
@@ -280,21 +281,472 @@ class UserController extends AbstractController {
 	} // end postAction method
 	/**
 	 * edit method
-	 * @Route("/edit/:attribut") 
+	 * @Route("/edit/:attribut")
 	 */
-	/**  CURRENT BUILT METHOD
 	function editAction($attribut) {
-		 $currentemail= null;
-		 $confirmemail=null;
-		 $newpassword=null;
-		 $currentpassword = null;
-		 $pwconfirm = null;
-		 $newaddress = null;
-		 $newzip = null;
-		 $newtown = null;
-		 $newphone = null;
-		 $confirmphone=null;
-		 echo $attribut;exit(); 
+			// edit user email
+			if($attribut == 'email'){
+				$newemail = null;
+				$confirmemail = null;
+				$password = null;
+				 if (array_key_exists('HTTP_CONTENT_TYPE',$_SERVER)
+				 && $_SERVER['HTTP_CONTENT_TYPE'] == "application/json") {
+						$editRequest = json_decode(stream_get_contents(STDIN));
+						$newemail = $editRequest->newemail;
+						$confirmemail = $editRequest->confirmemail;
+						$password = $editRequest->password;
+				 }
+				 if(array_key_exists('newemail', $_REQUEST)
+				  && array_key_exists('confirmemail', $_REQUEST)
+				  && array_key_exists('password', $_REQUEST)){
+					$newemail = (!empty($_REQUEST['newemail'])) 
+						? filter_var(htmlentities($_REQUEST['newemail']), FILTER_SANITIZE_EMAIL)
+						: false;
+					$confirmemail = (!empty($_REQUEST['confirmemail'])) 
+						? filter_var(htmlentities($_REQUEST['confirmemail']), FILTER_SANITIZE_EMAIL)
+						: false;
+					$password = (!empty($_REQUEST['password']))
+						? htmlentities($_REQUEST['password'])
+						: false;
+				 }
+				 // verification des parametres
+				if ($newemail && $newemail != null && $newemail != ""
+				 && $confirmemail && $confirmemail != null && $confirmemail != ""
+				 && $password && $password != null && $password != ""){
+					 // Confirmation du mot de passe
+					 if($password != $this->session['user']->password()){ // No match submitted password VS user's password
+						 $message = "Votre mot de passe n'est pas confirmé.";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					 } // endif password match
+					 // Is email sent valid
+					 elseif (filter_var($newemail, FILTER_VALIDATE_EMAIL) === false
+					  && filter_var($confirmemail, FILTER_VALIDATE_EMAIL) === false) {  // Emails non valide
+						$message = "L'email fourni n'est pas valide";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					} // endif valid emails
+					// Match newemail VS confirm email
+					elseif($newemail != $confirmemail){ // emails do not match
+						$message = "Votre nouvel email n'est pas confirmé";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					} //endif match email
+					// Testing newemail VS user current email 
+					elseif($newemail == $this->session['user']->email()) { // newemail match with current email
+						$message = "Votre nouvel email doit être différent de votre adresse mail actuelle";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					} //endif testing newemail VS currentemail
+					// ALL PARAM OK
+					else{
+						$customer = $this->session['user'];		
+						$customer->setEmail($newemail);
+						$custdao = new CustomerDAO();
+						try{
+							$customer = $custdao->updateCustomer($customer);
+						}
+						catch( Throwable $t){
+							if ($this->isJson) {
+								return '{"success": false, "error": '+
+									'{ "message" : "'.$message.'"}}';
+							} else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $t));
+							}
+						}
+							if($customer){
+								// Customer updated successfully
+								/**
+								 *
+								 * Send mail to customer->email to confirm that email exist.
+								 */
+								$this->session['user'] = $customer;
+								return parent::render("user.html", array("customer"=> $this->session['user']));
+							}
+							else {
+								// Registration failure
+								$message = "Une erreur inconnue s'est produite";
+								if ($this->isJson) {
+									return '{"success": false, "error": '+
+										'{ "message" : "'.$message.'"}}';
+								} else {
+									http_response_code(400); //bad request
+									return parent::render("error/400.html", array("message"=> $message));
+								}
+							}	
+					} // end ALL PARAM OK
+				 } // endif verif param
+				// Param setEmail non valid
+				else{
+					 $message = "Les champs du formulaire doivent être renseignés";
+						if ($this->isJson) {
+							return '{"success": false, "error": '+
+								'{ "message" : "'.$message.'"}}';
+						} else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						}
+				 }
+			} // endif attribut == email
+			// edit user address
+			elseif($attribut == 'address'){
+				$newaddress = null;
+				$newzip = null;
+				$newtown = null;
+				$password = null;
+				 if (array_key_exists('HTTP_CONTENT_TYPE',$_SERVER)
+				 && $_SERVER['HTTP_CONTENT_TYPE'] == "application/json") {
+						$editRequest = json_decode(stream_get_contents(STDIN));
+						$newaddress = $editRequest->newaddress;
+						$newzip = $editRequest->newzip;
+						$newtown = $editRequest->newtown;
+						$password = $editRequest->password;
+				 }
+				  if(array_key_exists('newaddress', $_REQUEST)
+				  && array_key_exists('newzip', $_REQUEST)
+				  && array_key_exists('newtown', $_REQUEST)
+				  && array_key_exists('password', $_REQUEST)){
+					$newaddress = (!empty($_REQUEST['newaddress']))
+						? htmlentities($_REQUEST['newaddress'])
+						: false;
+					$newzip = (!empty($_REQUEST['newzip'])) 
+						? htmlentities($_REQUEST['newzip'])
+						: false;
+					$newtown = (!empty($_REQUEST['newtown']))
+						? htmlentities($_REQUEST['newtown'])
+						: false;
+					$password = (!empty($_REQUEST['password']))
+						? htmlentities($_REQUEST['password'])
+						: false;
+				 } //endif array_key
+				 // Check param
+				 if ($newaddress && $newaddress != null && $newaddress != ""
+				 && $newzip && $newzip != null && $newzip != ""
+				 && $newtown && $newtown != null && $newtown != ""
+				 && $password && $password != null && $password != ""){
+					 // Password match
+					 if($password != $this->session['user']->password()){ // No match submitted password VS user's password
+						 $message = "Votre mot de passe n'est pas confirmé.";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					 } // endif password match
+					 // valid zip
+					 elseif( filter_var($newzip, FILTER_VALIDATE_REGEXP,
+						array("options"=>array("regexp"=>"#[0-9]{5}$#"))) === false){
+							$message = "Le code postal fourni n'est pas valide";
+							  if ($this->isJson) {
+								return '{"success": false, "error": '+
+								  '{ "message" : "'.$message.'"}}';
+							  } else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $message));
+							  }
+					} //endif valid zip
+					// ALL PARAM OK
+					else{
+						$customer = $this->session['user'];		
+						$customer->setAddress($newaddress);
+						$customer->setZip($newzip);
+						$customer->setTown($newtown);
+						$custdao = new CustomerDAO();
+						try{
+							$customer = $custdao->updateCustomer($customer);
+						}
+						catch( Throwable $t){
+							if ($this->isJson) {
+								return '{"success": false, "error": '+
+									'{ "message" : "'.$message.'"}}';
+							} else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $t));
+							}
+						}
+							if($customer){
+								// Customer updated successfully
+								/**
+								 *
+								 * Send mail to customer->email to confirm that email exist.
+								 */
+								$this->session['user'] = $customer;
+								return parent::render("user.html", array("customer"=> $this->session['user']));
+							}
+							else {
+								// Registration failure
+								$message = "Une erreur inconnue s'est produite";
+								if ($this->isJson) {
+									return '{"success": false, "error": '+
+										'{ "message" : "'.$message.'"}}';
+								} else {
+									http_response_code(400); //bad request
+									return parent::render("error/400.html", array("message"=> $message));
+								}
+							}	
+					} // end ALL PARAM OK
+				 } // endif check param
+				// Param setAddress non valid
+				else{
+					 $message = "Les champs du formulaire doivent être renseignés";
+						if ($this->isJson) {
+							return '{"success": false, "error": '+
+								'{ "message" : "'.$message.'"}}';
+						} else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						}
+				 } 
+			} //endif edit address
+			// attribut == phone
+			elseif($attribut == 'phone'){
+				$newphone = null;
+				$confirmphone = null;
+				$password = null;
+				 if (array_key_exists('HTTP_CONTENT_TYPE',$_SERVER)
+				 && $_SERVER['HTTP_CONTENT_TYPE'] == "application/json") {
+						$editRequest = json_decode(stream_get_contents(STDIN));
+						$newphone = $editRequest->newphone;
+						$confirmphone = $editRequest->confirmphone;
+						$password = $editRequest->password;
+				 }
+				  if(array_key_exists('newphone', $_REQUEST)
+				  && array_key_exists('confirmphone', $_REQUEST)
+				  && array_key_exists('password', $_REQUEST)){
+					$newphone = (!empty($_REQUEST['newphone']))
+						? htmlentities($_REQUEST['newphone'])
+						: false;
+					$confirmphone = (!empty($_REQUEST['confirmphone'])) 
+						? htmlentities($_REQUEST['confirmphone'])
+						: false;
+					$password = (!empty($_REQUEST['password']))
+						? htmlentities($_REQUEST['password'])
+						: false;
+				  }
+				 // Check param
+				 if ($newphone && $newphone != null && $newphone != ""
+				  && $confirmphone && $confirmphone != null && $confirmphone != ""
+				  && $password && $password != null && $password != ""){
+					   // Password match
+					 if($password != $this->session['user']->password()){ // No match submitted password VS user's password
+						 $message = "Votre mot de passe n'est pas confirmé.";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(403); // auth error
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					 } // endif password match
+					 // Valid phone
+					 elseif(filter_var($newphone, FILTER_VALIDATE_REGEXP, array(
+						"options" =>array("regexp"=>"#^0[1-9]([-. ]?[0-9]{2}){4}$#"))) === false) { // Phone non valide
+							$message = "Le numero de téléphone fourni n'est pas valide";
+							  if ($this->isJson) {
+								return '{"success": false, "error": '+
+								  '{ "message" : "'.$message.'"}}';
+							  } else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $message));
+							  }
+					} // endif valid phone
+					// match phones
+					elseif($newphone != $confirmphone){ // no match
+						$message = "Votre nouveau numero n'est pas confirmé";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					} // endif match phones
+					// ALL PARAM OK
+					else{
+						$customer = $this->session['user'];		
+						$customer->setPhone($newphone);
+						$custdao = new CustomerDAO();
+						try{
+							$customer = $custdao->updateCustomer($customer);
+						}
+						catch( Throwable $t){
+							if ($this->isJson) {
+								return '{"success": false, "error": '+
+									'{ "message" : "'.$message.'"}}';
+							} else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $t));
+							}
+						}
+							if($customer){
+								// Customer updated successfully
+								/**
+								 *
+								 * Send mail to customer->email to confirm that email exist.
+								 */
+								$this->session['user'] = $customer;
+								return parent::render("user.html", array("customer"=> $this->session['user']));
+							}
+							else {
+								// Registration failure
+								$message = "Une erreur inconnue s'est produite";
+								if ($this->isJson) {
+									return '{"success": false, "error": '+
+										'{ "message" : "'.$message.'"}}';
+								} else {
+									http_response_code(400); //bad request
+									return parent::render("error/400.html", array("message"=> $message));
+								}
+							}	
+					} // end ALL PARAM OK
+				 }
+				// Param setAddress non valid
+				else{
+					 $message = "Les champs du formulaire doivent être renseignés";
+						if ($this->isJson) {
+							return '{"success": false, "error": '+
+								'{ "message" : "'.$message.'"}}';
+						} else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						}
+				 } // endif check param
+			} //endif edit phone
+			// edit password
+			elseif($attribut == 'password'){
+				$currentpassword = null;
+				$newpassword = null;
+				$pwconfirm = null;
+				 if (array_key_exists('HTTP_CONTENT_TYPE',$_SERVER)
+				 && $_SERVER['HTTP_CONTENT_TYPE'] == "application/json") {
+						$editRequest = json_decode(stream_get_contents(STDIN));
+						$currentpassword = $editRequest->currentpassword;
+						$newpassword = $editRequest->newpassword;
+						$pwconfirm = $editRequest->pwconfirm;
+				 }
+				  if(array_key_exists('currentpassword', $_REQUEST)
+				  && array_key_exists('newpassword', $_REQUEST)
+				  && array_key_exists('pwconfirm', $_REQUEST)){
+					$currentpassword = (!empty($_REQUEST['currentpassword']))
+						? htmlentities($_REQUEST['currentpassword'])
+						: false;
+					$newpassword = (!empty($_REQUEST['newpassword']))
+						? htmlentities($_REQUEST['newpassword'])
+						: false;
+					$pwconfirm = (!empty($_REQUEST['pwconfirm']))
+						? htmlentities($_REQUEST['pwconfirm'])
+						: false;
+				  }
+				 // Check param
+				 if ($currentpassword && $currentpassword != null && $currentpassword != ""
+				  && $newpassword && $newpassword != null && $newpassword != ""
+				  && $pwconfirm && $pwconfirm != null && $pwconfirm != ""){
+					   // Password match
+					 if($currentpassword != $this->session['user']->password()){ // No match submitted password VS user's password
+						 $message = "Mot de passe incorrect";
+						  if ($this->isJson) {
+							return '{"success": false, "error": '+
+							  '{ "message" : "'.$message.'"}}';
+						  } else {
+							http_response_code(403); //error auth
+							return parent::render("error/400.html", array("message"=> $message));
+						  }
+					 } // endif password match
+					 // match new VS confirm
+					 elseif($newpassword != $pwconfirm) { // Phone non valide
+							$message = "Mot de passe non confirmé";
+							  if ($this->isJson) {
+								return '{"success": false, "error": '+
+								  '{ "message" : "'.$message.'"}}';
+							  } else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $message));
+							  }
+					} // endif match new VS confirm
+					// ALL PARAM OK
+					else{
+						$customer = $this->session['user'];		
+						$customer->setPhone($newphone);
+						$custdao = new CustomerDAO();
+						try{
+							$customer = $custdao->updateCustomer($customer);
+						}
+						catch( Throwable $t){
+							if ($this->isJson) {
+								return '{"success": false, "error": '+
+									'{ "message" : "'.$message.'"}}';
+							} else {
+								http_response_code(400); //bad request
+								return parent::render("error/400.html", array("message"=> $t));
+							}
+						}
+							if($customer){
+								// Customer updated successfully
+								/**
+								 *
+								 * Send mail to customer->email to confirm that email exist.
+								 */
+								$this->session['user'] = $customer;
+								return parent::render("user.html", array("customer"=> $this->session['user']));
+							}
+							else {
+								// Registration failure
+								$message = "Une erreur inconnue s'est produite";
+								if ($this->isJson) {
+									return '{"success": false, "error": '+
+										'{ "message" : "'.$message.'"}}';
+								} else {
+									http_response_code(400); //bad request
+									return parent::render("error/400.html", array("message"=> $message));
+								}
+							}	
+					} // end ALL PARAM OK
+				 }
+				// Param setPassword non valid
+				else{
+					 $message = "Les champs du formulaire doivent être renseignés";
+						if ($this->isJson) {
+							return '{"success": false, "error": '+
+								'{ "message" : "'.$message.'"}}';
+						} else {
+							http_response_code(400); //bad request
+							return parent::render("error/400.html", array("message"=> $message));
+						}
+				 } // endif check param
+			} // endif edit password
+			// attribut unknown
+			else{
+				$message = "Votre requète n'est pas valide";
+					  if ($this->isJson) {
+						return '{"success": false, "error": '+
+						  '{ "message" : "'.$message.'"}}';
+					  } else {
+						http_response_code(400); //bad request
+						return parent::render("error/400.html", array("message"=> $message));
+					  }
+			} // end att unknown
 	} // end editAction method 
-	*/
 }
