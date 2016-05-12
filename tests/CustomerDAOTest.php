@@ -65,7 +65,7 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 		"password" => "tatata",
 		"address" => "24 rue Erik Satie",
 		"zip" => "77380",
-		"town" => "Combs-la-Ville"
+		"town" => "Combs-la-Ville",
 		"phone" => "0160340218"
 	  ));
 	  $custdao = new CustomerDAO();
