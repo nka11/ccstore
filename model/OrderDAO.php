@@ -16,8 +16,8 @@ class OrderDAO extends AbstractRestClient {
 
   public function __construct($client = NULL) {
     parent::__construct();
-    $this->cldao = new ClientDAO($this->api_key);
-    $this->pdao = new ProduitDAO($this->api_key);
+    $this->cldao = new CustomerDAO($this->api_key);
+    $this->pdao = new ProductDAO($this->api_key);
     if ($client == NULL) {
       return;
     }
@@ -216,17 +216,17 @@ class OrderDAO extends AbstractRestClient {
   }
 
   public function mapDataLineOrder($orderline) {
-    $product = $this->pdao->getProduitById($orderline->id_p());
+    $product = $this->pdao->getProductById($orderline->id_p());
     $data = array(
       "fk_product" => $orderline->id_p(),
       //"fk_commande" => $orderline->id_com(),
       "qty" => $orderline->quantite(),
       "ref" => $product->ref(),
       "product_ref" => $product->ref(),
-      "libelle" => $product->titre(),
-      "label" => $product->titre(),
+      "libelle" => $product->title(),
+      "label" => $product->title(),
       "desc" => $product->description(),
-      "subprice" => $product->prix_vente(),
+      "subprice" => $product->price(),
       "tva_tx" => $product->tva()
     );
     if ($orderline->id_lc() != null
