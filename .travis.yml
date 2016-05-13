@@ -204,7 +204,7 @@ before_script:
   # configure apache virtual hosts
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
   ls /etc/apache2/mods-enabled
-  sudo sed -e "s?%TRAVIS_BUILD_DIR%/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
+  sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
   if [ "$DEBUG" = true ]; then
     sudo cat /etc/apache2/sites-available/default
   fi
