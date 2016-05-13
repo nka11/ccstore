@@ -9,13 +9,13 @@
         "twbs/bootstrap": "^3.3.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.2"
+        "phpunit/phpunit": "*"
     },
     "license": "AGPL",
     "authors": [
         {
             "name": "nka11",
-            "email": "nicolas@karageuzian.com"
+            "email": "nicolas@karageuzian.com",
 			"role" :   "Developer"
         },
         {

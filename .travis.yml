@@ -7,7 +7,6 @@ dist: trusty
 language: php
 
 php:
-- '5.3'
 - '5.4'
 - '5.5'
 - '5.6'
@@ -15,7 +14,8 @@ php:
 - nightly
 
 addons:
-  mariadb: '10.0'
+  #MariaDB addon not available on trusty
+  #mariadb: '10.0'
   # FIXME: find a way to import a MySQL dump into PostgreSQL
   #postgresql: '9.3'
   apt:
@@ -24,7 +24,9 @@ addons:
     # Let's install Apache with.
     - apache2
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
-    - libapache2-mod-fcgid
+    - libapache2-mod-php5 
+    - mysql-server
+    - php5-memcache
 
 # Start on every boot
 services:
@@ -36,8 +38,8 @@ env:
   - DEBUG=false
   matrix:
   # MariaDB overrides MySQL installation so it's not possible to test both yet
-  #- DB=mysql
-  - DB=mariadb
+  - DB=mysql
+  #- DB=mariadb
   # FIXME: find a way to import a MySQL dump into PostgreSQL
   #- DB=postgresql
   # TODO
@@ -120,11 +122,6 @@ before_script:
   echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
   sed -i -e 's/^display_errors = On$/display_errors = Off/g' ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
   if [ "$TRAVIS_PHP_VERSION" = '5.3' ] || [ "$TRAVIS_PHP_VERSION" = '5.4' ]; then
-    echo
-    echo "Enabling APC for PHP <= 5.4"
-    #   Documentation says it should be available for PHP <= 5.6 but it's not for 5.5 and 5.6!
-    echo 'extension = apc.so' >> ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
-    echo
     echo "Enabling Memcached for PHP <= 5.4"
     #   Documentation says it should be available for all PHP versions but it's not for 5.5 and 5.6, 7.0 and nightly!
     echo 'extension = memcached.so' >> ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
@@ -159,6 +156,8 @@ before_script:
   echo "Setting up database"
   if [ "$DB" = 'mysql' ] || [ "$DB" = 'mariadb' ]; then
     echo "MySQL"
+    sudo mysql -e 'CREATE USER travis;'
+    sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''%'\'';'
     mysql -e 'DROP DATABASE IF EXISTS travis;'
     mysql -e 'CREATE DATABASE IF NOT EXISTS travis;'
     mysql -D travis < ~/dolibarr/dev/initdemo/mysqldump_dolibarr_3.5.0.sql
@@ -240,14 +239,14 @@ script:
 - |
   echo "Checking PHP syntax errors"
   # Ensure we catch errors
-  parallel-lint  --blame .
+  parallel-lint --exclude vendor  --blame .
 
 # TODO: dev/* checks
 
 - |
   echo "Checking coding style"
   # Exclusions are defined in the ruleset.xml file
-  phpcs -s -n -p -d memory_limit=-1 --colors --tab-width=4 --standard=~/dolibarr/dev/codesniffer/ruleset.xml --encoding=utf-8 .
+  phpcs -s -p -d memory_limit=-1 --colors --tab-width=4 --standard=ruleset.xml --encoding=utf-8 .
 
 # TODO: Check Javascript (jshint?)
 
@@ -259,22 +258,22 @@ script:
   echo "Upgrading Dolibarr"
   # Ensure we catch errors
   set +e
-  cd ~dolibarr/htdocs/install
-  php upgrade.php 3.5.0 3.6.0 ignoredbversion > ~dolibarr/upgrade350360.log
-  php upgrade2.php 3.5.0 3.6.0 ignoredbversion > ~dolibarr/upgrade350360-2.log
-  php step5.php 3.5.0 3.6.0 ignoredbversion > ~dolibarr/upgrade350360-3.log
-  php upgrade.php 3.6.0 3.7.0 ignoredbversion > ~dolibarr/upgrade360370.log
-  php upgrade2.php 3.6.0 3.7.0 ignoredbversion > ~dolibarr/upgrade360370-2.log
-  php step5.php 3.6.0 3.7.0 ignoredbversion > ~dolibarr/upgrade360370-3.log
-  php upgrade.php 3.7.0 3.8.0 ignoredbversion > ~dolibarr/upgrade370380.log
-  php upgrade2.php 3.7.0 3.8.0 ignoredbversion > ~dolibarr/upgrade370380-2.log
-  php step5.php 3.7.0 3.8.0 ignoredbversion > ~dolibarr/upgrade370380-3.log
-  php upgrade.php 3.8.0 3.9.0 ignoredbversion > ~dolibarr/upgrade380390.log
-  php upgrade2.php 3.8.0 3.9.0 ignoredbversion > ~dolibarr/upgrade380390-2.log
-  php step5.php 3.8.0 3.9.0 ignoredbversion > ~dolibarr/upgrade380390-3.log
-  php upgrade.php 3.9.0 4.0.0 ignoredbversion > ~dolibarr/upgrade390400.log
-  php upgrade2.php 3.9.0 4.0.0 ignoredbversion > ~dolibarr/upgrade390400-2.log
-  php step5.php 3.9.0 4.0.0 ignoredbversion > ~dolibarr/upgrade390400-3.log
+  cd ~/dolibarr/htdocs/install
+  php upgrade.php 3.5.0 3.6.0 ignoredbversion > ~/dolibarr/upgrade350360.log
+  php upgrade2.php 3.5.0 3.6.0 ignoredbversion > ~/dolibarr/upgrade350360-2.log
+  php step5.php 3.5.0 3.6.0 ignoredbversion > ~/dolibarr/upgrade350360-3.log
+  php upgrade.php 3.6.0 3.7.0 ignoredbversion > ~/dolibarr/upgrade360370.log
+  php upgrade2.php 3.6.0 3.7.0 ignoredbversion > ~/dolibarr/upgrade360370-2.log
+  php step5.php 3.6.0 3.7.0 ignoredbversion > ~/dolibarr/upgrade360370-3.log
+  php upgrade.php 3.7.0 3.8.0 ignoredbversion > ~/dolibarr/upgrade370380.log
+  php upgrade2.php 3.7.0 3.8.0 ignoredbversion > ~/dolibarr/upgrade370380-2.log
+  php step5.php 3.7.0 3.8.0 ignoredbversion > ~/dolibarr/upgrade370380-3.log
+  php upgrade.php 3.8.0 3.9.0 ignoredbversion > ~/dolibarr/upgrade380390.log
+  php upgrade2.php 3.8.0 3.9.0 ignoredbversion > ~/dolibarr/upgrade380390-2.log
+  php step5.php 3.8.0 3.9.0 ignoredbversion > ~/dolibarr/upgrade380390-3.log
+  php upgrade.php 3.9.0 4.0.0 ignoredbversion > ~/dolibarr/upgrade390400.log
+  php upgrade2.php 3.9.0 4.0.0 ignoredbversion > ~/dolibarr/upgrade390400-2.log
+  php step5.php 3.9.0 4.0.0 ignoredbversion > ~/dolibarr/upgrade390400-3.log
   cd -
   set +e
   echo
@@ -282,7 +281,7 @@ script:
 - |
   echo "Unit testing"
   # Ensure we catch errors. Set this to +e if you want to go to the end to see log file.
-  phpunit -d memory_limit=-1 tests
+  phpunit -d memory_limit=-1 -c tests/phpunittest.xml tests/
 
 - |
   #echo "Output dolibarr.log"
