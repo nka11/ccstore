@@ -14,7 +14,8 @@ php:
 - nightly
 
 addons:
-  mariadb: '10.0'
+  #MariaDB addon not available on trusty
+  #mariadb: '10.0'
   # FIXME: find a way to import a MySQL dump into PostgreSQL
   #postgresql: '9.3'
   apt:
@@ -35,8 +36,8 @@ env:
   - DEBUG=false
   matrix:
   # MariaDB overrides MySQL installation so it's not possible to test both yet
-  #- DB=mysql
-  - DB=mariadb
+  - DB=mysql
+  #- DB=mariadb
   # FIXME: find a way to import a MySQL dump into PostgreSQL
   #- DB=postgresql
   # TODO
@@ -158,6 +159,8 @@ before_script:
   echo "Setting up database"
   if [ "$DB" = 'mysql' ] || [ "$DB" = 'mariadb' ]; then
     echo "MySQL"
+    sudo mysql -e 'CREATE USER travis;'
+    sudo mysql -e 'GRANT ALL ON *.* TO \'travis\'@\'locahost\';'
     mysql -e 'DROP DATABASE IF EXISTS travis;'
     mysql -e 'CREATE DATABASE IF NOT EXISTS travis;'
     mysql -D travis < ~/dolibarr/dev/initdemo/mysqldump_dolibarr_3.5.0.sql
@@ -281,7 +284,7 @@ script:
 - |
   echo "Unit testing"
   # Ensure we catch errors. Set this to +e if you want to go to the end to see log file.
-  phpunit -d memory_limit=-1 -c test/phpunittest.xml tests/
+  phpunit -d memory_limit=-1 -c tests/phpunittest.xml tests/
 
 - |
   #echo "Output dolibarr.log"
