@@ -86,6 +86,20 @@ class DolApiTest extends PHPUnit_Framework_TestCase
      $req->uri("$this->api_url/order/41/line/$rowid?api_key=$this->api_key");
      $resp = $req->send();
      echo "\nDELETE /order/41/line/$rowid\n";
-		 echo json_encode($resp->body, JSON_PRETTY_PRINT);
+     echo json_encode($resp->body, JSON_PRETTY_PRINT);
+     $req = Request::init();
+     $req->mime("application/json");
+     $req->method("GET");
+     $req->uri("$this->api_url/user/12345?api_key=$this->api_key");
+     $res = $req->send();
+     print __METHOD__." Code: $res->code\n";
+     $req = Request::init();
+     $req->mime("application/json");
+     $req->method("GET");
+     $req->uri("$this->api_url/user/1?api_key=$this->api_key");
+     $res = $req->send();
+     print __METHOD__." Code: $res->code\n";
+     print __METHOD__." RES: ".json_encode($res->body, JSON_PRETTY_PRINT);
+
   }
 }
