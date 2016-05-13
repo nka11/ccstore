@@ -2,15 +2,15 @@
 	method="post" action="{{base_path}}/user/edit/email" autocomplete="off">
 	<div class="form-group">
 	<label for="inputNewEmail" class="control-label">Nouvelle adresse email</label>
-	<input type="email" class="form-control" id="inputNewEmail" name="newemail" autocomplete="off"/>
+	<input type="email" class="form-control" id="inputNewEmail" name="newemail" autocomplete="off" required/>
 	</div>
 	<div class="form-group">
 	<label for="inputConfNewEmail" class="control-label">Retaper adresse email</label>
-	<input type="email" class="form-control" id="inputConfNewEmail" name="confirmemail" autocomplete="off"/>
+	<input type="email" class="form-control" id="inputConfNewEmail" name="confirmemail" autocomplete="off" required/>
 	</div>
 	<div class="form-group">
 	<label for="inputPassword" class="control-label">Mot de passe</label>
-	<input type="password" class="form-control" id="inputPassword" name="currentpassword" autocomplete="off"/>
+	<input type="password" class="form-control" id="inputPassword" name="password" autocomplete="off" required/>
 	</div>
 	<div class="form-group">
 	 <button type="submit" class="btn btn-primary">Envoyer</button>
