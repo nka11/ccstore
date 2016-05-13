@@ -15,7 +15,17 @@ class AbstractRestClient {
     $req->mime("application/json");
     $req->method("GET");
     $req->uri("$this->api_url/login?login=$dolibarr_user_login&password=$dolibarr_user_password");
-    $resp = $req->send();
+    try {
+      $resp = $req->send();
+    } catch (Throwable $t) {
+      $req = Request::init();
+      $req->method("GET");
+      $req->uri("$this->api_url/login?login=$dolibarr_user_login&password=$dolibarr_user_password");
+      $resp = $req->send();
+      print "\n".__METHOD__." at login GET: ".$resp->code;
+      print "\n".__METHOD__." body: ".$resp->body."\n";
+      throw new RestException("API not initialized");
+    }
     if ($resp->code != 200) {
       throw new RestException("API not initialized");
     }
