@@ -11,6 +11,9 @@ class ProductDAO extends AbstractRestClient {
     $req->method("GET");
     $req->uri("$this->api_url/product/list?api_key=$this->api_key");
     $resp = $req->send();
+	if ($resp->code == 404) {
+			return false;
+	}
     //echo json_encode($resp->body,JSON_PRETTY_PRINT);
     foreach ($resp->body as $data) {
       array_push($result, $this->_mapProduct($data));
@@ -45,6 +48,9 @@ class ProductDAO extends AbstractRestClient {
     $req->method("GET");
     $req->uri("$this->api_url/product/list/category/$category?api_key=$this->api_key");
     $resp = $req->send();
+	 if ($resp->code == 404) {
+			return false;
+	}
     foreach ($resp->body as $data) {
       array_push($result, $this->_mapProduct($data));
     }
