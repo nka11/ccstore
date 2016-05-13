@@ -27,6 +27,7 @@ addons:
     - libapache2-mod-php5 
     - mysql-server
     - php5-memcache
+    - php5-mysql
 
 # Start on every boot
 services:
@@ -158,6 +159,7 @@ before_script:
     echo "MySQL"
     sudo mysql -e 'CREATE USER travis;'
     sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''%'\'';'
+    sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''localhost'\'';'
     mysql -e 'DROP DATABASE IF EXISTS travis;'
     mysql -e 'CREATE DATABASE IF NOT EXISTS travis;'
     mysql -D travis < ~/dolibarr/dev/initdemo/mysqldump_dolibarr_3.5.0.sql
@@ -198,26 +200,11 @@ before_script:
   echo
 
 - |
-  echo "Setting up Apache + FPM"
-  # enable php-fpm
-  cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
-  if [ "$TRAVIS_PHP_VERSION" = '7.0' ] || [ "$TRAVIS_PHP_VERSION" = 'nightly' ]; then
-    # Copy the included pool
-    cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
-  fi
-  if [ "$DEBUG" = true ]; then
-    cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
-  fi
-  sudo a2enmod rewrite actions fastcgi alias
-  echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
-  if [ "$DEBUG" = true ]; then
-    cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
-  fi
-  ~/.phpenv/versions/$PHP_VERSION_NAME/sbin/php-fpm
+  echo "Setting up Apache + PHP"
   # configure apache virtual hosts
-  sudo cp -f ~/dolibarr/build/travis-ci/apache.conf /etc/apache2/sites-available/default
-
-  sudo sed -e "s?%TRAVIS_BUILD_DIR%?$HOME/dolibarr?g" --in-place /etc/apache2/sites-available/default
+  sudo cp -f build/apache.conf /etc/apache2/sites-available/default
+  ls /etc/apache2/mods-enabled
+  sudo sed -e "s?%TRAVIS_BUILD_DIR%/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
   if [ "$DEBUG" = true ]; then
     sudo cat /etc/apache2/sites-available/default
   fi
