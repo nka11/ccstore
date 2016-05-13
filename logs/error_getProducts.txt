@@ -1,0 +1,47 @@
+error : getProducts()
+
+path = /store/
+
+1. index.php l.23 : call StoreController()
+2. StoreController.php l.15 : execute getProducts()
+3. ProductDAO.php l.17 : echo json_encode($resp->body,JSON_PRETTY_PRINT);
+
+{ "error": { "code": 401, "message": "Unauthorized" }, 
+"debug": { "source": "Restler.php:957 at authenticate stage", 
+"stages": { "success": [ "get", "route", "negotiate" ], 
+"failure": [ "authenticate", "message" ] } } }
+
+4. StoreController.php l.18 : print_r($products);
+
+Array ( [0] => Product Object 
+( [id_p:Product:private] => 0 
+[title:Product:private] => 
+[ref:Product:private] => 
+[price:Product:private] => 0 
+[tva:Product:private] => 0 
+[description:Product:private] => 
+[is_active:Product:private] => 
+[img:Product:private] => 
+[categories:Product:private] => 
+[producers:Product:private] => ) 
+[1] => Product Object 
+( [id_p:Product:private] => 0 
+[title:Product:private] => 
+[ref:Product:private] => 
+[price:Product:private] => 0 
+[tva:Product:private] => 0 
+[description:Product:private] => 
+[is_active:Product:private] => 
+[img:Product:private] => 
+[categories:Product:private] => 
+[producers:Product:private] => ) )
+
+5. StoreController.php l.18 : print_r($categories);
+
+Array ( [0] => Category Object 
+( [id:Category:private] => 4 
+[id_parent:Category:private] => 
+[label:Category:private] => Boulangerie 
+[description:Category:private] => Ensemble des activités économiques relatives
+		 à la fabrication et à la commercialisation du pain 
+) )
