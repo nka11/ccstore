@@ -25,6 +25,7 @@ addons:
     - apache2
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
     - libapache2-mod-php5 
+    - mysql-server
 
 # Start on every boot
 services:
