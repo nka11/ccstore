@@ -67,7 +67,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase{
 	
 	public function testLoginWithInvalidFormEmail(){
 		$custdao = new CustomerDAO();
-		$emails = array( null, "", "wrongformatAemail.com", "wrong@format")
+		$emails = array( null, "", "wrongformatAemail.com", "wrong@format");
 		$password = "testPassword";
 		
 		
