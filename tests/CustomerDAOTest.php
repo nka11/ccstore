@@ -127,9 +127,9 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($customers[$key]->town(), $users[$key]->town());
 		$this->assertEquals($customers[$key]->phone(), $users[$key]->phone());
 		$delusers[$key] = $custdao->deleteCustomer($user);
-		$this->assertInternalType('boolean', $deluser[$key]);  // confirm deletion
-		$this->assertEquals(1, $deluser[$key]);  // confirm deletion
-		$this->assertNotEquals(0, $deluser[$key]);  // confirm deletion
+		$this->assertInternalType('boolean', $delusers[$key]);  // confirm deletion
+		$this->assertEquals(1, $delusers[$key]);  // confirm deletion
+		$this->assertNotEquals(0, $delusers[$key]);  // confirm deletion
 	}
 	
   }

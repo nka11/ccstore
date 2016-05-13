@@ -13,7 +13,16 @@ class CustomerDAO extends AbstractRestClient {
     $resp = $req->send();
 
 	foreach ($resp->body as $data) {
-      array_push($result, $this->mapCustomer($data));
+    $custdata = $data;
+    $custid = (int)$custdata->id;
+    $req = $this->req();
+    $req->uri("$this->api_url/customer/$custid/contacts?api_key=$this->api_key");
+    $resp = $req->send();
+    if ($resp->code == 404) {
+      return false;
+    }
+	  $custdata->contacts = $resp->body;
+	  array_push($result, $this->mapCustomer($custdata));
     }
     return $result;
   }
