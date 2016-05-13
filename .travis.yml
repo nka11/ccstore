@@ -239,14 +239,14 @@ script:
 - |
   echo "Checking PHP syntax errors"
   # Ensure we catch errors
-  parallel-lint  --blame .
+  parallel-lint --exclude vendor  --blame .
 
 # TODO: dev/* checks
 
 - |
   echo "Checking coding style"
   # Exclusions are defined in the ruleset.xml file
-  phpcs -s -n -p -d memory_limit=-1 --colors --tab-width=4 --standard=~/dolibarr/dev/codesniffer/ruleset.xml --encoding=utf-8 .
+  phpcs -s -n -p -d memory_limit=-1 --colors --tab-width=4 --standard=ruleset.xml --encoding=utf-8 .
 
 # TODO: Check Javascript (jshint?)
 
@@ -281,7 +281,7 @@ script:
 - |
   echo "Unit testing"
   # Ensure we catch errors. Set this to +e if you want to go to the end to see log file.
-  phpunit -d memory_limit=-1 tests/
+  phpunit -d memory_limit=-1 -c test/phpunittest.xml tests/
 
 - |
   #echo "Output dolibarr.log"
