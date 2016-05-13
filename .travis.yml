@@ -225,7 +225,7 @@ before_script:
   echo
 
 - |
-  echo "Configuring dolecommerce'
+  echo "Configuring dolecommerce"
   cp conf/dolirest.cnf.php.example conf/dolirest.cnf.php
   sed -i -e 's?  \$dolibarr_api_url =.*$?  $dolibarr_api_url = "http://localhost/api/index.php" conf/dolirest.cnf/php
 
