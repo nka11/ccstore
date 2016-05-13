@@ -292,12 +292,15 @@
         <severity>0</severity>
     </rule>
     <rule ref="PEAR.NamingConventions.ValidFunctionName.ScopeNotInCamelCaps">
+        <type>warning</type>
         <severity>2</severity>
     </rule>
     <rule ref="PEAR.Commenting.FunctionComment.MissingParamTag">
+        <type>warning</type>
         <severity>2</severity>
     </rule>
     <rule ref="Generic.Formatting.SpaceAfterCast.NoSpace">
+        <type>warning</type>
         <severity>1</severity>
     </rule>
     <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">

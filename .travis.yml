@@ -161,7 +161,7 @@ before_script:
   if [ "$DB" = 'mysql' ] || [ "$DB" = 'mariadb' ]; then
     echo "MySQL"
     sudo mysql -e 'CREATE USER travis;'
-    sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''locahost'\'';'
+    sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''%'\'';'
     mysql -e 'DROP DATABASE IF EXISTS travis;'
     mysql -e 'CREATE DATABASE IF NOT EXISTS travis;'
     mysql -D travis < ~/dolibarr/dev/initdemo/mysqldump_dolibarr_3.5.0.sql
