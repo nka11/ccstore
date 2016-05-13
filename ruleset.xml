@@ -290,16 +290,16 @@
     </rule>
     <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">
         <severity>0</severity>
-    <rule>
+    </rule>
     <rule ref="PEAR.NamingConventions.ValidFunctionName.ScopeNotInCamelCaps">
         <severity>2</severity>
-    <rule>
+    </rule>
     <rule ref="PEAR.Commenting.FunctionComment.MissingParamTag">
         <severity>2</severity>
-    <rule>
+    </rule>
     <rule ref="Generic.Formatting.SpaceAfterCast.NoSpace">
         <severity>1</severity>
-    <rule>
+    </rule>
     <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
         <severity>0</severity>
     </rule>
