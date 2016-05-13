@@ -6,11 +6,16 @@ use \nategood\httpful;
 use \Httpful\Request;
 class CustomerDAO extends AbstractRestClient {
   public function getCustomers() {
-    $req = $this->req();
+	$result = array();
+   $req = $this->req();
     $req->method("GET");
     $req->uri("$this->api_url/thirdparty/list/customers?api_key=$this->api_key");
     $resp = $req->send();
 
+	foreach ($resp->body as $data) {
+      array_push($result, $this->mapCustomer($data));
+    }
+    return $result;
   }
 
   public function getCustomerByEmail($email) {
@@ -49,7 +54,7 @@ class CustomerDAO extends AbstractRestClient {
     if ($resp->code == 404) {
       return false;
     }
-    $cldata->contacts = $resp->body;
+    $custdata->contacts = $resp->body;
     return $this->mapCustomer($custdata);
   }
   public function updateCustomer(Customer $customer) {
@@ -128,6 +133,7 @@ class CustomerDAO extends AbstractRestClient {
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
+		//echo "error Customer";exit();
       return false;
     }
     $customer->setId_c((int)$res->body);
@@ -138,6 +144,7 @@ class CustomerDAO extends AbstractRestClient {
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
+		//echo "error Contact";exit();
       return false;
     }
     $customer->setId_contact($res->body);
@@ -147,15 +154,16 @@ class CustomerDAO extends AbstractRestClient {
     $req->method("GET");
     $res = $req->send();
     if ($res->code != 200) {
+		//echo "error Cat";exit();
       return false;
     }
-
     $req = $this->req();
     $req->uri("$this->api_url/contact/".$customer->id_contact()."/createUser?api_key=$this->api_key");
-    $req->body("{\"login\":\"".$customer->email()."\",\"password\":\"".$customer->password()."\"}");
+    $req->body("{\"login\":\"".$customer->email()."\",\"password\":\"".$customer->password()."\"}");  // BUG WITH EMAIL ADRESS CONTAINING "."
     $req->method("POST");
     $res = $req->send();
     if ($res->code != 200) {
+		//echo "error createUSER post method";exit();
       //echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
@@ -167,6 +175,7 @@ class CustomerDAO extends AbstractRestClient {
     $req->method("GET");
     $res = $req->send();
     if ($res->code != 200) {
+		//echo "error createUSER get method";exit();
       echo json_encode($res->body,JSON_PRETTY_PRINT);
       return false;
     }
