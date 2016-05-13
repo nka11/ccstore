@@ -29,19 +29,20 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 			"town" => "Testcity",
 			"phone" => "0123456789"
 		));
-		$existingcustomer = $custdao->createCustomer($existingcustomer);
-		$this->assertNotInternalType('boolean', $existingcustomer);
-		$email = "test1@email.test";
-		$password = "test1Password";
-		$this->assertEquals($password, $existingcustomer->password());
-		$custdata = $custdao->getCustomerByEmail($email);
-		$this->assertNotInternalType('boolean', $custdata);
-		$this->assertNotEquals($password, $custdata->password());
-		$custdata->setPassword($password);
-		$custdata = $custdao->login($custdata);
-		$this->assertNotInternalType('boolean', $custdata);
-		$this->assertNotEquals(null, $custdata->api_key());
-		$this->assertNotEquals("", $custdata->api_key());
+		$existingcustomer = $custdao->createCustomer($existingcustomer); // Create knownUser
+		$this->assertNotInternalType('boolean', $existingcustomer); // Confirm
+		$knownuser = $custdao->getCustomerByEmail($existingcustomer->email()); // load knownUser
+		$this->assertNotInternalType('boolean', $knownuser);  // Confirm loading
+		$this->assertNotEquals($existingcustomer->password(), $knownuser->password());  // Confirm knownUser password is crypted
+		$knownuser->setPassword($existingcustomer->password());   // setPassword
+		$custdata = $custdao->login($knownuser);  // Test login
+		$this->assertNotInternalType('boolean', $custdata);  // confirm login
+		$this->assertNotEquals(null, $custdata->api_key());  // confirm api_key not null
+		$this->assertNotEquals("", $custdata->api_key());  // confirm api_key not empty
+		$delcust = $custdao->deleteCustomer($knownuser);  // delete knownuser
+		$this->assertInternalType('boolean', $delcust);  // confirm deletion
+		$this->assertEquals(1, $delcust);  // confirm deletion
+		$this->assertNotEquals(0, $delcust);  // confirm deletion
 	}
 	
 	public function testLoginCaseKnownUserAndPwsNotMatch(){
@@ -57,28 +58,80 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 			"town" => "Testcity",
 			"phone" => "0123456789"
 		));
+
 		// Case user does exist and password does not match
-		$email = "test2@email.test";
-		$password = "invalidPassword";
-		$this->assertNotEquals($password, $existingcustomer->password());
-		$custdata = $custdao->getCustomerByEmail($email);
-		$this->assertNotInternalType('boolean', $custdata);
-		$this->assertNotEquals($password, $custdata->password());
-		$custdata->setPassword($password);
-		$custdata = $custdao->login($custdata);
+		$this->assertNotEquals("invalidPassword", $existingcustomer->password()); // Assert passwords not match
+		$knownuser = $custdao->createCustomer($existingcustomer); // Create knownUser
+		$this->assertNotInternalType('boolean', $knownuser); // Confirm
+		$knownuser = $custdao->getCustomerByEmail($existingcustomer->email()); // load knownuser
+		$this->assertNotInternalType('boolean', $knownuser); // confirm loading
+		$this->assertNotEquals($existingcustomer->password(), $knownuser->password()); // Assert knownuser's password is crypted
+		$knownuser->setPassword("invalidPassword");
+		$custdata = $custdao->login($knownuser);
 		$this->assertInternalType('boolean', $custdata);
+		$delcust = $custdao->deleteCustomer($knownuser);  // delete knownuser
+		$this->assertInternalType('boolean', $delcust);  // confirm deletion
+		$this->assertEquals(1, $delcust);  // confirm deletion
+		$this->assertNotEquals(0, $delcust);  // confirm deletion
 	}
-	/*
-	public function testLoginWithInvalidFormEmail(){
-		$custdao = new CustomerDAO();
-		$email = null;
-		$password = "testPassword";
-		
-	}
-	*/
+	
   public function testGetCustomers() {
-    $custdao = new CustomerDAO();
-    $custdao->getCustomers();
+    $customers = array();
+	$users = array();
+	$delusers = array();
+	$custdao = new CustomerDAO();
+	
+	$customers[0] = new Customer(array(
+			"email" => "test1@email.test",
+			"password" => "test1Password",
+			"name" => "Testname1",
+			"firstname" => "Testfirstname1",
+			"address" => "1 test adress",
+			"zip" => "77000",
+			"town" => "Testcity",
+			"phone" => "0123456789"
+		));
+	$customers[1] = new Customer(array(
+			"email" => "test2@email.test",
+			"password" => "test2Password",
+			"name" => "Testname2",
+			"firstname" => "Testfirstname2",
+			"address" => "2 test adress",
+			"zip" => "77000",
+			"town" => "Testcity",
+			"phone" => "0123456789"
+		));
+	$customers[2] = new Customer(array(
+			"email" => "test3@email.test",
+			"password" => "test3Password",
+			"name" => "Testname3",
+			"firstname" => "Testfirstname3",
+			"address" => "3 test adress",
+			"zip" => "77000",
+			"town" => "Testcity",
+			"phone" => "0123456789"
+		));
+	foreach($customers as $key=>$customer){
+		$users[$key] = $custdao->createCustomer($customer); // Create user1
+		$this->assertNotInternalType('boolean', $users[$key]); // Confirm
+	}
+	$users = $custdao->getCustomers();
+	$this->assertInternalType('array', $users);
+	$this->assertCount(3, $users);
+	foreach($users as $key=>$user){
+		$this->assertEquals($customers[$key]->email(), $users[$key]->email());
+		$this->assertEquals($customers[$key]->name(), $users[$key]->name());
+		$this->assertEquals($customers[$key]->firstname(), $users[$key]->firstname());
+		$this->assertEquals($customers[$key]->address(), $users[$key]->address());
+		$this->assertEquals($customers[$key]->zip(), $users[$key]->zip());
+		$this->assertEquals($customers[$key]->town(), $users[$key]->town());
+		$this->assertEquals($customers[$key]->phone(), $users[$key]->phone());
+		$delusers[$key] = $custdao->deleteCustomer($user);
+		$this->assertInternalType('boolean', $deluser[$key]);  // confirm deletion
+		$this->assertEquals(1, $deluser[$key]);  // confirm deletion
+		$this->assertNotEquals(0, $deluser[$key]);  // confirm deletion
+	}
+	
   }
   public function testGetUnexistingCustomerByEmail() {
     $custdao = new CustomerDAO();
@@ -137,6 +190,13 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 	  $this->assertEquals($customer->zip(), $copycustomer->zip());
 	  $this->assertEquals($customer->town(), $copycustomer->town());
 	  $this->assertEquals($customer->phone(), $copycustomer->phone());
+	  
+	  if(!$customer){
+		 $delcust = $custdao->deleteCustomer($customer);  // delete customer
+		$this->assertInternalType('boolean', $delcust);  // confirm deletion
+		$this->assertEquals(1, $delcust);  // confirm deletion
+		$this->assertNotEquals(0, $delcust);  // confirm deletion
+	  }
   }
   
 }
