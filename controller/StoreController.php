@@ -3,6 +3,7 @@
 require_once './vendor/autoload.php';
 require_once './controller/AbstractController.php';
 require_once './model/ProductDAO.php';
+require_once './model/CategoryDAO.php';
 class StoreController extends AbstractController {
   /**
    * @Route("/")
@@ -10,8 +11,13 @@ class StoreController extends AbstractController {
    */
   function indexAction() {
     $pdao = new ProductDAO();
+	$cdao = new CategoryDAO();
     $products = $pdao->getProducts();
-    return parent::render('store.html', array("products" => $products));
+	$categories = $cdao->getCategories();
+    return parent::render('store.html', array(
+		"products" => $products,
+		"categories" => $categories
+	));
   }
   /**
    * @Route("/:id")

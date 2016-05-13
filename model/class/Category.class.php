@@ -2,9 +2,10 @@
 
 	class Category {
 		
-		private $id_cat,
-				$id_parent, // peut-être nul si pas de categorie parente
-				$tag;
+		private 	$id,
+						$id_parent, // peut-être nul si pas de categorie parente
+						$label,
+						$description;
 				
 		public function __construct(array $data){
 			$this->hydrate($data);	
@@ -18,17 +19,18 @@
 			}
 		}
 		//setter
-		public function id_cat() { return $this->id_cat;}
+		public function id() { return $this->id;}
 		public function id_parent() { return $this->id_parent;}
-		public function tag() { return $this->tag;}
+		public function label() { return $this->label;}
+		public function description(){return $this->description;}
 		//getter
-		public function setId_cat($id_cat) { $this->id_cat = (int) $id_cat;}
+		public function setId($id) { $this->id = (int) $id;}
 		public function setId_parent($id_parent) { $this->id_parent = (int) $id_parent;}
-		public function setTag($tag) { $this->tag = $tag;}
-				
+		public function setLabel($label) { $this->label = $label;}
+		public function setDescription($description) {$this->description = $description;}
 		//ctrl
 		
-		public function ctrlCategorie($tag=NULL){}
+		public function ctrlCategory($tag=NULL){}
 		
 		
 	}

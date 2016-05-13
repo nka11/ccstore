@@ -11,10 +11,8 @@
 	</form>
 	<h3>CATEGORIES</h3>
 	<ul class="nav nav-pills nav-stacked">
-		<li><a href="#">Boulangerie<span class="badge">42</span></a></li>
-		<li><a href="#">Viande<span class="badge">18</span></a></li>
-		<li><a href="#">Epicerie salée<span class="badge">24</span></a></li>
-		<li><a href="#">Epicerie sucrée<span class="badge">33</span></a></li>
-		<li><a href="#">Boissons<span class="badge">22</span></a></li>
+	 {% for category in categories %}
+		<li><a href="#">{{category.label}}<span class="badge">X</span></a></li>
+	{% endfor %}
 	</ul>
 </div>
