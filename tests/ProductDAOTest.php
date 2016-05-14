@@ -8,7 +8,7 @@ class ProductDAOTest extends PHPUnit_Framework_TestCase
     $pdao = new ProductDAO();
     $products = $pdao->getProducts();
 	$this->assertNotInternalType('boolean', $products);
-	$this->assertCount(1, $products);
+	$this->assertCount(2, $products);
     foreach ($products as $product) {
       $this->assertInternalType('string',$product->title());
     }
@@ -48,15 +48,13 @@ class ProductDAOTest extends PHPUnit_Framework_TestCase
 	$this->assertInternalType('boolean', $delpro);  // confirm deletion
 	$this->assertTrue($delpro);  // confirm deletion
   }
-  }
-  
   public function testGetProductsByCategory() {
     $pdao = new ProductDAO();
-    $products = $pdao->getProductsByCategory(1);
+    $products = $pdao->getProductsByCategory(4);
 	$this->assertNotInternalType('boolean', $products);
+	$this->assertCount(1, $products);
     foreach ($products as $product) {
       $this->assertInternalType('string',$product->title());
-      $pdao->getProductCategories($product);
     }
   }
 }
