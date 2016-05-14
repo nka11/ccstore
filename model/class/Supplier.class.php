@@ -1,17 +1,19 @@
 <?php
 
-	class Producer {
+	class Supplier {
  /**
    * Représente unproducteur vs model dolibarr :
    * 
    */
 		private	$id,
-						$denom, // Dénomination
-						$title, // SAS, particulier, etc
+						$name, 
+						$name_alias,
 						$address,
 						$zip,
 						$town,
 						$phone,
+						$email,
+						$web,
 						$description;
 				
 		
@@ -36,24 +38,26 @@
 		//getter
 		
 		public function id() {return $this->id;}
-		public function denom() {return $this->denom;}
-		public function title() {return $this->title;}
+		public function name() {return $this->name;}
+		public function name_alias() {return $this->name_alias;}
 		public function address() {return $this->address;}
 		public function zip() {return $this->zip;}
 		public function town() { return $this->town;}
 		public function phone() { return $this->phone;}
+		public function web() { return $this->web;}
 		public function description() {return $this->description;}
 				
 			
 		//setter
 		
 		public function setId($id) { $this->id = (int) $id;}
-		public function setDenom($denom) { $this->denom = $denom;}
-		public function setTitle($title) { $this->title = $title;}
+		public function setName($name) { $this->name = $name;}
+		public function setName_alias($name_alias) { $this->name_alias = $name_alias;}
 		public function setAdresse($address) { $this->address = $address;}
 		public function setZip($zip) { $this->zip = $zip;}
 		public function setTown($town) {$this->town = $town;}
 		public function setPhone($phone) { $this->phone = $phone;}
+		public function setWeb($web) { $this->web = $web;}
 		public function setDescription($description) { 
 			if (is_string($description))
 				{$this->description = $description;}
