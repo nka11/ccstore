@@ -11,8 +11,8 @@ class StoreController extends AbstractController {
    */
   function indexAction() {
     $pdao = new ProductDAO();
+	$products = $pdao->getProducts();
 	$cdao = new CategoryDAO();
-    $products = $pdao->getProducts();
 	$categories = $cdao->getCategories();
     return parent::render('store.html', array(
 		"products" => $products,
