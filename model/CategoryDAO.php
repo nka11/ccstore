@@ -14,8 +14,6 @@ class CategoryDAO extends AbstractRestClient {
     if ($resp->code == 404) {
 			return false;
 	}
-	
-	//echo json_encode($resp->body,JSON_PRETTY_PRINT);
     foreach ($resp->body as $data) {
       array_push($result, $this->_mapCategory($data));
     }
