@@ -12,7 +12,7 @@
 	<h3>CATEGORIES</h3>
 	<ul class="nav nav-pills nav-stacked">
 	 {% for category in categories %}
-		<li><a href="#">{{category.label}}<span class="badge">X</span></a></li>
+		<li><a href="{{base_path}}/store/category/{{category.id}}">{{category.label}}<span class="badge">X</span></a></li>
 	{% endfor %}
 	</ul>
 </div>
