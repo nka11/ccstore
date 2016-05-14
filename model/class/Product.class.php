@@ -7,19 +7,19 @@ class Product {
    * Un produit peut avoir plusieures catégories
    *
    */
-		private $id_p,
-				$title,
-				$ref, // reference produit
-				$price,
-				$tva,
-				$description = "",
-				$is_active,
-				$img,
-				
-				//objets : 
-				
-				$categories,
-				$producers;
+		private 	$id,
+						$title,
+						$ref, // reference produit
+						$price,
+						$tva,
+						$description = "",
+						$is_active,
+						$img,
+						
+						//objets : 
+						
+						$categories,
+						$producers;
 		
 		public function __construct(array $data)	{
 			$this->hydrate($data);
@@ -36,8 +36,7 @@ class Product {
 			}
 		}	
 		//getter
-		public function id_p() {return $this->id_p;}
-		public function id() {return $this->id_p;}
+		public function id() {return $this->id;}
 		public function title() {return $this->title;}
 		public function price() {return $this->price;}
 		public function tva() {return $this->tva;}
@@ -49,7 +48,7 @@ class Product {
 		public function categories() { return $this->categories;}
 		public function producers() { return $this->producers;}
 		//setter
-		public function setId_p($id) { $this->id_p = (int) $id;}
+		public function setId($id) { $this->id = (int) $id;}
 		public function setTitle($title) { $this->title = $title;}
 		public function setPrice($price) { $this->price =  $price;}
 		public function setCategories($categories) { $this->categories =  $categories;}
