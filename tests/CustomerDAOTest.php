@@ -119,13 +119,13 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 	$this->assertInternalType('array', $users);
 	$this->assertCount(3, $users);
 	foreach($users as $key=>$user){
-		$this->assertEquals($customers[$key]->email(), $users[$key]->email());
-		$this->assertEquals($customers[$key]->name(), $users[$key]->name());
-		$this->assertEquals($customers[$key]->firstname(), $users[$key]->firstname());
-		$this->assertEquals($customers[$key]->address(), $users[$key]->address());
-		$this->assertEquals($customers[$key]->zip(), $users[$key]->zip());
-		$this->assertEquals($customers[$key]->town(), $users[$key]->town());
-		$this->assertEquals($customers[$key]->phone(), $users[$key]->phone());
+		$this->assertEquals($customers[$key]->email(), $user->email());
+		$this->assertEquals($customers[$key]->name(), $user->name());
+		$this->assertEquals($customers[$key]->firstname(), $user->firstname());
+		$this->assertEquals($customers[$key]->address(), $user->address());
+		$this->assertEquals($customers[$key]->zip(), $user->zip());
+		$this->assertEquals($customers[$key]->town(), $user->town());
+		$this->assertEquals($customers[$key]->phone(), $user->phone());
 		$delusers[$key] = $custdao->deleteCustomer($user);
 		$this->assertInternalType('boolean', $delusers[$key]);  // confirm deletion
 		$this->assertEquals(1, $delusers[$key]);  // confirm deletion
@@ -155,48 +155,46 @@ class CustomerDAOTest extends PHPUnit_Framework_TestCase
 		"town" => "Combs-la-Ville",
 		"phone" => "0160340218"
 	  ));
-	  $custdao = new CustomerDAO();
-	  $customer = $custdao->createCustomer($custData);
-	  $this->assertNotInternalType('boolean',$customer);
-	  $this->assertInternalType('int',$customer->id_c());
-	  $this->assertInternalType('int', $customer->id_user());
-	  $this->assertInternalType('string',$customer->email()); 
-	  $this->assertInternalType('string',$customer->name());
-	  $this->assertInternalType('string',$customer->firstname());
-	  $this->assertInternalType('string',$customer->password());
-	  $this->assertInternalType('string',$customer->address());
-	  $this->assertInternalType('string',$customer->zip());
-	  $this->assertInternalType('string',$customer->town());
-	  $this->assertInternalType('string',$customer->phone());
-	  $copycustomer = $custdao->getCustomerById($customer->id_c());
-	  $this->assertNotInternalType('boolean', $copycustomer);
-	  $this->assertEquals($customer->id_c(), $copycustomer->id_c());
-	  $this->assertEquals($customer->id_user(), $copycustomer->id_user());
-	  $this->assertEquals($customer->email(), $copycustomer->email());
-	  $this->assertEquals($customer->name(), $copycustomer->name());
-	  $this->assertEquals($customer->firstname(), $copycustomer->firstname());
-	  $this->assertEquals($customer->address(), $copycustomer->address());
-	  $this->assertEquals($customer->zip(), $copycustomer->zip());
-	  $this->assertEquals($customer->town(), $copycustomer->town());
-	  $this->assertEquals($customer->phone(), $copycustomer->phone());
-	  $copycustomer = $custdao->getCustomerByEmail($customer->email());
-	  $this->assertNotInternalType('boolean', $copycustomer);
-	  $this->assertEquals($customer->id_c(), $copycustomer->id_c());
-	  $this->assertEquals($customer->id_user(), $copycustomer->id_user());
-	  $this->assertEquals($customer->email(), $copycustomer->email());
-	  $this->assertEquals($customer->name(), $copycustomer->name());
-	  $this->assertEquals($customer->firstname(), $copycustomer->firstname());
-	  $this->assertEquals($customer->address(), $copycustomer->address());
-	  $this->assertEquals($customer->zip(), $copycustomer->zip());
-	  $this->assertEquals($customer->town(), $copycustomer->town());
-	  $this->assertEquals($customer->phone(), $copycustomer->phone());
+	$custdao = new CustomerDAO();
+	$customer = $custdao->createCustomer($custData);
+	$this->assertNotInternalType('boolean',$customer);
+	$this->assertInternalType('int',$customer->id_c());
+	$this->assertInternalType('int', $customer->id_user());
+	$this->assertInternalType('string',$customer->email()); 
+	$this->assertInternalType('string',$customer->name());
+	$this->assertInternalType('string',$customer->firstname());
+	$this->assertInternalType('string',$customer->password());
+	$this->assertInternalType('string',$customer->address());
+	$this->assertInternalType('string',$customer->zip());
+	$this->assertInternalType('string',$customer->town());
+	$this->assertInternalType('string',$customer->phone());
+	$copycustomer = $custdao->getCustomerById($customer->id_c());
+	$this->assertNotInternalType('boolean', $copycustomer);
+	$this->assertEquals($customer->id_c(), $copycustomer->id_c());
+	$this->assertEquals($customer->id_user(), $copycustomer->id_user());
+	$this->assertEquals($customer->email(), $copycustomer->email());
+	$this->assertEquals($customer->name(), $copycustomer->name());
+	$this->assertEquals($customer->firstname(), $copycustomer->firstname());
+	$this->assertEquals($customer->address(), $copycustomer->address());
+	$this->assertEquals($customer->zip(), $copycustomer->zip());
+	$this->assertEquals($customer->town(), $copycustomer->town());
+	$this->assertEquals($customer->phone(), $copycustomer->phone());
+	$copycustomer = $custdao->getCustomerByEmail($customer->email());
+	$this->assertNotInternalType('boolean', $copycustomer);
+	$this->assertEquals($customer->id_c(), $copycustomer->id_c());
+	$this->assertEquals($customer->id_user(), $copycustomer->id_user());
+	$this->assertEquals($customer->email(), $copycustomer->email());
+	$this->assertEquals($customer->name(), $copycustomer->name());
+	$this->assertEquals($customer->firstname(), $copycustomer->firstname());
+	$this->assertEquals($customer->address(), $copycustomer->address());
+	$this->assertEquals($customer->zip(), $copycustomer->zip());
+	$this->assertEquals($customer->town(), $copycustomer->town());
+	$this->assertEquals($customer->phone(), $copycustomer->phone());
 	  
-	  if(!$customer){
-		 $delcust = $custdao->deleteCustomer($customer);  // delete customer
-		$this->assertInternalType('boolean', $delcust);  // confirm deletion
-		$this->assertEquals(1, $delcust);  // confirm deletion
-		$this->assertNotEquals(0, $delcust);  // confirm deletion
-	  }
+	$delcust = $custdao->deleteCustomer($customer);  // delete customer
+	$this->assertInternalType('boolean', $delcust);  // confirm deletion
+	$this->assertEquals(1, $delcust);  // confirm deletion
+	$this->assertNotEquals(0, $delcust);  // confirm deletion
   }
   
 }
