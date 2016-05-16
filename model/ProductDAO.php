@@ -56,9 +56,19 @@ class ProductDAO extends AbstractRestClient {
     }
     return $result;
   }
+  public function createProduct(Product $product){
+	  /*DO SOMETHING*/
+  }
+  public function updateProduct(Product $product){
+	  /*DO SOMETHING*/
+  }
+public function deleteProduct(Product $product){
+	/*DO SOMETHING*/
+}  
+  
   private function _mapProduct($data) {
     $product = new Product(array(
-      "id_p" => (int)$data->id,
+      "id" => (int)$data->id,
       "ref" => $data->ref,
       "title" => $data->label,
       "description" => $data->description,
