@@ -213,7 +213,10 @@ before_script:
 
   # configure apache virtual hosts
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
+  echo "[Apache mods enabled]"
   ls /etc/apache2/mods-enabled
+  echo "[Apache mods available]"
+  ls /etc/apache2/mods-available
   ls ~/.phpenv/versions/$PHP_VERSION_NAME/bin
   sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
   FCGID_WRAPPER=~/.phpenv/versions/$PHP_VERSION_NAME/bin/php-cgi
@@ -236,9 +239,9 @@ script:
   echo "Checking webserver availability"
   # Ensure we do not catch errors
   set +e
-  wget http://127.0.0.1/index.php
+  wget http://127.0.0.1/
   if [ "$DEBUG" = true ]; then
-    cat index.php
+    cat index.html
   fi
   set -e
   echo
