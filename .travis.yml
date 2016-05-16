@@ -216,6 +216,9 @@ before_script:
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
   ls /etc/apache2/mods-enabled
   sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
+  FCGID_WRAPPER=`which php-wrapper`
+  echo $FCGID_WRAPPER
+  sudo sed -e "s?%FCGID_WRAPPER%?$FCGID_WRAPPER?g" --in-place /etc/apache2/sites-available/default
   if [ "$DEBUG" = true ]; then
     sudo cat /etc/apache2/sites-available/default
   fi
