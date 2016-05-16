@@ -23,7 +23,6 @@ addons:
     # We need a webserver to test the webservices
     # Let's install Apache with.
     - apache2
-    - libapache2-mod-fastcgi
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
     - mysql-server
 
@@ -71,6 +70,12 @@ before_install:
   echo
 
 install:
+
+- |
+  echo "Adding packages"
+  sudo apt-get -qq update
+  sudo apt-get install libapache2-mod-fastcgi
+
 - |
   echo "Updating Composer"
   composer self-update
