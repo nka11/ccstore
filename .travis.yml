@@ -74,7 +74,7 @@ install:
 - |
   echo "Adding packages"
   sudo apt-get -qq update
-  sudo apt-get install libapache2-mod-fastcgi
+  sudo apt-get install libapache2-mod-fcgid
 
 - |
   echo "Updating Composer"
