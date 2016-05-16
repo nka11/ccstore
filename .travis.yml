@@ -23,6 +23,7 @@ addons:
     # We need a webserver to test the webservices
     # Let's install Apache with.
     - apache2
+    - libapache2-mod-fastcgi
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
     - mysql-server
 
@@ -198,7 +199,14 @@ before_script:
 
 - |
   echo "Setting up Apache + PHP"
-  cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default
+   cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
+   if [ "$TRAVIS_PHP_VERSION" = '7.0' ] || [ "$TRAVIS_PHP_VERSION" = 'nightly' ]; then
+    # Copy the included pool
+    cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
+  cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
+  fi
+  sudo a2enmod rewrite actions fastcgi alias
+
   # configure apache virtual hosts
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
   ls /etc/apache2/mods-enabled
