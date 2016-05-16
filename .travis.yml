@@ -236,9 +236,9 @@ script:
   echo "Checking webserver availability"
   # Ensure we catch errors
   set -e
-  wget http://127.0.0.1
+  wget http://127.0.0.1/index.php
   if [ "$DEBUG" = true ]; then
-    cat index.html
+    cat index.php
   fi
   set +e
   echo
