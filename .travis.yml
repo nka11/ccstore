@@ -209,6 +209,7 @@ before_script:
     # Copy the included pool
     cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
   fi
+  sudo a2dismod mpm_event
   sudo a2enmod rewrite actions fcgid alias mpm_worker vhost_alias allowmethods
 
   # configure apache virtual hosts
