@@ -208,13 +208,13 @@ before_script:
    if [ "$TRAVIS_PHP_VERSION" = '7.0' ] || [ "$TRAVIS_PHP_VERSION" = 'nightly' ]; then
     # Copy the included pool
     cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
-  cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
   fi
-  sudo a2enmod rewrite actions fastcgi alias
+  sudo a2enmod rewrite actions fcgid alias
 
   # configure apache virtual hosts
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
   ls /etc/apache2/mods-enabled
+  ls ~/.phpenv/versions/$PHP_VERSION_NAME/bin
   sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
   FCGID_WRAPPER=`which php-wrapper`
   echo $FCGID_WRAPPER
