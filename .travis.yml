@@ -216,7 +216,7 @@ before_script:
   ls /etc/apache2/mods-enabled
   ls ~/.phpenv/versions/$PHP_VERSION_NAME/bin
   sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
-  FCGID_WRAPPER=~/.phpenv/versions/PHP_VERSION_NAME/bin/php-cgi
+  FCGID_WRAPPER=~/.phpenv/versions/$PHP_VERSION_NAME/bin/php-cgi
   echo $FCGID_WRAPPER
   sudo sed -e "s?%FCGID_WRAPPER%?$FCGID_WRAPPER?g" --in-place /etc/apache2/sites-available/default
   if [ "$DEBUG" = true ]; then
