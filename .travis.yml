@@ -24,10 +24,7 @@ addons:
     # Let's install Apache with.
     - apache2
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
-    - libapache2-mod-php5 
     - mysql-server
-    - php5-memcache
-    - php5-mysql
 
 # Start on every boot
 services:
@@ -201,6 +198,7 @@ before_script:
 
 - |
   echo "Setting up Apache + PHP"
+  cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default
   # configure apache virtual hosts
   sudo cp -f build/apache.conf /etc/apache2/sites-available/default
   ls /etc/apache2/mods-enabled
