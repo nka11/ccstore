@@ -74,7 +74,7 @@ install:
 - |
   echo "Adding packages"
   sudo apt-get -qq update
-  sudo apt-get install libapache2-mod-fcgid
+  sudo apt-get install libapache2-mod-fcgid apache2-mpm-worker
 
 - |
   echo "Updating Composer"
@@ -234,13 +234,13 @@ before_script:
 script:
 - |
   echo "Checking webserver availability"
-  # Ensure we catch errors
-  set -e
+  # Ensure we do not catch errors
+  set +e
   wget http://127.0.0.1/index.php
   if [ "$DEBUG" = true ]; then
     cat index.php
   fi
-  set +e
+  set -e
   echo
 
 - |
