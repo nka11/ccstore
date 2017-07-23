@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <table class="table">
+    <tr><th>var</th><th>value</th></tr>
+    <tr><td>request_uri</td><td>{{ request_uri }}</td></tr>
+    <tr><td>path</td><td>{{ path }}</td></tr>
+    <tr><td>controller</td><td>{{ controller }}</td></tr>
+    <tr><td>base_path</td><td>{{ base_path }}</td></tr>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add Product{% endblock %}
+
+
+{% block content %}
+{% set units = ['Kg', 'g', 'L', 'cl', 'pièce'] %}
+<div class="panel panel-default">
+	<div class="panel-header">
+		<h1 class="panel-title">{{ action.button_value }} un produit</h1>
+	</div>
+	<div class="panel-body">
+		<form  method="post" action="{{ base_path }}/admin/post/product" enctype="multipart/form-data">
+				<div class="row"> 
+				  <div class="col-md-6 col-md-offset-3">
+					 <input type="text" class="form-control" id="label" name="label" placeholder="label" value="{{product.label}}"/>
+				  </div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<label for="supplier">Producteur : </label>
+						<select name="fk_supplier" id="supplier">
+							{% for supplier in suppliers %}
+							<option value="{{supplier.id}}" {% if product.fk_supplier == supplier.id %} selected {% endif %}>{{supplier.label}}</option>
+							{% endfor %}
+						</select>
+						<label for="category">Categorie : </label>
+						<select name="fk_category" id="category">
+							<option value="0"></option>
+							{% for category in categories %}
+							<option value="{{category.id}}" {% if product.fk_cat == category.id %} selected {% endif %}>{{category.label}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-3">
+						<input type="text" class="form-control" id="packaging" name="packaging" placeholder="packaging" value="{{product.packaging}}"/>
+					</div>
+					<div class="col-md-4">
+						<input type="number" class="form-control" id="package_weight" name="package_weight" placeholder="Poids du produit" value="{{product.package_weight}}"/>
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+					<label for="weight_unit">Unité de poids : </label>
+						<select name="weight_unit" id="weight_unit"/>
+							{% for unit in units %}
+								<option value="{{ unit }}" {% if product.weight_unit == unit %}selected{% endif %}>{{ unit }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div><br/>
+				<div class="row">
+				  <div class="col-md-3 col-md-offset-3">
+					<input class="form-control" id="price" name="price" type="text" placeholder="Prix ( Deux chiffres après la virgule)" value="{{product.price}}"/>
+				  </div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<label for="status">Statut : </label>
+						<select name="status">
+							<option value="visible" {% if product.status == "visible" %} selected {% endif %}>visible</option>
+							<option value="invisible" {% if product.status == "invisible"  %}selected {% endif %}>invisible </option>
+						</select>
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-offset-3">
+						<textarea name="description" id="description" cols="80" rows="6">{{ product.description }}</textarea>
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+					<label for="picture">Envoyer une image : </label>
+					<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+					<input type="file" name="picture"/>
+					</div>
+				</div><br/>
+				<input type="hidden" id="mode" name="mode" value="{{action.mode}}"/>
+				{% if action.mode== "edit" %} <input type="hidden" name="id_product" id="id_product" value="{{product.id}}"/>{% endif %}
+				  <div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{{action.button_value}}</button>
+				  </div>
+		  </form>
+	</div>
+</div>
+ {% endblock %}

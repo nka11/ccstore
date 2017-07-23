@@ -1,0 +1,16 @@
+{
+    "name": "courtcircuit/temp",
+    "description": "An ecommerce frontend for temp use",
+    "require": {
+        "twbs/bootstrap": "^3.3",
+        "corneltek/pux": "~1.5",
+        "twig/twig": "^1.27"
+    },
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Johann Bernhard",
+            "email": "johann.bernhard26@gmail.com"
+        }
+    ]
+}

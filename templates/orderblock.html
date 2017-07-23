@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+	<div class="container-fluid">
+		<div class="col-md-4">
+			<div class="row">
+				<div class="text-left">Semaine {{ "now"|date("W") }}</div>
+			</div>
+			<div class="row">
+				<div class="text-left">{{ days["now"|date("N")] }} {{ "now"|date("d") }} {{ months["now"|date("n")] }} {{ "now"|date("Y") }}</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+				<div class="text-center">Cloture des commandes pour la semaine {{ orderblock.week }} : </div>
+			</div>
+			<div class="row">
+				<div class="text-center">Mercredi {{ orderblock.closing|date("d") }} {{ months[orderblock.closing|date("n")] }} à 23h59</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+				<div class="text-right">Prochaine livraison : </div>
+			</div>
+			<div class="row">
+				<div class="text-right">Semaine {{ orderblock.week }} : Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} et Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }}</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Formulaire de commande{% endblock %}
+
+
+{% block content %}
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title">Etape 1 : Paramêtres de la livraison</h1>
+		</div>
+		<div class="panel-body">
+				<form role="form" data-toggle="validator"
+						   method="POST" action="{{ base_path }}/order/create">
+						<div class="row">
+							<div class="col-md-6 col-md-offset-3">
+								<label for="delivery_address">Adresse de livraison</label>
+								<input name="delivery_address" type="text" class="form-control" id="delivery_address" value="{{session.user.address}}"  required/>
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 col-md-offset-3">
+								<label for="delivery_town">Code postal</label>
+								<input name="delivery_zip" type="text" class="form-control" id="delivery_zip" value="{{session.user.zip}}"  required/>
+								<div class="help-block with-errors"></div>
+							</div>
+							<div class="col-md-3">
+								<label for="delivery_town">Ville</label>
+								<input name="delivery_town" type="text" class="form-control" id="delivery_town" value="{{session.user.town}}"  required/>
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-md-offset-3">
+								<strong>Jour de livraison</strong>
+								<div class="radio">
+								  <label>
+									<input type="radio" name="delivery_date" id="friday" value='{{ orderblock.closing|date_modify("+2 day")|date("Y-m-d") }}' checked/>
+									Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (17h - 20h)
+								  </label>
+								</div>
+								<div class="radio">
+								  <label>
+									<input type="radio" name="delivery_date" id="saturday" value='{{ orderblock.closing|date_modify("+3 day")|date("Y-m-d") }}'/>
+									Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (10h - 14h)
+								  </label>
+								</div>
+							</div>
+						</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3">
+							<label for="delivery_instructions">Instructions complémentaires pour la livraison</label>
+							<textarea name="delivery_instructions" class="form-control" id="delivery_instructions" rows="4" placeholder="Exemples : préférences et/ou contraintes horaires, digicode, attention chien méchant... oO"></textarea>
+						</div>	
+					 </div><br/>
+					 <div class="row">
+						<div class="col-md-6 col-md-offset-3" id="delivery_cost">
+							{% if session['user'].rank != "member" %}
+							<span class='glyphicon glyphicon-warning-sign' style='color:red'></span> <i style='color:red'>Vous n'êtes pas encore adhérent! Frais de livraison : 5€</i>
+							{% else %}
+							<span class='glyphicon glyphicon-thumbs-up' style='color:green'></span> <i style='color:green'>Vous êtes adhérent! Frais de livraison : Gratuit</i>
+							{% endif %}
+						</div>
+					</div>
+					{% if session['user'].rank != "member" %}
+					<div class="row" id="checkBox">
+						<div class="col-md-6 col-md-offset-3">
+						<div class="checkbox">
+							<label>
+							  <input type="checkbox" name="adhesion" id="adhBox" onclick="check()"/> Inclure une adhésion à ma commande ( 20 €) et ne plus payer de frais de livraison cette année.
+							</label>
+						  </div>
+						 </div>
+					</div><br/>
+					{% endif %}
+					 <div class="form-group">
+						<button type="submit" class="btn btn-primary center-block">Valider les paramêtres</button>
+					 </div>
+				</form>
+		</div>
+	</div>
+</div>
+<script>
+function check(){
+	var checkBox = document.getElementById("adhBox");
+	var delivery_cost = document.getElementById("delivery_cost");
+	if(checkBox.checked == true){
+		delivery_cost.innerHTML = "<span class='glyphicon glyphicon-thumbs-up' style='color:green'></span> <i style='color:green'>Vous êtes adhérent! La livraison est gratuite</i>";
+	}
+	else{
+		delivery_cost.innerHTML = "<span class='glyphicon glyphicon-warning-sign' style='color:red'></span> <i style='color:red'>Vous n'êtes pas encore adhérent! Frais de livraison : 5€</i>";
+	}
+}
+</script>
+{% endblock %}

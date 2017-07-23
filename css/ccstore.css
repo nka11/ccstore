@@ -1,0 +1,15 @@
+body {
+		margin-top:50px;
+        padding-bottom: 20px;
+		/*font-family			:	'PoetsenOne-Regular';*/
+		font-family	:	'Montserrat';
+		font-size	:	14px;
+}
+.title{
+	font-size: 14px;
+	font-weight: bold;
+}
+.price{
+	font-size: 14px;
+	font-weight: bold;
+}

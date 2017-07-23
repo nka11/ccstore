@@ -1,0 +1,44 @@
+<form  method="post" action="{{ base_path }}/user/post">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<input type="text" class="form-control" id="label" name="label" placeholder="Nom de la structure"/>
+		</div>
+	</div><br/>
+	<div class="row">
+	  <div class="col-md-8 col-md-offset-2">
+		 <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
+		 <span id="helpBlock" class="help-block">Votre mail nous permet de vous authentifier</span>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-4 col-md-offset-2">
+		<input class="form-control" id="mdp_c" name="password" placeholder="Mot de passe" type="password">
+	  </div>
+	  <div class="col-md-4">
+		<input class="form-control" id="pwconfirm" name="pwconfirm" placeholder="Confirmer le mot de passe" type="password"/>
+	  </div>
+	</div><br/>
+	<div class="row">
+	  <div class="col-md-8 col-md-offset-2">
+		<input class="form-control" id="address" name="address" placeholder="Adresse" type="text"/>
+	  </div>
+	</div><br/>
+	<div class="row">
+	  <div class="col-md-3 col-md-offset-2">
+		<input class="form-control" id="zip" name="zip" placeholder="Code postal" type="text">
+	  </div>
+	  <div class="col-md-5">
+		<input class="form-control" id="town" name="town" placeholder="Ville" type="text">
+	  </div>
+	</div><br/>
+	<div class="row">
+	  <div class="col-md-6 col-md-offset-3">
+		<input class="form-control" id="phone" name="phone" placeholder="Telephone" type="text">
+	  </div>
+	</div><br/>
+	<div class="row">
+	  <div class="col-md-4 col-md-offset-4">
+		<button type="submit" class="btn btn-primary">Inscription</button>
+	  </div>
+	 </div><br/>
+</form>

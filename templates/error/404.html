@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Page non trouvée{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h3>La page {{ path }} n'a pas été trouvée</h3>
+	<h2>Détail erreur</h2>
+	<p>{{ e }}</p>
+</div>
+{% endblock %}

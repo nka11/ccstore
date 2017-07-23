@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Fiche producteur : {{supplier.name}}{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <div class="col-md-2 col-sm-2 col-xs-2">
+	<h3>PRODUCTEURS</h3>
+		<ul class="nav nav-pills nav-stacked">
+		{% for supplier in suppliers %}
+			<li><a href="{{base_path}}/supplier/{{ supplier.id }}">{{ supplier.name }} <span class="badge">{{ supplier.badge }}</span></a></li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-4 col-xs-12 col-sm-4">
+				<img src="{{base_path}}/files/pictures/supplier/nophoto.png" class="img-responsive img-rounded" alt="image grand format" width="733" height="488"/>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4> Fiche producteur : {{supplier.name }}</h4>
+					</div>
+					<table class="table">
+						<tr>
+							<th>Structure : </th>
+							<td>{{ supplier.label }}</td>
+						</tr>
+						<tr>
+							<th><span class="glyphicon glyphicon-envelope"></span> : </th>
+							<td>{{ supplier.zip }}, {{supplier.town }}</td>
+						</tr>
+					</table>
+					<div class="panel-body">
+						<p>Information relative au producteur</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">Les produits de ce producteur : </h4>
+					</div>
+					<div class="panel-body">
+						<ul class="list-inline list-unstyled">
+							{% for product in supplier.products %}
+								<li style="width:250px;margin:0px 10px;padding:0px;vertical-align:top">
+									<div class="row" style="width:250px;padding:0px;margin:0px">
+										<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded"/>
+									</div>
+									<div class="row">
+										<div class="text-uppercase col-sm-9 col-xs-8 text-left">{{ product.label }}</div><div class="col-sm-3 col-xs-4 text-right">{{ product.price_unit }} €<sup>{{product.price_deci}}</sup></div>
+									</div>
+									<div class="row bg-info">
+										<div class="col-sm-8 col-xs-7 text-left">{{product.packaging}}</div><div class="col-sm-4 col-xs-5 text-right">~ {{product.package_weight}} {{product.weight_unit}}</div>
+									</div>
+									<div class="row bg-warning">
+										<p class="text-right col-sm-12 col-xs-12">{{product.priceper}} € / {{product.weight_unit_ref}}</p>
+									</div>
+									<div class="row">
+										<p class="col-md-4" style="margin:0px;padding:0px"><a class="btn btn-success" href="{{ base_path }}/store/{{ product.id }}" role="button">Voir details &raquo;</a></p>
+									</div>
+								</li>
+							{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ 
+{% endblock %}
+

@@ -1,0 +1,20 @@
+<div class="col-md-2">
+	<form role="search" class="inline-form">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="search" class="form-control" placeholder="Mot-clé"/>
+				<span class="input-group-btn">
+				<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+				</span>
+			</div>
+		</div>
+	</form>
+	<h3>CATEGORIES</h3>
+	<ul class="nav nav-pills nav-stacked">
+	 {% for category in categories %}
+		{% if category.id_parent == NULL %}
+		<li><a href="{{base_path}}/store/category/{{category.id}}">{{category.label}} <span class="badge">{{ category.badge }}</span></a></li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+</div>

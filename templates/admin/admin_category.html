@@ -1,0 +1,32 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add category{% endblock %}
+
+
+{% block content %}
+ <form  method="post" action="{{ base_path }}/admin/post/category">
+        <div class="row"> 
+          <div class="col-md-6 col-md-offset-3">
+             <input type="text" class="form-control" id="label" name="label" placeholder="Label" {% if action.mode == "edit" %} value="{{category.label}}" {% endif %}/>
+          </div>
+        </div><br/>
+		<div class="row">
+			<div class="col-md-9 col-md-offset-3">
+				<select name="id_parent">
+					<option value=""></option>
+				{% for cat in categories %}
+					<option value="{{ cat.id }}" {% if cat.id == category.id_parent %} selected{% endif %}>{{ cat.label }}</option>
+				{% endfor %}
+				</select>
+				<textarea name="description" col="6">{{ category.description }}</textarea>
+			</div>
+		</div><br/>
+		<input type="hidden" id="mode" name="mode" value="{{action.mode}}"/>
+		{% if action.mode == "edit" %}
+		<input type="hidden" id="id_category" name="id_category" value="{{ category.id }}"/>
+		{% endif %}
+          <div class="col-md-4 col-md-offset-4">
+          	<button type="submit" class="btn btn-primary">{{action.button_value}}</button>
+          </div>
+  </form>
+ {% endblock %}

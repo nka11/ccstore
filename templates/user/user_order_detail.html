@@ -1,0 +1,52 @@
+ <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="orderLabel">Détail de commande</h4>
+      </div>
+	<div class="modal-body text-left">
+		<div class="container-fluid">
+			<div class="col-md-6">
+				<strong>Identifiants de la commande</strong>
+				<ul class="list-group">
+					<li class="list-group-item"><b>Date : </b>{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }} {{ order.order_date|date('Y') }}</li>
+					<li class="list-group-item"><b>Référence : </b>{{order.ref}}</li>
+					<li class="list-group-item"><b>A livrer le : </b> {{ days[order.delivery_date|date("N")] }} {{ order.delivery_date|date('d') }} {{ months[order.delivery_date|date('n')] }} {{ order.delivery_date|date('Y') }}</li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<strong>Paramêtres de livraison</strong>
+					<ul class="list-group">
+						<li class="list-group-item"><span class="glyphicon glyphicon-user"></span> {{ order.customer.name }} {{ order.customer.lastname }}</li>
+						<li class="list-group-item"><b><span class="glyphicon glyphicon-envelope"></span></b> {{order.delivery_address}}, {{ order.delivery_zip }} {{order.delivery_town}}</li>
+						<li class="list-group-item"><b><span class="glyphicon glyphicon-comment"></span></b> {{ order.delivery_instructions }}
+						</li>
+					</ul>
+			</div>
+		</div>
+	</div>
+	<table class="table">
+			<tr>
+				<th>Produit</th>
+				<th>Prix unitaire</th>
+				<th>Quantité</th>
+				<th>Total</th>
+			</tr>
+			{% for ol in order.list_ol %}
+			<tr>
+				<td>{{ol.product.label}}</td>
+				<td>{{ol.product.price}} €</td>
+				<td>{{ol.amount}}</td>
+				<td>{{ ol.value}} €</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="3"><b>Montant du panier </b></td>
+				<td colspan="2">{{ order.total_amount }} €</td>
+			</tr>
+		</table>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+	 </div>
+  </div>

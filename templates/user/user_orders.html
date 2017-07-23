@@ -1,0 +1,35 @@
+{% for order in orders %}
+<div class="modal fade" id="detailOrder_{{ order.ref }}" tabindex="-1" role="dialog" aria-labelledby="orderLabel">
+		{% include "user/user_order_detail.html" %}
+</div>
+{% endfor %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h1 class="panel-title">Historique des commandes</h1>
+	</div>
+	<table class="table table-striped">
+		<tr>
+			<th>Référence</th>
+			<th>Date</th>
+			<th>Nombre d'articles</th>
+			<th>Montant total</th>
+			<th>Date de livraison</th>
+			<th>Avancement</th>
+			<th>Action</th>
+		</tr>
+		{% for order in orders %}
+		<tr>
+			<td>{{ order.ref }}</td>
+			<td>{{ order.order_date|date("d/m/Y") }} à {{ order.order_date|date("H:i") }}</td>
+			<td>{{ order.list_ol|length }}</td>
+			<td>{{ order.total_amount }} €</td>
+			<td>{{ order.delivery_date|date("d/m/Y") }}</td>
+			<td>{{ order.status }}</td>
+			<td>
+				<a href="#detailOrder_{{ order.ref }}" data-toggle="modal" data-target="#detailOrder_{{ order.ref }}" title="Voir détail"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+				<a href="{{ base_path }}/user/pdfGenerator/{{ order.ref }}" target="_blanck" title="Voir le fichier"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>

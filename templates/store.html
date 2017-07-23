@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Boutique{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  {% include "store_sidebar.html" %}
+	<div class="col-sm-12 col-md-10">
+		<ul class="nav nav-tabs nav-fill" role="tablist">
+			<li role="presentation" class="nav-item"><a href="#all" aria-controls="all" role="tab" data-toggle="pill">{% if category.label != NULL %}{{ category.label }} : {% else %} Tous les produits : {% endif %}Tout  <span class="badge">{{ category.badge }}</span></a></li>
+			{% for cat in category.childCats %}
+				<li role="presentation" class="nav-item"><a href="#{{ cat.label }}" aria-controls="{{ cat.label }}" role="tab" data-toggle="pill">{{ cat.label }} <span class="badge">{{ cat.badge }}</span></a></li>
+			{% endfor %}
+		</ul>
+		<div class="tab-content" style="padding:10px">
+				<div role="tabpanel" class="tab-pane fade in active" id="all">
+					<ul class="list-inline list-unstyled">
+						{% if products != NULL %}
+							{% for product in products %}
+								{% include "product_brief.html" %}
+							{% endfor %}
+						{% else %}
+							{% for product in category.products %}
+								{% include "product_brief.html" %}
+							{% endfor %}
+						{% endif %}
+					</ul>
+				</div>
+				{% for cat in category.childCats %}
+				<div role="tabpanel" class="tab-pane fade" id="{{cat.label}}">
+					<ul class="list-inline list-unstyled">
+						{% for product in cat.products %}
+							{% include "product_brief.html" %}
+						{% endfor %}
+					</ul>
+				</div>
+				{% endfor %}
+		</div>
+	</div>
+</div>
+<form class="form-inline" id="addToBasketForm" method="post" action="{{base_path}}/store/add/basket" style="display:none">
+		<input type="hidden" class="form-control" id="amount" name="amount" min='1' value='1'/>
+		<input type="hidden" class="form-control" id="product" name="id_p" min="1" value=""/>
+</form>
+<script type="text/javascript">
+function substractProduct(inputName){
+	var qte = document.getElementById(inputName).value;
+	qte = parseInt(qte);
+	if(qte > 0){
+		qte = qte - 1;
+		document.getElementById(inputName).value = qte;
+	}
+}
+function addProduct(inputName){
+	var qte = document.getElementById(inputName).value;
+	qte = parseInt(qte);
+	if(qte < 5){
+		qte = qte+ 1;
+		document.getElementById(inputName).value = qte;
+	}
+}
+function submitToBasket(inputName, id_p){
+	var qte = document.getElementById(inputName).value;
+	document.getElementById("amount").value = qte;
+	document.getElementById("product").value = id_p;
+	document.getElementById("addToBasketForm").submit();
+}
+</script>
+{% endblock %}
+

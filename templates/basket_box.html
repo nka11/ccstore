@@ -1,0 +1,40 @@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="basketLabel">Mon panier</h4>
+		<p><i>Livraison le Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }}
+			ou le Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }}
+		</i>
+		</p>
+      </div>
+      <!--<div class="modal-body">-->
+		<table class="table">
+			<tr>
+				<th>Produit</th>
+				<th>Prix unitaire</th>
+				<th>Quantité</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+			{% for line in session['basket'] %}
+			<tr>
+				<td>{{line.product.label}}</td>
+				<td>{{line.product.price}} €</td>
+				<td>{{line.amount}}</td>
+				<td>{{ line.value }} €</td>
+				<td><a href="{{base_path}}/store/del/basket/{{line.product.id}}" title="Supprimer la ligne"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red"></span></a></td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="3"><b>Montant du panier </b></td>
+				<td colspan="2">{{ session['basket_amount'] }} €</td>
+			</tr>
+		</table>
+     <!--</div>-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a href="{{base_path}}/order/ini"><button type="button" class="btn btn-primary">Commander</button></a>
+      </div>
+	 </div>
+  </div>
