@@ -1,0 +1,32 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %} Liste des événements {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid" style="text-align:left;">
+	<div class="col-md-3">	
+		<div class="panel panel-default">
+		  <div class="panel-heading">Liste des événements ( <a href="{{ base_path }}/admin/add/event"><span class="glyphicon glyphicon-plus"></span></a>)</div>
+			<div class="panel-body">
+				<ul class="nav nav-pills nav-stacked" role="tablist" style="height:450px;overflow:scroll">
+					{% for event in events %}
+					<li role="presentation" {% if event.id == 1 %} class="active" {% endif %}>
+						<a href="#{{ event.id }}" aria-controls="{{event.id}}" role="tab" data-toggle="pill">
+							{{event.name}} / {{event.start_date}}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+		  </div>
+		</div>
+	</div>
+	<div class="tab-content col-md-9">
+		{% for event in events %}
+		<div role="tabpanel" class="tab-pane fade{% if event.id == 1 %} in active{% endif %}" id="{{event.id}}">{% include "admin/event/event_profile.html" %}</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
+

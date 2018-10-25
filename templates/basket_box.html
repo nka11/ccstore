@@ -30,11 +30,21 @@
 				<td colspan="3"><b>Montant du panier </b></td>
 				<td colspan="2">{{ session['basket_amount'] }} €</td>
 			</tr>
+			<tr>
+				<td colspan="4">
+				{% if session['user'].is_Member %}
+					<span class='glyphicon glyphicon-thumbs-up' style='color:green'></span> <i style='color:green'>Vous êtes adhérent! Frais de livraison : Gratuit</i>
+				{% else %}
+					<span class='glyphicon glyphicon-warning-sign' style='color:red'></span> <i style='color:red'>Vous n'êtes pas encore adhérent! Frais de livraison : 5€</i>
+				{% endif %}
+				</td>
+			</tr>
 		</table>
+		
      <!--</div>-->
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <a href="{{base_path}}/order/ini"><button type="button" class="btn btn-primary">Commander</button></a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <a href="{{base_path}}/order/ini"><button type="button" class="btn btn-primary" {% if session['basket_amount'] == 0 %} disabled="disabled" {% endif %} >Commander</button></a>
       </div>
 	 </div>
   </div>

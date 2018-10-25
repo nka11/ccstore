@@ -1,0 +1,50 @@
+<div class="col-md-10">
+	<div class="row">
+		<div class="col-md-8 col-xs-12 col-sm-9">
+			<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded" alt="image grand format" style="background-color:green;"/>
+		</div>
+		<div class="col-md-4">
+				<div class="panel panel-default">
+						<div class="panel-heading">
+							 <h4 class="panel-title text-uppercase">{{ product.label }} <div class="panel-title text-right">{{ product.price_unit }} €<sup>{{product.price_deci}}</sup></div></h4>
+							 <small>{{product.ref}}</small>
+						</div>
+						<table class="table">
+							<tr>
+								<th>Emballage : </th>
+								<td>{{product.packaging }}</td>
+							</tr>
+							<tr>
+								<th>Poids : </th>
+								<td>{{product_package_weight}}{{product.weight_unit}}</td>
+							</tr>
+							<tr>
+								<th>Prix à l'unité : </th>
+								<td>{{product.priceper}} € / {{product.weight_unit_ref}}</td>
+							</tr>
+						</table>
+						<div class="panel-body">	
+							<p>{{product.description}}</p>
+						</div>
+				</div>
+		</div>
+	</div><br/>
+	<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">Autres produits pour ce producteur : </h4>
+					</div>
+					<div class="panel-body">
+						<ul class="list-inline list-unstyled">
+							{% for product in product.supplier.products %}
+								<li class="col-md-3">
+									{% include "objects/product/li.html" %}
+								</li>
+							{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

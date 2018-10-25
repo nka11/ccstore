@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="keywords" content="Court, Circuit, Sénart, Alimentation, Locale, Produits, Fermiers, Agriculture">
+	<meta name="description" content="Association spécialisée dans la distribution de produits fermiers locaux.
+	Prodcteurs de Seine-et-Marne, de l'Essonne et du Val-de-Marne. Retrouver tout le savoir faire local.
+	Livraison à domicile.">
+    <title>{% block title %}Court Circuit Sénart - Distribution de produits fermiers locaux{% endblock %}</title>
+	<!--Favicon-->
+	<link rel="icon" type="image/png" href="files/ProfilFacebook.png" />
+    <!-- Bootstrap -->
+    <link href="{{ base_path }}/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{ base_path }}/css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+@font-face{
+
+	font-family	:	'PoetsenOne-Regular';
+	src					:	url('{{base_path}}/files/design/polices/PoetsenOne-Regular.ttf');
+
+}
+@font-face{
+	font-family:	'Montserrat';
+	src			:	url('{{base_path}}/files/font/Montserrat-Bold.otf');
+}
+.jumbotron{
+	background-color	:	white;<!--url('files/CourtCircuitN16039.jpg')-->
+	background-size		:	cover;
+	background-repeat	:	no-repeat;
+}
+</style>
+{% set days= {"1" : "Lundi", "2" : "Mardi", "3" : "Mercredi", "4" : "Jeudi", "5" : "Vendredi", "6" : "Samedi", "7" : "Dimanche"} %}
+{% set months= {"1" : "Janvier", "2" : "Février", "3" : "Mars", "4" : "Avril", "5" : "Mai", "6" : "Juin", "7" : "Juillet", "8" : "Août", "9" : "Septembre", "10" : "Octobre", "11" : "Novembre", "12" : "Décembre"} %}
+  </head>
+  <body>
+		<div class="modal fade" id="myBasket" tabindex="-1" role="dialog" aria-labelledby="basketLabel">
+				{% include "basket_box.html" %}
+		</div>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ base_path }}/" style="margin-left: 10px;padding:0px"><img alt="COURT CIRCUIT" src="{{ base_path }}/files/design/logo/CourtCircuitSenartLogo02blanc.png" height="50px"/></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="{{ base_path }}/"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li><a href="{{ base_path }}/store">Boutique</a></li>
+				<li><a href="{{base_path}}/supplier">Producteurs</a></li>
+				<!--<li><a href="#traiteur">Traiteur</a></li>-->
+				<!--<li><a href="#about">FAQ</a></li>-->
+				<li><a href="{{ base_path }}/contactUs">Contact</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{% if session['status'] == 'visitor' %}
+					{% include "customer_auth.html" %}
+				{% elseif session['status'] == 'user' %}
+					{% include "customer_box.html" %}
+				{% elseif session.status == 'admin' %}
+					{% include "admin/box/box.html" %}
+				{% endif %}
+			</ul>
+		   <button type="button" class="btn btn-success navbar-btn navbar-right" data-toggle="modal" data-target="#myBasket">
+				<span class="glyphicon glyphicon-shopping-cart"></span> Mon panier <span class="badge">{{session['basket']|length}}</span>
+			</button>
+        </div><!--/.navbar-collapse -->
+    </nav>
+	<!-- week and order block panel -->
+	<!-- {% include "orderblock.html" %}-->
+	<!-- end week and orderblock panel -->
+	<!-- alertblock -->
+	{% include "alert/alertblock.html" %}
+	{% block content %}{% endblock %}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ base_path }}/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- <script src="{{ base_path }}/js/validator.js"></script>-->
+  </body>
+</html>

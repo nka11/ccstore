@@ -1,0 +1,19 @@
+<table class="table">
+	<tr>
+		<th>Référence</th>
+		<th>Désignation</th>
+		<th>Catégorie</th>
+		<th>Prix achat TTC</th>
+		<th>Prix vente</th>
+	</tr>
+	{% for product in supplier.products %}
+	<tr>
+		<td>{{ product.ref }}</td>
+		<td>{{ product.label }}</td>
+		<td>{{ product.category.label }}</td>
+		<td>{{ product.supplier_price }} €</td>
+		<td>{{ product.price }}</td>
+	</tr>
+	{% endfor %}
+<!-- AJOUTER UN FORMULAIRE RAPIDE POUR AJOUTER UN PRODUIT -->
+</table>

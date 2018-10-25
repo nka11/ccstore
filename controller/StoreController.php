@@ -9,31 +9,47 @@ class StoreController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-	//return parent::render('maintenance.html', array("message" => "Correction d'un bug entrainant l'affichage en doublon de certains produits."));
-	$categories = $this->loadCategories();
-	$products = $this->loadProducts();
+	$categories = $this->dbManager->loadCategories();
+	$products = $this->dbManager->loadProducts();
     return parent::render('store.html', array(
 		"products" => $products,
 		"categories" => $categories
 	));
   }
   /**
+    * @Route("/")  																							// show products for one category
+	* @Method("POST")
+	*/
+   function selectAction(){
+	   $products=array();
+	   $id_cat= ( array_key_exists('id_cat', $_POST))
+				?	$_POST['id_cat']
+				:	null;
+		$category = ($id_cat && $id_cat!= null && $id_cat!="")
+				?	$this->dbManager->loadCategory($id_cat)
+				:	null;
+	   $categories = $this->dbManager->loadCategories();
+	   $products= ( !$category)
+				?	$this->dbManager->loadProducts()
+				:	array();
+	    return parent::render('store.html', array(
+		"products"	=>	$products,
+		"categories" => $categories,
+		"category"		=> $category
+	));
+   }
+  /**
    * @Route("/:id")
    * @Method("GET")
    */
    function detailAction($id) {
-	   $categories = $this->loadCategories();
-	   $product = $this->pdao->getProductById($id);
-	   if($product){
-		   $product= $this->hydrateProduct($product);
-		   $products= $this->pdao->getProductsBySupplier($product->fk_supplier());
-			return parent::render('plug.html', array(
-				"categories" => $categories,
-				"product" => $product,
-				"products"	=> $products
-				));
-	   } 
-	   else return parent::render("error/403.html", array("message"=>"Le produit n'existe pas"));
+		$productID= (int) $id;
+		$categories = $this->dbManager->loadCategories();
+		$product = $this->dbManager->loadProduct($productID);
+		return parent::render('store/plug.html', array(
+			"categories" => $categories,
+			"product" => $product,
+			));
    }
    /**
     * @Route("/category/:id")  																							// show products for one category
@@ -41,17 +57,10 @@ class StoreController extends AbstractController {
 	*/
    function narrowAction($id){
 	   $products=array();
-	   $categories = $this->loadCategories();
+	   $categories = $this->dbManager->loadCategories();
 	   // load asked category
-	   $category = $this->cdao->getCategoryById($id);
-	   if($category) $category = $this->hydrateCategory($category);
-	   else{
-		   $message="Catégorie demandée introuvable";
-			http_response_code(400); //bad request
-			return parent::render("error/400.html", array("message"=> $message));
-	   }
+	   $category = $this->dbManager->loadCategory($id);
 	    return parent::render('store.html', array(
-		"products" => $products,
 		"categories" => $categories,
 		"category"		=> $category
 	));
@@ -61,47 +70,36 @@ class StoreController extends AbstractController {
 	* @Method("POST")
 	*/
    function addArticleAction(){
-	   $amount=NULL;
-	   $id_p=NULL;
-	   if(array_key_exists('amount', $_REQUEST)
+	    $amount=NULL;
+	    $id_p=NULL;
+	    if(array_key_exists('amount', $_REQUEST)
 			&& array_key_exists('id_p', $_REQUEST)){
-		   $amount= (int) $_REQUEST['amount'];
-		   $id_p= (int) $_REQUEST['id_p'];
-		   if($amount && $amount >0 && $amount!= NULL && $amount!=""
+			$amount= (int) $_REQUEST['amount'];
+			$id_p= (int) $_REQUEST['id_p'];
+			if($amount && $amount >0 && $amount!= NULL && $amount!=""
 				&& $id_p && $id_p>0 && $id_p!="" ){
-			  
-			   try{
-			   $product= $this->pdao->getProductById($id_p);
-				}catch (Throwable $t) {
-					$message = "Le produit sélectionné n'existe pas";
-					http_response_code(403); //bad request
-					return parent::render("error/403.html", array("message"=> $message));
-				}
+				$product= $this->dbManager->loadProduct($id_p);
 				if($product){
-						$article= array(
+					$article= array(
 							"amount"=>$amount,
 							"product"=>$product,
 							"value"=> number_format($product->price()*number_format($amount, 2), 2));
-						$_SESSION['basket'][]= $article;
-						$this->handle_session();
-					
-						$products= $this->loadProducts();
-						$categories= $this->loadCategories();
-					return parent::render('store.html', array(
-						"products" => $products,
-						"categories" => $categories
-								));
+					$_SESSION['basket'][]= $article;
+					$this->handle_session();
+					$alert="Produit ajouté au panier";
 				}
-		   }else{
-				$message="Quantité demandé non valide";
-				http_response_code(400); //bad request
-				return parent::render("error/400.html", array("message"=> $message));
-		   }
-	   }else{
-		   $message="Parametre(s) manquant(s)";
-			http_response_code(400); //bad request
-			return parent::render("error/400.html", array("message"=> $message));
-	   }
+				else $alert= "Produit introuvable...";
+		    }
+		    else $alert="Quantité demandé non valide";
+	    }
+		else $alert="Parametre(s) manquant(s)";
+		$categories = $this->dbManager->loadCategories();
+		$products = $this->dbManager->loadProducts();
+		return parent::render("store.html", array(
+									"alert"=>$alert,
+									"products"=>$products,
+									"categories"=>$categories
+									));
    }
    /**
     * @Route("/del/basket/:id")

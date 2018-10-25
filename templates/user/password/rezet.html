@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block content %}
+<div class="wrapper container-fluid">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="mono_layer">
+		<div class="connectionpage_form col-md-6 col-xs-12">
+			<h2 class="text-center">Confirmation de réinitialisation</h2>
+			<form role="form" data-toggle="validator"
+				method="POST" action="{{ base_path }}/user/password/rezet" class="form-horizontal">
+				<div class="form-group form-group-lg">
+					<label class="sr-only" for="email">Email address</label>
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<input name="str" type="text" class="form-control" id="str" placeholder="Code d'identification" autocomplete="off" value="" required/>
+					</div>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Envoyer</button>
+					</div>
+				</div>
+			</form>
+			<div class="text-center"><a href="{{base_path}}/user/connection">Se connecter</a></div>
+		</div>
+		<div class="connectionpage_img col-md-6 hidden-xs">
+			<img class="img-responsive img-rounded" src="{{base_path}}/files/design/connection/img-connection.jpg"/>
+		</div>
+	</div>
+</div>
+{% endblock %}

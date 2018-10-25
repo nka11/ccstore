@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="wrapper container-fluid">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="mono_layer">
+		<div class="connectionpage_form col-md-6 col-xs-12">
+			<h2 class="text-center">Se connecter à Court Circuit</h2>
+			<form role="form" data-toggle="validator"
+				method="POST" action="{{ base_path }}/user/login" class="form-horizontal">
+				<div class="form-group form-group-lg">
+					<label class="sr-only" for="email">Email address</label>
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<input name="email" type="email" class="form-control" id="email" placeholder="E-mail" autocomplete="off" value="E-mail" required/>
+					</div>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="form-group form-group-lg">
+					<label class="sr-only" for="password">Password</label>
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<input name="password" type="password" id="password" class="form-control" placeholder="Mot de passe" data-minlength="6" required/>
+					</div>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<p class="form-control-static"><a href="{{ base_path }}/user/password/forgotten">Mot de passe oublié</a></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-8 col-xs-12">
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Connexion</button>
+					</div>
+				</div>
+				<input name="forward" type="hidden" class="form-control" value="{{ base_path }}{{ path }}"/>
+			</form>
+			<div class="text-center">Pas encore de compte chez Court Circuit ? <a href="{{base_path}}/registration">S'inscrire</a></div>
+		</div>
+		<div class="connectionpage_img col-md-6 hidden-xs">
+			<img class="img-responsive img-rounded" src="{{base_path}}/files/design/connection/img-connection.jpg"/>
+		</div>
+	</div>
+</div>
+{% endblock %}

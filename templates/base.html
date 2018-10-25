@@ -14,7 +14,7 @@
 	<link rel="icon" type="image/png" href="files/ProfilFacebook.png" />
     <!-- Bootstrap -->
     <link href="{{ base_path }}/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="{{ base_path }}/css/ccstore.css" rel="stylesheet">
+	<link href="{{ base_path }}/css/style.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,21 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <style>
-@font-face{
 
-	font-family	:	'PoetsenOne-Regular';
-	src					:	url('{{base_path}}/files/design/polices/PoetsenOne-Regular.ttf');
-
-}
-@font-face{
-	font-family:	'Montserrat';
-	src			:	url('{{base_path}}/files/font/Montserrat-Bold.otf');
-}
-.jumbotron{
-	background-image	:	url('files/CourtCircuitN16039.jpg');
-	background-size		:	cover;
-	background-repeat	:	no-repeat;
-}
 </style>
 {% set days= {"1" : "Lundi", "2" : "Mardi", "3" : "Mercredi", "4" : "Jeudi", "5" : "Vendredi", "6" : "Samedi", "7" : "Dimanche"} %}
 {% set months= {"1" : "Janvier", "2" : "Février", "3" : "Mars", "4" : "Avril", "5" : "Mai", "6" : "Juin", "7" : "Juillet", "8" : "Août", "9" : "Septembre", "10" : "Octobre", "11" : "Novembre", "12" : "Décembre"} %}
@@ -45,40 +31,43 @@
 		<div class="modal fade" id="myBasket" tabindex="-1" role="dialog" aria-labelledby="basketLabel">
 				{% include "basket_box.html" %}
 		</div>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ base_path }}/" style="margin-left: 10px;padding:0px"><img alt="Brand" src="{{ base_path }}/files/design/logo/CourtCircuitSenartLogo02blanc.png" height="50px"/></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="{{ base_path }}/"><span class="glyphicon glyphicon-home"></span></a></li>
-				<li><a href="{{ base_path }}/store">Boutique</a></li>
-				<li><a href="{{base_path}}/supplier">Producteurs</a></li>
-				<!--<li><a href="#traiteur">Traiteur</a></li>-->
-				<!--<li><a href="#about">FAQ</a></li>-->
-				<li><a href="{{ base_path }}/contact">Contact</a></li>
-			</ul>
-			 <ul class="nav navbar-nav navbar-right">
-          {% if session['status'] == 'visitor' %}
-          {% include "customer_auth.html" %}
-          {% else %}
-           {% include "customer_box.html" %}
-          {% endif %}
-		  </ul>
-		   <button type="button" class="btn btn-success navbar-btn navbar-right" data-toggle="modal" data-target="#myBasket">
-				<span class="glyphicon glyphicon-shopping-cart"></span> Mon panier <span class="badge">{{session['basket']|length}}</span>
-			</button>
-        </div><!--/.navbar-collapse -->
-    </nav>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="{{ base_path }}/" ><img alt="Brand" src="{{ base_path }}/files/LogoCC.png" height="50px"/></a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+				{% if session['status'] == 'visitor' %}
+					{% include "navBoxes/guest.html" %}
+				{% elseif session['status'] == 'user' %}
+					{% include "navBoxes/user.html" %}
+				{% elseif session.status == 'admin' %}
+					{% include "navBoxes/guest.html" %}
+				{% endif %}
+					<li class="dropdown" style="margin-right:20px">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Des questions ?<span class="caret"></span></a>
+						<ul class="dropdown-menu" style="padding:10px;">
+							<li><a href="#">Comment ça marche?</a></li>
+							<li><a href="#">Aide</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</li>
+				</ul>
+				<button type="button" class="btn btn-success navbar-btn navbar-right" data-toggle="modal" data-target="#myBasket">
+					<span class="glyphicon glyphicon-shopping-cart" style="margin-right:5px"></span>Votre panier<span class="badge" style="margin-left:5px">{{session['basket']|length}}</span>
+				</button>
+			</div><!--/.navbar-collapse -->
+		</nav>
 	<!-- week and order block panel -->
-	{% include "orderblock.html" %}
+	<!-- {% include "orderblock.html" %}-->
 	<!-- end week and orderblock panel -->
+	<!-- alertblock -->
 	{% block content %}{% endblock %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

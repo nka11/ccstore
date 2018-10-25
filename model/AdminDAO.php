@@ -6,7 +6,7 @@ include_once './vendor/autoload.php';
 class AdminDAO extends AbstractClient {
   public function getAdmins() {
 	$result = array();
-	$req = $this->pdo_db->prepare("SELECT * FROM admin");
+	$req = $this->pdo_db->prepare("SELECT * FROM ".$tb_prefix."admin");
 	$req->execute();
 	
 	while($data = $req->fetch(PDO::FETCH_ASSOC)){
@@ -17,7 +17,7 @@ class AdminDAO extends AbstractClient {
 
   public function getAdminByPseudo($pseudo) {
     $result = array();
-	$req = $this->pdo_db->prepare("SELECT * FROM admin WHERE pseudo='".$pseudo."'");
+	$req = $this->pdo_db->prepare("SELECT * FROM ".$tb_prefix."admin WHERE pseudo='".$pseudo."'");
 	$req->execute();
 	while($data = $req->fetch(PDO::FETCH_ASSOC)){
 		$result[]= $this->mapAdmin($data);
@@ -32,7 +32,7 @@ class AdminDAO extends AbstractClient {
 
   public function getAdminById($id_a) {
     $result = array();
-	$req = $this->pdo_db->prepare("SELECT * FROM admin WHERE rowid=:id_a");
+	$req = $this->pdo_db->prepare("SELECT * FROM ".$tb_prefix."admin WHERE rowid=:id_a");
 	$req->bindValue(":id_a", $id_a, PDO::PARAM_INT);
 	$req->execute();
 	
@@ -51,7 +51,7 @@ class AdminDAO extends AbstractClient {
         || $admin->id_a() <= 0) { // admin must have an id
       return false;
     }
-    $req= $this->pdo_db->prepare("UPDATE admin SET pseudo=:pseudo, password=:password WHERE rowid=:id_a");
+    $req= $this->pdo_db->prepare("UPDATE ".$tb_prefix."admin SET pseudo=:pseudo, password=:password WHERE rowid=:id_a");
 	$req->bindValue(":pseudo", $admin->pseudo());
 	$req->bindValue(":password", $admin->password());
 	$req->bindValue(":id_a", $admin->id_a(), PDO::PARAM_INT);
@@ -61,7 +61,7 @@ class AdminDAO extends AbstractClient {
 	return $admin;
   }
   public function deleteAdmin(Admin $admin) {
-    $req= $this->pdo_db->prepare("DELETE FROM admin WHERE rowid=:id_a");
+    $req= $this->pdo_db->prepare("DELETE FROM ".$tb_prefix."admin WHERE rowid=:id_a");
 	$req->bindValue(":id_a", $admin->id_a(), PDO::PARAM_INT);
 	
 	$admin= getAdminByPseudo($admin->pseudo());
@@ -70,7 +70,7 @@ class AdminDAO extends AbstractClient {
 
   public function login(Admin $admin) {
     $result = array();
-	$req = $this->pdo_db->prepare("SELECT * FROM admin WHERE pseudo=:pseudo AND password=:password");
+	$req = $this->pdo_db->prepare("SELECT * FROM ".$tb_prefix."admin WHERE pseudo=:pseudo AND password=:password");
 	$req->bindValue(":pseudo", $admin->pseudo());
 	$req->bindValue(":password", sha1($admin->password()));
 	$req->execute();
@@ -91,7 +91,7 @@ class AdminDAO extends AbstractClient {
     if ($existing != false) {
       return false;
     }
-    $req=$this->pdo_db->prepare("INSERT INTO admin SET pseudo=:pseudo, password=:password");
+    $req=$this->pdo_db->prepare("INSERT INTO ".$tb_prefix."admin SET pseudo=:pseudo, password=:password");
     $req->bindValue(":pseudo", $admin->pseudo());
 	$req->bindValue(":password", sha1($admin->password()));
 	$req->execute();

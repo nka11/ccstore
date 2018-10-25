@@ -1,0 +1,67 @@
+<table class="table">
+	<tr>
+		<th>Référence</th>
+		<th>Client</th>
+		<th>Type Client</th>
+		<th>Nombre d'article</th>
+		<th>Montant</th>
+		<th>Date validation</th>
+		<th>Provenance</th>
+		<th>Statut</th>
+		<th>Action</th>
+	</tr>
+{% for user_orders in orders['user'] %}
+	{% for order in user_orders %}
+	<tr>
+		<td>{{order.ref}}</td>
+		<td>{{order.customer.name}} {{order.customer.lastname}}</td>
+		<td>{{order.customer_type}}</td>
+		<td>{{order.list_ol|length}}</td>
+		<td>{{order.total_amount}}€</td>
+		<td>{{order.order_date}}</td>
+		<td>{{order.origin}}</td>
+		<td>{{order.status}}</td>
+		<td>
+		<a href="#detailOrder_{{ order.ref }}" data-toggle="modal" data-target="#detailOrder_{{ order.ref }}" title="Voir détail"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+		<a href="{{ base_path }}/admin/pdfGenerator/{{ order.ref }}" target="_blanck" title="Voir le fichier"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></a>
+		</td>
+	</tr>
+	{% endfor %}
+{% endfor %}
+{% for contact_orders in orders['contact'] %}
+	{% for order in contact_orders %}
+	<tr>
+		<td>{{order.ref}}</td>
+		<td>{{order.customer.name}} {{order.customer.lastname}}</td>
+		<td>{{order.customer_type}}</td>
+		<td>{{order.list_ol|length}}</td>
+		<td>{{order.total_amount}}€</td>
+		<td>{{order.order_date}}</td>
+		<td>{{order.origin}}</td>
+		<td>{{order.status}}</td>
+		<td>
+		<a href="#detailOrder_{{ order.ref }}" data-toggle="modal" data-target="#detailOrder_{{ order.ref }}" title="Voir détail"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+		<a href="{{ base_path }}/admin/pdfGenerator/{{ order.ref }}" target="_blanck" title="Voir le fichier"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></a>
+		</td>
+	</tr>
+	{% endfor %}
+{% endfor %}
+{% for organization_orders in orders['organization'] %}
+	{% for order in organization_orders %}
+	<tr>
+		<td>{{order.ref}}</td>
+		<td>{{order.customer.name}} {{order.customer.lastname}}</td>
+		<td>{{order.customer_type}}</td>
+		<td>{{order.list_ol|length}}</td>
+		<td>{{order.total_amount}}€</td>
+		<td>{{order.order_date}}</td>
+		<td>{{order.origin}}</td>
+		<td>{{order.status}}</td>
+		<td>
+		<a href="#detailOrder_{{ order.ref }}" data-toggle="modal" data-target="#detailOrder_{{ order.ref }}" title="Voir détail"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+		<a href="{{ base_path }}/admin/pdfGenerator/{{ order.ref }}" target="_blanck" title="Voir le fichier"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span></a>
+		</td>
+	</tr>
+	{% endfor %}
+{% endfor %}
+</table>

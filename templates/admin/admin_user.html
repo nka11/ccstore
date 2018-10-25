@@ -1,0 +1,25 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add User{% endblock %}
+
+
+{% block content %}
+
+<div class="panel panel-default">
+	<div class="panel panel-heading">
+		<h3 class="panel-title">Inscription</h3>
+		<ul class="nav nav-tabs nav-fill" role="tablist">
+			<li role="presentation" class="nav-item"><a href="#person" aria-controls="all" role="tab" data-toggle="pill">Particulier</a></li>
+			<li role="presentation" class="nav-item"><a href="#organization" aria-controls="all" role="tab" data-toggle="pill">Société</a></li>
+		</ul>
+	</div>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane fade in active" id="person">
+			{% include "registration/registration_personForm.html" %}
+		</div>
+		<div role="tabpanel" class="tab-pane fade" id="organization">
+			{% include "registration/registration_orgaForm.html" %}
+		</div>
+	</div>
+ </div>
+ {% endblock %}

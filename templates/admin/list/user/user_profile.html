@@ -1,0 +1,17 @@
+<div class="panel panel-warning">
+	<div class="panel panel-heading">
+		<h3>{{user.lastname}} {{user.name}} {% if user.is_Member %} (ADHERANTS) {% endif %}</h3>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#infos{{user.id}}" aria-controls="infos" role="tab" data-toggle="pill">Informations</a></li>
+			<li role="presentation"><a href="#orders{{user.id}}" aria-controls="orders" role="tab" data-toggle="pill">Commandes <span class="badge">{{ user.orders|length }}</span></a></li>
+			<li role="presentation"><a href="#address{{user.id}}" aria-controls="address" role="tab" data-toggle="pill">Adresses</a></li>
+			<li role="presentation"><a href="#adhesions{{user.id}}" aria-controls="adhesions" role="tab" data-toggle="pill">Adhésions</a></li>
+		</ul>
+	</div>
+	<div class="tab-content panel-body">
+		<div role="tabpanel" class="tab-pane fade in active" id="infos{{user.id}}">{% include "admin/list/user/tab-content_infos.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="orders{{user.id}}">{% include "admin/list/user/user_orders.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="address{{user.id}}">{% include "admin/list/user/tab-content_address.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="adhesions{{user.id}}">{% include "admin/list/user/tab-content_adhesions.html" %}</div>
+	</div>
+</div>

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Court Circuit - Politique de confidentialité{% endblock %}
+
+{% block content %}
+<div class="wrapper container-fluid">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="hero_layer">
+		<div class="privacy_hero container">
+			<div class="privacy_slogan col-md-4 col-xs-12">
+				<p>{{ privacy.slogan }}</p>
+			</div>
+			<div class="privacy_introduction col-md-8 col-xs-12">
+				<p>{{ privacy.introduction }}</p>
+				<p>Pour plus d'informations : </p>
+				<button type="button" class="btn btn-primary btn-lg">Politique de confidentialité</button>
+			</div>
+		</div>
+	</div>
+	<div class="body_layer">
+		<h2 class="privacy_body_title title-center">Une approche des données construite autour de 4 principes</h2>
+		<div class="privacy_body_core container">
+			<ul class="list-inline list-unstyled">
+				<li class="col-md-6 col-xs-12 text-left">
+					<h2 class="core_subtitle text-center">Nous gardons vos données sécurisées</h2>
+					<p>	Lorsque vous utilisez Court Circuit, vous nous confiez vos données.<br/>
+						Notre équipe travaille pour les protéger contre la fraude, les abus et les accès non autorisés.<br/>
+						Nous avons également mis en place des règles strictes pour nous assurer que seul le strict minimum de personnes
+						a accès aux informations de base dont ils ont besoin pour faire leur travail. Enfin, nous nous sommes engagés à ne pas vendre vos données.
+					</p>
+				</li>
+				<li class="col-md-6 col-xs-12 text-left">
+					<h2 class="core_subtitle text-center">Nous renforçons la confiance consommateurs/producteurs</h2>
+					<p>	Lorsque vous allez sur Court Circuit, vous voulez être sûrs d’ interagir uniquement avec des producteurs dignes de confiance et de trouver des produits sains.
+						Nous avons rencontré chacun des producteurs annoncés sur le site, et évalué leurs méthodes de production.
+						Notre équipe travaille à ce que les informations disponibles et les descriptifs des producteurs soient toujours correctes.
+						
+					</p>
+				</li>
+				<li class="col-md-6 col-xs-12 text-left">
+					<h2 class="core_subtitle text-center">Nous utilisons des données pour améliorer votre expérience</h2>
+					<p>	Nous travaillons tous les jours chez Court Circuit pour nous assurer que notre service répond à vos besoins. 
+						Nous utilisons les données pour améliorer notre site Web ou pour développer de nouvelles fonctionnalités et de nouveaux outils adaptés à vos attentes.
+						Nous stockons certaines informations pour vous éviter de devoir les saisir à chaque fois que vous utilisez Court Circuit.
+						Nous n'utilisons pas votre géolocalisation.
+					</p>
+				</li>
+				<li class="col-md-6 col-xs-12 text-left">
+					<h2 class="core_subtitle text-center">Nous vous fournissons les outils nécessaires pour contrôler vos données</h2>
+					<p>	Grâce aux paramètres de votre compte Court Circuit ou de votre navigateur, vous pouvez modifier vos informations personnelles ou personnaliser 
+						vos préférences de cookies à tout moment.
+						Nous avons également mis en place une adresse e-mail dédiée dans le cas où vous souhaitez nous poser des questions sur notre politique de protection 
+						des données personnelles ou si vous souhaitez accéder à, modifier ou supprimer vos données personnelles.
+					</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="body_layer">
+		<h2 class="privacy_body_title">Nos réponses à vos questions</h2>
+		<p>
+			<i>text area</i>
+		</p>
+	</div>
+</div>
+{%endblock%}

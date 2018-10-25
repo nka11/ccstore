@@ -1,15 +1,26 @@
 <?php
 
-	class User {
+	class User{
  /**
-   *Customer vs database
+   * User vs database
    * 
    */
-		private	$id,
+		private		$id,
+					$lastname,
+					$name,
+					$email,
+					$phone,
 					$password,
-					$login,
-					$rank,
-					$email_code;
+					$registration_date,
+					$email_code,
+					
+					//php support request
+					$temp_code,
+					
+					//php list
+					$orders,
+					$user_address,
+					$user_adhesions=array();
 		
 		public function __construct(array $data)
 		{
@@ -30,18 +41,43 @@
 		
 		//getter
 		
-		public function id(){return $this->id;}
+		public function id() {return $this->id;}
+		public function lastname() {return $this->lastname;}
+		public function name() {return $this->name;}
+		public function email() {return $this->email;}
+		public function phone() {return $this->phone;}
 		public function password(){return $this->password;}
-		public function login(){return $this->email;}
+		public function user_address() {return $this->user_address;}
 		public function rank(){return $this->rank;}
+		public function registration_date() {return $this->registration_date;}
 		public function email_code(){ return $this->email_code;}
+		public function temp_code(){ return $this->temp_code;}
+		public function user_adhesions() { return $this->user_adhesions;}
+		public function orders() { return $this->orders;}
 		
 		//setter
 		
 		public function setId($id) { $this->id = (int) $id;}
+		public function setLastname($lastname) { $this->lastname = $lastname;}
+		public function setName($name) { $this->name = $name;}
+		public function setEmail($email) { $this->email = $email;}
+		public function setPhone($phone) { $this->phone = $phone;}
 		public function setPassword($pw){ $this->password = $pw;}
-		public function setLogin($login){$this->login = $login;}
+		public function setUser_address($user_address) { $this->user_address = $user_address;}
 		public function setRank($rank){$this->rank = $rank;}
+		public function setRegistration_date($reg_date) {$this->registration_date= $reg_date;}
 		public function setEmail_code($code) {$this->email_code= $code;}
+		public function setTemp_code($code) {$this->temp_code= $code;}
+		public function setUser_adhesions($adhesions) {$this->user_adhesions= $adhesions;}
+		public function setOrders($orders) {$this->orders= $orders;}
+
+		//function
 		
+		public function is_Member() {
+			foreach($this->user_adhesions as $adh){
+				if($adh['date_adhesion'] == date("Y")) return true;
+				else return false;
+			}
+			
+		}
 	}

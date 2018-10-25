@@ -1,0 +1,9 @@
+<div class="panel-body">
+	<ul class="list-inline list-unstyled">
+		{% for product in supplier.products %}
+		<li class="col-md-3">
+			{% include "objects/product/li.html" %}
+		</li>
+		{% endfor %}
+	</ul>
+</div>

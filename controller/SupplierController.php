@@ -7,8 +7,8 @@ class SupplierController extends AbstractController {
    * @Route("/")
    * @Method("GET")
    */
-  function indexAction() {
-	$suppliers = $this->loadSuppliers();
+  function indexAction(){
+	$suppliers = $this->dbManager->loadSuppliers();
     return parent::render('suppliers.html', array(
 		"suppliers" => $suppliers
 	));
@@ -18,13 +18,12 @@ class SupplierController extends AbstractController {
 	 * @Method("GET")
 	 */
 	 function itemAction($id){
-		 $sdao = new SupplierDAO();
-		 $supplier = $sdao->getSupplierById($id);
-		if($supplier)	$supplier = $this->hydrateSupplier($supplier);
-		$suppliers= $this->loadSuppliers();
+		$supplier = $this->dbManager->getSupplier($id);
+		if($supplier){
 		 return parent::render('supplier_plug.html',array(
 			"supplier" => $supplier,
 			"suppliers"	=>	$suppliers
 		 ));
+		}
 	 }
 }

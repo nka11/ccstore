@@ -6,7 +6,7 @@ include_once './vendor/autoload.php';
 class OrderLineDAO extends AbstractClient {
 	public function getOrderLinesByOrder($order_id){
 		$result=array();
-		$req = $this->pdo_db->prepare("SELECT * FROM order_line WHERE fk_order=".$order_id);
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."order_line WHERE fk_order=".$order_id);
 		$req->execute();
 		 foreach($req->errorInfo() as $e)
 		{
@@ -21,7 +21,7 @@ class OrderLineDAO extends AbstractClient {
 	}
 	public function getOrderLineById($id){}
 	public function createOrderLine(OrderLine $orderline){
-		 $req=$this->pdo_db->prepare('INSERT INTO order_line SET fk_order=:fk_order, fk_product=:fk_product, amount=:amount, ol_value=:value');
+		 $req=$this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."order_line SET fk_order=:fk_order, fk_product=:fk_product, amount=:amount, ol_value=:value");
 		 $req->bindValue(':fk_order', $orderline->fk_order(), PDO::PARAM_INT);
 		 $req->bindValue(':fk_product', $orderline->fk_product(), PDO::PARAM_INT);
 		 $req->bindValue(':amount', $orderline->amount(), PDO::PARAM_INT);

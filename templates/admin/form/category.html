@@ -1,0 +1,40 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add category{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{% if event != NULL %}Modifier {% else %}Ajouter {% endif %} une catégorie</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" action="{{ base_path }}/admin/post/category">
+			<div class="form-group">
+				<label for="label" class="col-sm-2 control-label">Label :</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="label" name="label" value="{{category.label}}"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="id_parent" class="col-sm-2 control-label">Catégorie parente :</label>
+				<div class="col-sm-10">
+					<select name="id_parent" id="id_parent" class="form-control">
+						<option value=""></option>
+						{% for cat in categories %}
+						<option value="{{ cat.id }}" {% if cat.id == category.id_parent %} selected{% endif %}>{{ cat.label }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+				<textarea name="description" class="form-control" id="description" cols="30" rows="4">{{ category.description }}</textarea>
+			</div>
+			<input type="hidden" id="mode" name="mode" value="{% if category != NULL %}edit{% else %}add{% endif %}"/>
+			{% if category != NULL %} <input type="hidden" name="id_category" id="id_category" value="{{category.id}}"/>{% endif %}
+			<div class="col-md-4 col-md-offset-4">
+			<button type="submit" class="btn btn-primary">{% if category != NULL %}Modifier{% else %}Ajouter{% endif %}</button>
+			</div>
+		</form>
+ {% endblock %}

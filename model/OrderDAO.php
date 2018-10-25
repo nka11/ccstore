@@ -1,12 +1,16 @@
 <?php
 require_once("./model/AbstractClient.php");
 require_once("./model/class/Order.class.php");
+require_once("./model/class/Customer.class.php");
 include_once './vendor/autoload.php';
 
 class OrderDAO extends AbstractClient {
-	public function getOrders(){
+	public function getOrders($customer_type=NULL){
 		$result=array();
-		$req = $this->pdo_db->prepare("SELECT * FROM cc_order");
+		$string_type= ($customer_type!=NULL)
+					?	" WHERE customer_type='".$customer_type."'"
+					:	"";
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order".$string_type." ORDER BY order_date DESC");
 		$req->execute();
 		
 		if ($req->rowCount() > 0){
@@ -18,7 +22,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function getOrderById($id){
 		$order=null;
-		$req= $this->pdo_db->prepare("SELECT * FROM cc_order WHERE rowid=".$id);
+		$req= $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order WHERE rowid=".$id);
 		$req->execute();
 		
 		if($req->rowCount() == 1){
@@ -31,7 +35,7 @@ class OrderDAO extends AbstractClient {
 		}
 	}
 	public function getOrderByRef($ref){
-		$req = $this->pdo_db->prepare('SELECT * FROM cc_order WHERE ref=:ref');
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order WHERE ref=:ref");
 		$req->bindValue(':ref', $ref);
 		$req->execute();
 		
@@ -44,9 +48,23 @@ class OrderDAO extends AbstractClient {
 			return false;
 		}	
 	}
+	public function getOrdersByUser($user, $status=null){
+		$orders=array();
+		$req_string= "SELECT * FROM ".$tb_prefix."cc_order WHERE fk_customer=".$user->id();
+		$req_string.= ($status!=null)
+							?	" AND status= '$status'"
+							:	"";
+		$req = $this->pdo_db->prepare($req_string);
+		$req->execute();
+			while($data = $req->fetch(PDO::FETCH_ASSOC)){
+				$orders[] = $this->mapOrder($data);
+			}
+			if(count($orders) == 1 && $status == 'Pending') return $orders[0];
+			else return $orders;
+	}
 	public function getOrdersByCustomer($customer, $status=null){
 		$orders=array();
-		$req_string= "SELECT * FROM cc_order WHERE fk_customer=".$customer->id();
+		$req_string= "SELECT * FROM ".$this->tb_prefix."cc_order WHERE fk_customer=".$customer->id()." AND customer_type='".get_class($customer)."'";
 		$req_string.= ($status!=null)
 							?	" AND status= '$status'"
 							:	"";
@@ -59,8 +77,9 @@ class OrderDAO extends AbstractClient {
 			else return $orders;
 	}
 	public function createOrder(Order $order){
-		 $req=$this->pdo_db->prepare('INSERT INTO cc_order SET fk_customer=:fk_customer, ref=:ref, total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_cost= :delivery_cost, delivery_date=:delivery_date, status=:status, order_date=NOW()');
+		 $req=$this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."cc_order SET fk_customer=:fk_customer, customer_type=:customer_type, ref=:ref, total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_cost= :delivery_cost, delivery_date=:delivery_date, origin=:origin, status=:status, order_date=NOW()");
 		 $req->bindValue(':fk_customer', $order->fk_customer(), PDO::PARAM_INT);
+		 $req->bindValue(':customer_type', $order->customer_type());
 		 $req->bindValue(':ref', $order->ref());
 		 $req->bindValue(':total_amount', $order->total_amount());
 		 $req->bindValue(':delivery_address', $order->delivery_address());
@@ -70,6 +89,7 @@ class OrderDAO extends AbstractClient {
 		 $req->bindValue(':delivery_week', $order->delivery_week());
 		 $req->bindValue(':delivery_instructions', $order->delivery_instructions());
 		 $req->bindValue(':delivery_cost', $order->delivery_cost(), PDO::PARAM_INT);
+		 $req->bindValue(':origin', $order->origin());
 		 $req->bindValue(':status', $order->status());
 		 $req->execute();
 		 
@@ -86,7 +106,7 @@ class OrderDAO extends AbstractClient {
 			}
 	}
 	public function updateOrder(Order $order){
-		 $req=$this->pdo_db->prepare('UPDATE cc_order SET total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_date=:delivery_date, status=:status WHERE ref=:ref');
+		 $req=$this->pdo_db->prepare("UPDATE ".$this->tb_prefix."cc_order SET total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_date=:delivery_date, origin=:origin, status=:status WHERE ref=:ref");
 		 $req->bindValue(':ref', $order->ref());
 		 $req->bindValue(':total_amount', $order->total_amount());
 		 $req->bindValue(':delivery_address', $order->delivery_address());
@@ -95,6 +115,7 @@ class OrderDAO extends AbstractClient {
 		 $req->bindValue(':delivery_date', $order->delivery_date());
 		 $req->bindValue(':delivery_week', $order->delivery_week());
 		 $req->bindValue(':delivery_instructions', $order->delivery_instructions());
+		 $req->bindValue(':origin', $order->origin());
 		 $req->bindValue(':status', $order->status());
 		 $req->execute();
 		 
@@ -111,7 +132,7 @@ class OrderDAO extends AbstractClient {
 			}
 	}
 	public function deleteOrder(Order $order){
-		$this->pdo_db->exec('DELETE FROM cc_order WHERE ref = '.$order->ref());
+		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."cc_order WHERE ref = ".$order->ref());
 		
 		$order= $this->getOrderByRef($order->ref());
 		if(!$order) return true;
@@ -123,6 +144,7 @@ class OrderDAO extends AbstractClient {
 			"ref"=>$data['ref'],
 			"total_amount"=>$data['total_amount'],
 			"fk_customer"=>$data['fk_customer'],
+			"customer_type"=>$data['customer_type'],
 			"delivery_address"=>html_entity_decode($data['delivery_address']),
 			"delivery_town"=>html_entity_decode($data['delivery_town']),
 			"delivery_zip"	=>html_entity_decode($data['delivery_zip']),
@@ -131,6 +153,7 @@ class OrderDAO extends AbstractClient {
 			"delivery_week"	=>	$data['delivery_week'],
 			"delivery_cost"		=>	$data['delivery_cost'],
 			"order_date"=>$data['order_date'],
+			"origin"=>	$data['origin'],
 			"status"=>$data['status']
 	  ));
 	  return $order;

@@ -1,0 +1,12 @@
+<div class="container-fluid left-text">
+	<table class="table">
+		<tr>
+			<th>Année</th>
+		</tr>
+		{% for adhesion in user.user_adhesions %}
+			<tr>
+				<td>{{ adhesion.date_adhesion }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

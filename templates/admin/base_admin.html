@@ -35,23 +35,51 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ base_path }}">Court Circuit <span class="glyphicon glyphicon-home"></span></a>
+          <a class="navbar-brand" href="{{ base_path }}/">Court Circuit <span class="glyphicon glyphicon-home"></span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></span>Boutique<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boutique<span class="caret"></span></a>
 					<ul class="dropdown-menu col-md-6" style="padding:10px;">
-						<li><a href="{{ base_path }}/admin/product">Produits</a></li>
 						<li><a href="{{ base_path }}/admin/category">Categories</a></li>
+						<li><a href="{{base_path}}/admin/supplier">Producteurs</a></li>
+						<li><a href="{{ base_path }}/admin/product">Produits</a></li>
+						<li><a href="{{ base_path }}/admin/user">Utilisateurs</a></li>
+						<li><a href="{{base_path}}/admin/order">Commandes</a></li>
 					</ul>
 				</li>
-				<li><a href="{{base_path}}/admin/supplier">Producteurs</a></li>
-				<li><a href="{{base_path}}/admin/order">Commandes</a></li>
-				<li><a href="{{base_path}}/admin/customer">Clients</a></li>
+				<li><a href="{{base_path}}/admin/event">Agenda</a></li>
+				<li><a href="{{base_path}}/admin/animation">Animation</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Commercial<span class="caret"></span></a>
+					<ul class="dropdown-menu col-md-6" style="padding:10px;">
+						<li><a href="{{ base_path }}/admin/contact">Particuliers</a></li>
+						<li><a href="{{ base_path }}/admin/organization">Sociétés</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team<span class="caret"></span></a>
+					<ul class="dropdown-menu col-md-6" style="padding:10px;">
+						<li><a href="{{ base_path }}/admin/member">Membres</a></li>
+						<li><a href="{{ base_path }}/admin/office">Bureau</a></li>
+						<li><a href="{{ base_path }}/admin/asso">Court Circuit</a></li>
+					</ul>
+				</li>
 			</ul>
+			 <ul class="nav navbar-nav navbar-right">
+			{% if session.status == "admin" %}
+			{% include "admin/box/box.html" %}
+			{% endif %}
+			</ul>
+		  </ul>
         </div><!--/.navbar-collapse -->
     </nav>
+	{% include "admin/alert/alertblock.html" %}
+	<div>
+		<p>Session : {{session.status}}</p>
+		<p>- user : {{session.user.pseudo}}</p>
+	</div>
     {% block content %}{% endblock %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

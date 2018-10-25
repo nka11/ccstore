@@ -1,0 +1,49 @@
+<table class="table">
+	<tr>
+		<th>Genre</th>
+		<th>Nom</th>
+		<th>Prénom</th>
+		<th>Fonction</th>
+		<th>Email</th>
+		<th>Téléphone</th>
+	</tr>
+	{% for contact in orga.contacts %}
+	<tr>
+		<td>{{ contact.gender }}</td>
+		<td>{{ contact.lastname }}</td>
+		<td>{{ contact.name }}</td>
+		<td>{{ contact.fn }}</td>
+		<td>{{ contact.email }}</td>
+		<td>{{ contact.phone }}</td>
+	</tr>
+	{% endfor %}
+	<tr>
+		<form class="form-inline" action="{{ base_path }}/admin/post/organizationContact/{{ orga.id }}" method="POST">
+			<td class="form-group">
+				<select name="gender" class="form-control input-sm">
+					<option value="Monsieur">Monsieur</option>
+					<option value="Madame">Madame</option>
+				</select>
+			</td>
+			<td class="form-group">
+				<input type="text" class="form-control input-sm" id="lastname" name="lastname" placeholder="Nom"/>
+			</td>
+			<td class="form-group">
+				<input type="text" class="form-control input-sm" id="name" name="name" placeholder="Prénom"/>
+			</td>
+			<td class="form-group">
+				<input type="text" class="form-control input-sm" id="fn" name="fn" placeholder="Fonction"/>
+			</td>
+			<td class="form-group">
+				<input type="text" class="form-control input-sm" id="email" name="email" placeholder="Email"/>
+			</td>
+			<td class="form-group">
+				<input type="text" class="form-control input-sm" id="phone" name="phone" placeholder="Phone"/> 
+			</td>
+			<td>
+				<input type="hidden" name="mode" value="add"/>
+				<button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+			</td>
+		</form>
+	</tr>
+</table>

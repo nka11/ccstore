@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Fiche produit : {{product.title}}{% endblock %}
+
+
+{% block content %}
+<div class="wrapper container-fluid">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="store_layer">
+	  <!-- Example row of columns -->
+	  <!-- div class="row" -->
+	  {% include "store/sidebar.html" %}
+	  {% include "store/product/div.html" %}
+	</div>
+</div>
+{% endblock %}
+

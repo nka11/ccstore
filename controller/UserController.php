@@ -1,9 +1,9 @@
 <?php
-
 require_once './vendor/autoload.php';
 require_once './controller/AbstractController.php';
 require_once './model/class/orderPDF.class.php';
-require_once './model/CustomerDAO.php';
+require_once './model/UserDAO.php';
+require_once './model/ContactDAO.php';
 class UserController extends AbstractController {
   /**
    * Index /user/, shows user profile
@@ -15,14 +15,25 @@ class UserController extends AbstractController {
 	$user= $this->init();
 	if(!$user) return parent::render("alert_connexion_required.html"); // escape visitor session and invit for log in
 	else{
-		$orders= $this->odao->getOrdersByCustomer($user);
-		foreach($orders as $order){
-			$order = $this->hydrateOrder($order);
-		}
+		$orders= $this->dbManager->loadOrders($user);
 		return parent::render('user/user.html', array(
-													"customer" => $user,
-													"orders"		=> $orders) );
+													"user"  => $user,
+													"orders"=> $orders) );
 	}
+  }
+  /**
+   * Call Connection Page
+   *
+   * @Route("/connection")
+   * @Method ("GET")
+   */
+   function connectionAction() {
+		if(empty($_SESSION['user'])){
+			return parent::render('user/connection.html');
+		}
+		else{
+			return parent::render('user/dashboard.html');
+		}
   }
   /**
    * Login method
@@ -40,16 +51,17 @@ class UserController extends AbstractController {
     // check param
     if ($email != null && $email != "" 
       && $password != null && $password != "") {
-      $customer = $this->custdao->getCustomerByEmail($email);
-      if ($customer) {
-			if(password_verify($password, $customer->password())){
+      $user = $this->dbManager->loadUserByEmail($email);
+      if ($user) {
+			if(password_verify($password, $user->password())){
 				// Login success
-				$_SESSION['status'] = 'customer';
-				$_SESSION['user'] = $customer;
+				$_SESSION['status'] = 'user';
+				$_SESSION['user'] = $user;
 				if (array_key_exists('forward',$_REQUEST)) {
 					return header('Location: '.$_REQUEST['forward']);
 				}
-			  return header('Location: '.$this->base_path);
+				$alert= "Bonjour ".$user->name()."!";
+				return parent::render("user/dashboard.html", array("alert"=>$alert));
 			}  
 			else {
 				// Login failure
@@ -84,22 +96,96 @@ class UserController extends AbstractController {
     }
     return header('Location: '.$this->base_path);
   }
-  
 	/**
-	 * new customer email validation
+	 * User password forgotten
+	 * @Route("/password/forgotten")
+	 * @Method("GET")
+	 */
+	function pwForgottenAction(){
+		return parent::render("user/password/forgotten.html");
+	}
+	/**
+	 * User password rezet
+	 * @Route("/password/rezet")
+	 * @Method("POST")
+	 */
+	function pwRezetAction(){
+		$email=null;
+		$str=null;
+		$user=null;
+		$alert=null;
+		if (array_key_exists('email', $_POST)){
+			$email = $_POST['email'];
+			// check param
+			if ($email && $email != null && $email != ""){
+				$user = $this->dbManager->loadUserByEmail($email);
+				if($user){
+					$str = "0123456789"; // 10 caractères au total
+					$str = str_shuffle($str);
+					$str = substr($str,0,6);
+					$this->sendRequest($user, $str);
+					$str = password_hash($str, PASSWORD_DEFAULT);
+					$user->setTemp_code($str);
+					$_SESSION['temp_request']= $user;
+					
+					return parent::render("user/password/rezet.html");
+				}
+				else{
+					$alert= "Aucun compte utilisateur correspondant";
+					return parent::render("user/password/forgotten.html", array(
+																				"alert"	=>	$alert,
+																				"str"	=>	$str));
+				}
+			}
+			else{
+				$alert= "Adresse email non valide";
+			}
+		}
+		elseif(array_key_exists('str', $_POST)){
+			$str = $_POST['str'];
+			// check param
+			if($str && $str!=null && $str !=""){
+				if(password_verify($str, $_SESSION['temp_request']->temp_code())){
+					// Handle session
+					$user= $_SESSION['temp_request'];
+					// generate new password
+					$new= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+					$new = str_shuffle($new);
+					$new = substr($new,0,8);
+					$xnew = password_hash($new, PASSWORD_DEFAULT);
+					// update user password
+					$user->setPassword($xnew);
+					$user= $this->dbManager->update($user);
+					// Envoyer un mail avec nouveau mot de passe.
+					if($user){
+						$this->sendMail($user, $new);					
+						$alert= "Authentification réussie : Votre mot de passe à été réinitialisé. Un mail vous a été adressé.";
+					}
+					else $alert= "Une erreur inconnue s'est produite. Veuillez réessayer."; 
+					return parent::render("user/connection.html", array("alert" => $alert));
+				}
+				else{
+					$alert= "Authentification échouée";
+					return parent::render("user/connection.html", array("alert" => $alert));
+				}
+			}
+		}
+	}
+	/**
+	 * new user email validation
 	 * @Route("/validation/:id/:code")
 	 * @Method("GET")
 	 */
 	function validationAction($id, $code){
-		$customer = ( htmlentities($id) != null)
-				?	$this->custdao->getCustomerById((int)$id)
+		$user = ( htmlentities($id) != null)
+				?	$this->dbManager->loadUser((int)$id)
 				:	false;
-		if($customer) {
+		if($user) {
 			//check email_code
-			if($customer->email_code() != "is_valid"){ // escape email already verified
-				if( $customer->email_code() == $code){
-					$customer->setEmail_code("is_valid");
-					$customer = $this->custdao->updateCustomer($customer);
+			if($user->email_code() != "is_valid"){ // escape email already verified
+				if( $user->email_code() == $code){
+					$user->setEmail_code("is_valid");
+					$user= $this->dbManager->update($user);
 					return parent::render("email_validation_success.html");
 				}
 				else{
@@ -133,11 +219,11 @@ class UserController extends AbstractController {
 		}
 		elseif($user){
 			// treatment done successfully
-			$customer = $this->custdao->updateCustomer($user);
-			$message = ($customer)
-								?	"Modifications enregistrées"
-								:	"Erreur de traitement";
-			$_SESSION['user'] = $customer;
+			$user = $this->dbManager->update($user);
+			$message = ($user)
+						?	"Modifications enregistrées"
+						:	"Erreur de traitement";
+			$_SESSION['user'] = $user;
 			$this->handle_session();
 		}
 		return parent::render("/user/user.html", array("message"=>$message));
@@ -148,11 +234,11 @@ class UserController extends AbstractController {
 	 */
 	 public function pdfGeneratorAction($ref){
 		$order=	(htmlentities($ref) != null) 
-					?	$this->odao->getOrderByRef($ref)
+					?	$this->dbManager->loadOrder($ref)
 					:	false;
-		if($order) $order= $this->hydrateOrder($order);
-		else return parent::render("error/400.html", array("message" => "Commance introuvable"));
-		
+		if(!$order){
+			return parent::render("error/400.html", array("message" => "Commande introuvable"));
+		}
 		// Instanciation de la classe dérivée
 		$pdf = new orderPDF();
 		$pdf->AliasNbPages();
@@ -364,16 +450,20 @@ class UserController extends AbstractController {
 			return $message;
 		}
 	}
-	public function sendMailTo(Customer $customer){
+	public function sendRequest(User $user, $str){
 		
-		$www= "http://www.courtcircuit.bio/user/validation/".$customer->id()."/".$customer->email_code();
-		$to= $customer->email();
-		$subject= "[Court Circuit] Création de votre compte";
-		$message= "Bonjour,\n
-					Votre compte a bien été enregistré. Merci de valider votre adresse mail en cliquant sur le lien suivant :\n
-					".$www."\n
-					Un grand merci pour votre confiance.\n
-					Cordialement,\n
+		//$www= "http://www.courtcircuit.bio/user/validation/".$customer->id()."/".$customer->email_code();
+		$to= "contact@courtcircuit.bio";
+		$subject= "[Court Circuit] Support : Mot de passe oublié";
+		$message= "Mot de passe oublié! \n
+					Compte : ".$user->email()." \n\n
+					Nom : ".ucfirst($user->lastname())." \n
+					Prénom : ".ucfirst($user->name())." \n
+					Téléphone : ".$user->phone()." \n 
+					Envoyer code par téléphone... \n\n
+					
+					CODE : ".$str." \n
+					
 					L'équipe de Court-Circuit Sénart\n\n
 					Ce mail a été généré automatiquement, merci de ne pas y répondre.";
 		$headers  = "MIME-Version: 1.0" . "\r\n";
@@ -390,7 +480,38 @@ class UserController extends AbstractController {
 
 		$mail= mail($to, $subject, $message, $headers);
 	}
-	
+	public function sendMail(User $user, $new){
+		
+		//$www= "http://www.courtcircuit.bio/user/validation/".$customer->id()."/".$customer->email_code();
+		$to= $user->email();
+		$subject= "[Court Circuit] Support : Mot de passe oublié";
+		$message= "Cher utilisateur, \n\
+					Suite à votre demande, votre mot de passe à été réinitialisé.
+					
+					Voici votre nouveau mot de passe : ".$new." \n\n
+					
+					Nous vous conseillons de modifier ce mot de passe rapidement.
+					
+					Si vous n'êtes pas à l'origine de cette action, veuillez nous contacter à l'adresse suivante : \n
+					
+					contact@courtcircuit.bio \n\n
+					
+					L'équipe de Court-Circuit Sénart\n\n
+					Ce mail a été généré automatiquement, merci de ne pas y répondre.";
+		$headers  = "MIME-Version: 1.0" . "\r\n";
+		$headers = ""; // we clear the variable
+		$headers = "From: Ne_pas_répondre <noreply@courtcircuit.bio>\n"; // Adding the From field
+		// $headers = $headers."MIME-Version: 1.0\n"; // Adding the MIME version
+		$headers = $headers."Content-type: text/plain; charset=iso-8859-1\n"; // Add the type of encoding
+		/*
+		$headers .= "Content-type: text/plain; charset=iso-8859-1" . "\r\n";
+		$headers .= ($customer->label()!= null)
+				?	"To: ".$customer->label()." <".$customer->email().">" . "\r\n"
+				:	"To: ".$customer->lastname()." ".$customer->name()." <".$customer->email().">" . "\r\n";
+		$headers .= "From: [Court Circuit] Ne_pas_répondre <noreply@courtcircuit.bio>" . "\r\n";*/
+
+		$mail= mail($to, $subject, $message, $headers);
+	}
 	public function init(){
 		$user= $this->session['user'];
 		if(!$user) return false;

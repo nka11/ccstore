@@ -6,7 +6,7 @@ include_once './vendor/autoload.php';
 class ProductDAO extends AbstractClient {
 	public function getAsso(){
 		$result = array();
-		$req = $this->pdo_db->prepare("SELECT * FROM asso");
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."asso");
 		$req->execute();
 		
 		if ($req->rowCount() ==1){
@@ -26,7 +26,7 @@ class ProductDAO extends AbstractClient {
 		if ($existing != false) {
 		  return false;
 		}
-		$req = $this->pdo_db->prepare('INSERT INTO asso SET  label=:label, president=:president, tresorier=:tresorier, secretaire= :secretaire, adress=:adress, town=:town, zip=:zip');
+		$req = $this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."asso SET  label=:label, president=:president, tresorier=:tresorier, secretaire= :secretaire, adress=:adress, town=:town, zip=:zip");
 		$req->bindValue(':label', $asso->label());
 		$req->bindValue(':president', $asso->president());
 		$req->bindValue(':tresorier', $asso->tresorier());
@@ -46,7 +46,7 @@ class ProductDAO extends AbstractClient {
   }
   
   public function editAsso(Asso $asso){
-	$req= $this->pdo_db->prepare('UPDATE asso SET label=:label, president=:president, tresorier=:tresorier, secretaire= :secretaire, adress=:adress, town=:town, zip=:zip WHERE rowid=:id');
+	$req= $this->pdo_db->prepare("UPDATE ".$this->tb_prefix."asso SET label=:label, president=:president, tresorier=:tresorier, secretaire= :secretaire, adress=:adress, town=:town, zip=:zip WHERE rowid=:id");
 	$req->bindValue(':label', $asso->label());
 	$req->bindValue(':president', $asso->president());
 	$req->bindValue(':tresorier', $asso->tresorier());
@@ -67,7 +67,7 @@ class ProductDAO extends AbstractClient {
   }
   
   public function deleteAsso(Asso $asso){
-	  $req= $this->pdo_db->exec('DELETE FROM asso WHERE rowid='.$asso->id());
+	  $req= $this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."asso WHERE rowid=".$asso->id());
   }
   
   public function mapProduct($data){

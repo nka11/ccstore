@@ -1,0 +1,37 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block content %}
+{% include "admin/list/user/modals/getModals.html" %}
+<div class="container-fluid" style="text-align:left;">
+	<div class="col-md-5">
+		<div class="panel panel-default">
+			<div class="panel-heading">Liste des utilisateurs</div>
+			<div class="panel-body">
+				
+				<ul class="nav nav-pills nav-stacked" role="tablist" style="height:450px;overflow:scroll">
+					{% for user in users %}
+					<li role="presentation" {% if user.id == 1 %} class="active" {% endif %}>
+						<a href="#{{user.id}}" aria-controls="{{user.id}}" role="tab" data-toggle="pill">
+							{{user.lastname}} {{user.name}} - {{user.phone}}<br/>
+							<i>{{user.email}}</i>
+							{% if user.email_code == "is_valid" %}
+							<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green"></span>
+							{% else %}
+							<span class="glyphicon glyphicon-time" aria-hidden="true" style="color:red"></span>
+							{% endif %}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="tab-content col-md-7">
+		{% for user in users %}
+		<div role="tabpanel" class="tab-pane fade{% if user.id == 1 %} in active{% endif %}" id="{{user.id}}">{% include "admin/list/user/user_profile.html" %}</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

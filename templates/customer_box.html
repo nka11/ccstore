@@ -12,6 +12,9 @@ function submitLogout () {
     <li><a href="{{ base_path }}/user/">Profil</a></li>
 		<!-- li><a href="#">Historique des commandes</a></li -->
 		<li role="separator" class="divider"></li>
+		{% if session.user.status == "webmaster" %}
+		<li><a href="{{ base_path }}/admin">Administration</li>
+		{% endif %}
     <li>
         <a href="javascript: submitLogout()"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
     </li>

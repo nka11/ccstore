@@ -9,7 +9,7 @@ class InscriptionController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-    $products = $this->loadProducts();
+    $products = $this->dbManager->loadProducts();
     return parent::render('inscription.html', array("products" => $products));
   }
 }

@@ -1,5 +1,4 @@
 <?php
-
 require_once './vendor/autoload.php';
 require_once './controller/AbstractController.php';
 
@@ -9,8 +8,8 @@ class RegistrationController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-    $products = $this->loadProducts();
-    return parent::render('registration/registration.html', array("products" => $products));
+	if($this->session['status'] == 'admin') return parent::render('registration/registration.html', array("products"=>$products));
+    else return parent::render('registration/registration.html', array("products"=>$products));
   }
   
   /**
@@ -30,6 +29,7 @@ class RegistrationController extends AbstractController {
 		 $zip = null;
 		 $town = null;
 		 $phone = null;
+		 $user = null;
 		// check particular @param
 		if(array_key_exists('label', $_POST)){
 			$label= (!empty($_POST['label']))
@@ -119,34 +119,32 @@ class RegistrationController extends AbstractController {
 					return parent::render("error/400.html", array("message"=> $message));
 			}
 			else { // All param OK
-				$customer = new Customer( array(
+				$user= new User( array(
 					"id" => null,
-					"label" => $label,
 					"email" => $email,
-					"password" => password_hash($password, PASSWORD_DEFAULT),
 					"name" => $name,
 					"lastname" => $lastname,
-					"address" => $address,
-					"zip" => $zip,
-					"town" => $town,
+					"user_address" => array( "0"=> array(
+													"label"=> "Domicile",
+													"address"=> $address,
+													"zip"=> $zip,
+													"town"=> $town)
+											),
 					"phone" => $phone,
-					"email_code" => $this->createPw()
+					"password" => password_hash($password, PASSWORD_DEFAULT),
+					"email_code" => $this->createPw()					
 				));
-				try{
-				$customer = $this->custdao->createCustomer($customer);
-				}
-				catch(Throwable $t){
-						http_response_code(400); //bad request
-						return parent::render("error/400.html", array("message"=> $t));
-				}
+				// Try to create New User . If user already known, return user
+				$user= $this->dbManager->create($user);
 
-				if($customer) {
-						// New customer created successfully
+				if($user) {
+						// New user created successfully
 						/**
-						 * Send mail to customer->email to confirm that email exist.
+						 * Send mail to user->email to confirm that email exist.
 						 */
-					$this->sendMailTo($customer);
-					 return parent::render("inscription_success.html",  array("customer"=>$customer));
+					$this->sendNotification($user);
+					$this->sendMailTo($user);
+					 return parent::render("inscription_success.html",  array("user"=>$user));
 				}
 				else {
 					// Registration failure
@@ -169,16 +167,42 @@ class RegistrationController extends AbstractController {
 		$str = substr($str,0,8);
 		return $str;
 	}
-	public function sendMailTo(Customer $customer){
+	public function sendMailTo(User $user){
 		
-		$www= "http://www.courtcircuit.bio/user/validation/".$customer->id()."/".$customer->email_code();
-		$to= $customer->email();
+		$www= "https://www.courtcircuit.bio/user/validation/".$user->id()."/".$user->email_code();
+		$to= $user->email();
 		$subject= "[Court Circuit] Création de votre compte";
 		$message= "Bonjour,\n
 					Votre compte a bien été enregistré. Merci de valider votre adresse mail en cliquant sur le lien suivant :\n
 					".$www."\n
 					Un grand merci pour votre confiance.\n
 					Cordialement,\n
+					L'équipe de Court-Circuit Sénart\n\n
+					Ce mail a été généré automatiquement, merci de ne pas y répondre.";
+		//$headers  = "MIME-Version: 1.0" . "\r\n";
+		$headers = ""; // we clear the variable
+		$headers = "From: Ne_pas_répondre <noreply@courtcircuit.bio>\n"; // Adding the From field
+		$headers = $headers."MIME-Version: 1.0\n"; // Adding the MIME version
+		$headers = $headers."Content-type: text/plain; charset=iso-8859-1\n"; // Add the type of encoding
+		/*
+		$headers .= "Content-type: text/plain; charset=iso-8859-1" . "\r\n";
+		$headers .= ($customer->label()!= null)
+				?	"To: ".$customer->label()." <".$customer->email().">" . "\r\n"
+				:	"To: ".$customer->lastname()." ".$customer->name()." <".$customer->email().">" . "\r\n";
+		$headers .= "From: [Court Circuit] Ne_pas_répondre <noreply@courtcircuit.bio>" . "\r\n";*/
+
+		$mail= mail($to, $subject, $message, $headers);
+	}
+	public function sendNotification(User $user){
+		
+		//$www= "http://www.courtcircuit.bio/user/validation/".$customer->id()."/".$customer->email_code();
+		$to= "contact@courtcircuit.bio";
+		$subject= "[Court Circuit] Nouvelle inscription";
+		$message= "Nouvelle utilisateur! \n
+					Un nouveau compte à bien été enregistré : \n
+					Nom : ".ucfirst($user->lastname())." \n
+					Prénom : ".ucfirst($user->name())." \n
+					Mail : ".$user->email()." \n\n
 					L'équipe de Court-Circuit Sénart\n\n
 					Ce mail a été généré automatiquement, merci de ne pas y répondre.";
 		$headers  = "MIME-Version: 1.0" . "\r\n";

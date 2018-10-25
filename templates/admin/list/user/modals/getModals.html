@@ -1,0 +1,7 @@
+{% for user in users %}
+	{% for order in user.orders %}
+	<div class="modal fade" id="detailOrder_{{ order.ref }}" tabindex="-1" role="dialog" aria-labelledby="orderLabel">
+		{% include "admin/list/user/modals/order.html" %}
+	</div>
+	{% endfor %}
+{% endfor %}

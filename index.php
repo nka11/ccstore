@@ -1,4 +1,5 @@
 <?php
+
 $path = $_REQUEST['path'];
 if ($path == "" || $path == null || $path == "/index.php") {
   $path = "/";
@@ -9,6 +10,7 @@ require 'conf/controllers.cnf.default.php';
 
 use Pux\Executor;
 
+// MAINTENANCE - URGENCE -
 $mode= "open";
 if($mode != "open"){ require "templates/construction.html";exit();}
 

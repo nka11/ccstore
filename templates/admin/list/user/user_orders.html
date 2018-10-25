@@ -1,0 +1,14 @@
+<ul class="nav nav-pills nav-stacked" role="tablist" style="height:450px;overflow:scroll">
+	{% for order in user.orders %}
+		<li role="presentation" {% if user.orders|keys == 0 %} class="active" {% endif %}>
+		<a href="#detailOrder_{{ order.ref }}" data-toggle="modal" data-target="#detailOrder_{{ order.ref }}" title="Voir détail">
+			{{order.ref}} - {{ order.list_ol|length }} articles - <span class="badge">{{ order.total_amount }} €</span>
+			{% if order.status == "delivred" %}
+				<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green"></span>
+				{% elseif order.status == "pending" %}
+				<span class="glyphicon glyphicon-time" aria-hidden="true" style="color:red"></span>
+			{% endif %}
+		</a>
+		</li>
+	{% endfor %}
+</ul>

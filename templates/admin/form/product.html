@@ -1,0 +1,132 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add Product{% endblock %}
+
+
+{% block content %}
+{% set units = ['Kg', 'g', 'L', 'cl', 'pièce'] %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{% if product %}Modifier {% else %}Ajouter {% endif %} un produit</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" class="form-horizontal" action="{{ base_path }}/admin/post/product" enctype="multipart/form-data">
+			<div class="col-md-6">
+				<h4>REFERENCEMENT</h4>
+				<div class="form-group">
+					<label for="label" class="col-sm-2 control-label">Label</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="label" name="label" placeholder="label" value="{{product.label}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="ref" class="col-sm-2 control-label">Référence</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ref" name="ref" placeholder="REFERENCE" value="{{product.ref}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="agriculture" class="col-sm-2 control-label">Agriculture</label>
+					<div class="col-sm-10">
+						<select name="agriculture" id="agriculture" class="form-control">
+							<option value="biologique" {% if product.agriculture == "biologique" %} selected {% endif %}>biologique</option>
+							<option value="raisonnée" {% if product.agriculture == "raisonnée" %} selected {% endif %}>raisonnée</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="supplier" class="col-sm-2 control-label">Producteur</label>
+					<div class="col-sm-10">
+						<select name="fk_supplier" id="supplier" class="form-control">
+							{% for supplier in suppliers %}
+							<option value="{{supplier.id}}" {% if product.fk_supplier == supplier.id %} selected {% endif %}>{{supplier.label}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="category" class="col-sm-2 control-label">Categorie : </label>
+					<div class="col-sm-10">
+						<select name="fk_category" id="category" class="form-control">
+							<option value="0"></option>
+							{% for category in categories %}
+							<option value="{{category.id}}" {% if product.fk_cat == category.id %} selected {% endif %}>{{category.label}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h4>PRESENTATION</h4>
+				<div class="form-group">
+					<label for="packaging" class="col-sm-2 control-label">Packaging</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="packaging" name="packaging" placeholder="Packaging" value="{{product.packaging}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="package_weight" class="col-sm-2 control-label">Poids</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="package_weight" name="package_weight" placeholder="Poids" value="{{product.package_weight}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="weight_unit" class="col-sm-2 control-label">Unité de poids</label>
+					<div class="col-sm-10">	
+						<select name="weight_unit" id="weight_unit" class="form-control">
+							{% for unit in units %}
+								<option value="{{ unit }}" {% if product.weight_unit == unit %}selected{% endif %}>{{ unit }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="price" class="col-sm-2 control-label">Prix vente</label>
+					<div class="col-sm-10">
+						<input class="form-control" id="price" name="price" type="text" placeholder="Prix (2 décimales)" value="{{product.price}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="supplier_price" class="col-sm-2 control-label">Prix achat</label>
+					<div class="col-sm-10">
+						<input class="form-control" id="suppler_price" name="supplier_price" type="text" placeholder="Prix fournisseur (2 décimales)" value="{{product.supplier_price}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="visibility" class="col-sm-2 control-label">Visibilité</label>
+					<div class="col-sm-10">
+						<select name="visibility" class="form-control">
+							<option value=1 {% if product.visibility == 1 %} selected {% endif %}>Visible</option>
+							<option value=0 {% if product.visibility == 0  %}selected {% endif %}>Invisible </option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="availability" class="col-sm-2 control-label">Disponibilité</label>
+					<div class="col-sm-10">
+						<select name="availability" class="form-control">
+							<option value=1 {% if product.availability == 1 %} selected {% endif %}>Disponible</option>
+							<option value=0 {% if product.availability == 0  %}selected {% endif %}>Indisponible</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<textarea name="description" class="form-control" id="description" cols="30" rows="4">{{ product.description }}</textarea>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+					<label for="picture">Envoyer une image ( 800 x 534 / .jpg): </label>
+					<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+					<input type="file" name="picture"/>
+					</div>
+				</div>
+			</div>
+				<input type="hidden" id="mode" name="mode" value="{% if product %}edit{% else %}add{% endif %}"/>
+				{% if product %} <input type="hidden" name="id_product" id="id_product" value="{{product.id}}"/>{% endif %}
+				<div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{% if product %}Modifier{% else %}Ajouter{% endif %}</button>
+				</div>
+		</form>
+	</div>
+</div>
+ {% endblock %}

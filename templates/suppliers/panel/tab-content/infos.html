@@ -1,0 +1,15 @@
+<div class="container-fluid">
+	<table class="table">
+		<tr>
+			<th>Structure : </th>
+			<td>{{ supplier.label }}</td>
+		</tr>
+		<tr>
+			<th><span class="glyphicon glyphicon-envelope"></span> : </th>
+			<td>{{supplier.address}}, {{ supplier.zip }} {{supplier.town }}</td>
+		</tr>
+	</table>
+	<div>
+		{{supplier.description}}
+	</div>
+</div>

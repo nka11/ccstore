@@ -1,0 +1,21 @@
+{% for user_orders in orders['user'] %}
+	{% for order in user_orders %}
+	<div class="modal fade" id="detailOrder_{{ order.ref }}" tabindex="-1" role="dialog" aria-labelledby="orderLabel">
+		{% include "admin/list/order/modal/order.html" %}
+	</div>
+	{% endfor %}
+{% endfor %}
+{% for contact_orders in orders['contact'] %}
+	{% for order in contact_orders %}
+	<div class="modal fade" id="detailOrder_{{ order.ref }}" tabindex="-1" role="dialog" aria-labelledby="orderLabel">
+		{% include "admin/list/order/modal/order.html" %}
+	</div>
+	{% endfor %}
+{% endfor %}
+{% for organization_orders in orders['organization'] %}
+	{% for order in organization_orders %}
+	<div class="modal fade" id="detailOrder_{{ order.ref }}" tabindex="-1" role="dialog" aria-labelledby="orderLabel">
+		{% include "admin/list/order/modal/order.html" %}
+	</div>
+	{% endfor %}
+{% endfor %}

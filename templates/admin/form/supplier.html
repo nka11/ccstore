@@ -1,0 +1,83 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add supplier{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{% if supplier %}Modifier {% else %}Ajouter {% endif %} un producteur</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" class="form-horizontal" action="{{ base_path }}/admin/post/supplier">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="label" class="col-sm-2 control-label">Label</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="label" name="label" value="{{supplier.label}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="code" class="col-sm-2 control-label">CODE</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="code" name="code" value="{{supplier.code}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label">Téléphone</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="phone" name="phone" value="{{supplier.phone}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="email" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="email" name="email" value="{{supplier.email}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-2 control-label">Adresse</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="address" name="address" value="{{supplier.address}}"/>
+					</div>
+				</div>
+				 <div class="form-group">
+					<label for="zip" class="col-sm-2 control-label">Code Postal</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="zip" name="zip" value="{{supplier.zip}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="town" class="col-sm-2 control-label">Ville</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="town" name="town" value="{{supplier.town}}"/>
+					</div>
+				</div>
+				<input type="hidden" id="mode" name="mode" value="{% if supplier %}edit{% else %}add{% endif %}"/>
+				{% if supplier %}
+				<input type="hidden" id="id_supplier" name="id_supplier" value="{{supplier.id}}"/>
+				{% endif %}
+				  <div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{% if supplier %}Modifier {% else %}Ajouter {% endif %}</button>
+				  </div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="department" class="col-sm-2 control-label">Département</label>
+					<div class="col-sm-10">
+						<select name="department" id="department" class="form-control">
+							<option value="SEINE-ET-MARNE" {% if supplier.department == "SEINE-ET-MARNE" %} selected {% endif %}>SEINE-ET-MARNE</option>
+							<option value="ESSONNE" {% if supplier.department == "ESSONNE" %} selected {% endif %}>ESSONNE</option>
+							<option value="VAL-DE-MARNE" {% if supplier.department == "VAL-DE-MARNE" %} selected {% endif %}>VAL-DE-MARNE</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">Description</label>
+					<textarea name="description" class="form-control" id="description" cols="30" rows="6">{{ supplier.description }}</textarea>
+				</div><br/>
+			</div>
+		 </form>
+  </div>
+</div>
+ {% endblock %}

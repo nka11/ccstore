@@ -3,11 +3,89 @@
 {% block title %}Court Circuit - Distribution de produits fermiers locaux{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-<div class="jumbotron">
-  <img class="img-responsive center-block" src="files/CourtCircuitSenartLogo02Noir.png" style="width:60%"/>
-  <p class="text-center">N'allez pas chercher plus loin...</p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">En savoir plus...</a></p>
-</div>
+<div class="wrapper container-fluid">
+	<img class="homepageBckgd img-responsive" src="{{base_path}}/files/design/portal/JardinTrolls_forWeb.jpg"/>
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="homepage_hero container">
+		<div class="text-center">
+			<h2 class="homepage_hero_title">Vos produits fermiers locaux, <br/><span class="mid_sentence">livrés à domicile</span></h2>
+			<h2 class="homepage_hero_subtitle">Une stratégie économique pour garantir une alimentation saine... <i>durablement!</i></h2>
+			<div class="homepage_form">
+				<form  class="form-inline" method="post" action="{{ base_path }}/store">
+					<select name="id_cat" id="category" class="form-control input-lg">
+						<option value="0">Choisir une catégorie</option>
+						{% for category in categories %}
+						<option value="{{category.id}}">{{category.label}}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="btn btn-primary btn-lg">Rechercher</button>
+				</form>
+			</div>
+			<div class="homepage_oblck">
+				<h2 class="homepage_oblck_delivery_date">Prochaines livraisons<br/><span class="mid_sentence">Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} et Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }}</span></h2>
+			</div>
+		</div>
+	</div>
+	<div class="homepage_footer text-center">
+		<div class="col-md-3 col-md-offset-1">
+			{{ count_products }} produits disponibles issus de l'agriculture biologique et raisonnée locale
+		</div>
+		<div class="col-md-4" style="border-right: solid 2px grey;border-left: solid 2px grey">
+			Cette année, déjà 1100 € reversés dans des projets de territoire inscrits dans une démarche durable
+		</div>
+		<div class="col-md-3">
+			Livraison gratuite pour les adhérents
+		</div>
+	</div>
+	<div class="ordered container">
+		<h2>Commandés fréquemments sur Court Circuit</h2>
+		<p>Sur Court Circuit, vous commandez quand vous en avez besoin!</p>
+		<div class="row">
+			{% for product in exemples %}
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<div class="ordered_img">
+						<a href="{{ base_path }}/store/{{ product.id }}">
+							<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded"/>		
+						</a>
+						<!-- LABEL DU PRODUIT -->
+						{% if product.agriculture == 'biologique' %}
+						<img src="{{base_path}}/files/design/logo/AB.png" class="img-responsive" style="position:absolute;width:10%;left:4px;top:4px" title="Agriculture Biologique"/>
+						{% endif %}
+						<!-- BANDEAU PRODUCTEUR -->
+						<div style="position:absolute;width:100%;left:0px;bottom:4px;background-color:rgba(100, 100, 100, 0.8)">
+			
+							<!--<div class="col-sm-2 col-xs-4"> LOGO </div>-->			<!-- A VOIR -->
+
+							<div class="col-sm-12 col-xs-8">
+								<!--<a href="{{base_path}}/supplier/{{product.supplier.id}}" style="text-decoration:none;color:white">--><small class="text-uppercase" style="color:white">{{ product.supplier.label }}</small><!--</a>--><br/>
+								<small class="text-uppercase">{{product.supplier.town}}, {{product.supplier.department}}, FRANCE</small>
+							</div>
+						</div>
+					</div>
+					<div class="caption">
+						<p>
+							<div class="row">
+								<div class="title text-uppercase col-sm-8 col-xs-8 col-md-6 text-left">
+									<small>{{ product.label }}</small>
+								</div>
+								<div class="price col-sm-4 col-xs-4 col-md-6 text-right">
+									{{ product.price_unit }} €<sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup>
+								</div>
+							</div>
+						</p>
+						<p>
+							<div class="row">
+								<div class="col-sm-6 col-xs-8 col-md-8 text-left"><small>{{ product.packaging }} ~ {{ product.package_weight }} {{ product.weight_unit }}</small></div><div class="col-sm-6 col-xs-4 col-md-4 text-right"><small>{{ product.priceper|number_format(2) }} € / {{ product.weight_unit_ref }}</small></div>
+							</div>
+						</p>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
 </div>
 {%endblock%}

@@ -1,0 +1,14 @@
+<div style="position:relative">
+	<a href="{{ base_path }}/store/{{ product.id }}">
+		<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded"/>
+		{% if product.agriculture == 'biologique' %}
+			<img src="{{base_path}}/files/design/logo/AB.png" class="img-responsive" style="position:absolute;width:15%;right:10px;bottom:10px"/>
+		{% endif %}
+	</a>
+</div>
+<div class="row">
+	<div class="title text-uppercase col-sm-8 col-xs-8 text-left"><small>{{ product.label }}</small></div><div class="price col-sm-4 col-xs-4 text-right">{{ product.price_unit }} €<sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup></div>
+</div>
+<div class="row">
+	<div class="col-sm-6 col-xs-8 text-left"><small>{{ product.packaging }} ~ {{ product.package_weight }} {{ product.weight_unit }}</small></div><div class="col-sm-6 col-xs-4 text-right"><small>{{ product.priceper|number_format(2) }} € / {{ product.weight_unit_ref }}</small></div>
+</div>

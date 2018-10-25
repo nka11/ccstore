@@ -1,0 +1,81 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add Member{% endblock %}
+
+
+{% block content %}
+{% set units = ['Kg', 'g', 'L', 'cl', 'pièce'] %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{% if member != NULL %}Modifier {% else %}Ajouter {% endif %} un membre</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" class="form-horizontal" action="{{ base_path }}/admin/post/member" enctype="multipart/form-data">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">Prénom :</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="name" name="name" value="{{member.name}}"/>
+					</div>
+					<label for="lastname" class="col-sm-2 control-label">Nom :</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="lastname" name="lastname" value="{{member.lastname}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="phone" class="col-sm-2 control-label">Téléphone :</label>
+					<div class="col-sm-4">
+						<input type="text" name="phone" class="form-control" id="phone" value="{{member.phone}}"/>
+					</div>
+					<label for="email" class="col-sm-2 control-label">Email :</label>
+					<div class="col-sm-4">
+						<input type="text" name="email" class="form-control" id="email" value="{{member.email}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fn" class="col-sm-2 control-label">Fonction :</label>
+					<div class="col-sm-4">
+						<select name="fn" id="fn" class="form-control">
+							<option value="Commercial" {% if member.fn == "Commercial" %} selected {% endif %}>Commercial</option>
+							<option value="Chef" {% if member.fn == "Chef" %} selected {% endif %}>Chef</option>
+							<option value="Second" {% if member.fn == "Second" %} selected {% endif %}>Second</option>
+							<option value="Commis" {% if member.fn == "Commis" %} selected {% endif %}>Commis</option>
+							<option value="Serveur" {% if member.fn == "Serveur" %} selected {% endif %}>Serveur</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="Address" class="col-sm-2 control-label">Adresse :</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="address" name="address" value="{{member.address}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="zip" class="col-sm-2 control-label">Code postal :</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="zip" name="zip" value="{{member.zip}}"/>
+					</div>
+					<label for="town" class="col-sm-2 control-label">Ville :</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="town" name="town" value="{{member.town}}"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="col-md-6 col-md-offset-3">
+					<label for="picture">Envoyer une image : </label>
+					<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+					<input type="file" class="form-control" name="picture"/>
+					</div>
+				</div>
+			</div>
+				<input type="hidden" id="mode" name="mode" value="{% if member != NULL %}edit{% else %}add{% endif %}"/>
+				{% if member != NULL %} <input type="hidden" name="id_member" id="id_member" value="{{member.id}}"/>{% endif %}
+				<div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{% if member != NULL %}Modifier{% else %}Ajouter{% endif %}</button>
+				</div>
+		</form>
+	</div>
+</div>
+ {% endblock %}

@@ -1,0 +1,26 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Liste des commandes{% endblock %}
+
+{% block content %}
+{% include "admin/list/order/modal/getModals.html" %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Liste des commandes
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#all_orders" aria-controls="all_orders" role="tab" data-toggle="pill">All</a></li>
+			<li role="presentation"><a href="#user_orders" aria-controls="user_orders" role="tab" data-toggle="pill">Users</a></li>
+			<li role="presentation"><a href="#contact_orders" aria-controls="contact_orders" role="tab" data-toggle="pill">Contacts</a></li>
+			<li role="presentation"><a href="#organization_orders" aria-controls="organization_orders" role="tab" data-toggle="pill">Organizations</a></li>
+		</ul>
+	</div>
+	<div class="tab-content panel-body" style="height:450px;overflow:scroll">
+			<div role="tabpanel" class="tab-pane fade in active" id="all_orders">{% include "admin/list/order/all_orders.html" %}</div>
+			<div role="tabpanel" class="tab-pane fade" id="user_orders">{% include "admin/list/order/user_orders.html" %}</div>
+			<div role="tabpanel" class="tab-pane fade" id="contact_orders">{% include "admin/list/order/contact_orders.html" %}</div>
+			<div role="tabpanel" class="tab-pane fade" id="organization_orders">{% include "admin/list/order/organization_orders.html" %}</div>
+	</div>
+</div>
+
+{% endblock %}
+

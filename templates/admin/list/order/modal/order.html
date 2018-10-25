@@ -1,0 +1,73 @@
+ <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="orderLabel">Détail de commande</h4>
+      </div>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="col-md-6">
+				<strong>Identifiants de la commande</strong>
+				<ul class="list-group">
+					<li class="list-group-item"><b>Date : </b>{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }} {{ order.order_date|date('Y') }}</li>
+					<li class="list-group-item"><b>Référence : </b>{{order.ref}}</li>
+					<li class="list-group-item"><b>A livrer le : </b> {{ days[order.delivery_date|date("N")] }} {{ order.delivery_date|date('d') }} {{ months[order.delivery_date|date('n')] }} {{ order.delivery_date|date('Y') }}</li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<strong>Paramêtres de livraison</strong>
+					<ul class="list-group">
+						<li class="list-group-item"><span class="glyphicon glyphicon-user"></span> {{ order.customer.name }} {{ order.customer.lastname }}</li>
+						<li class="list-group-item"><b><span class="glyphicon glyphicon-envelope"></span></b> {{order.delivery_address}}, {{ order.delivery_zip }} {{order.delivery_town}}</li>
+						<li class="list-group-item"><b><span class="glyphicon glyphicon-comment"></span></b> {{ order.delivery_instructions }}
+						</li>
+					</ul>
+			</div>
+		</div>
+	</div>
+	<table class="table">
+			<tr>
+				<th>Produit</th>
+				<th>Prix unitaire</th>
+				<th>Conditionnement</th>
+				<th>Poids unitaire</th>
+				<th>Quantité</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+			{% for ol in order.list_ol %}
+			<tr>
+				<td>{{ol.product.label}}</td>
+				<td>{{ol.product.price}} €</td>
+				<td>{{ol.product.packaging}}</td>
+				<td>{{ol.product.package_weight}}{{ol.product.weight_unit}}</td>
+				<td>{{ol.amount}}</td>
+				<td>{{ ol.value}} €</td>
+				<td><a href="{{base_path}}/store/del/basket/{{line.product.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="3"><i>Frais de livraison</i></td>
+				<td colspan="2"><i>{% if order.customer.is_Member %} Gratuit {% else %} 5€ {% endif %}</i></td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Montant du panier </b></td>
+				<td colspan="2">{{ order.value }} €</td>
+			</tr>
+		</table>
+      <div class="modal-footer">
+		<form role="form" method="POST" action="{{ base_path }}/order/editStatus">
+			<select name="status" class="form-control">
+				<option value="confirmed" {% if order.status == "confirmed" %} selected {% endif %}>Confirmée</option>
+				<option value="preparation" {% if order.status == "preparation" %} selected {% endif %} >En préparation</option>
+				<option value="delivered" {% if order.status == "delivered" %} selected {% endif %}>Livrée et payée</option>
+				<option value="waiting payment" {% if order.status == "waiting payment" %} selected {% endif %}>En attente de paiement</option>
+				<option value="canceled" {% if order.status == "canceled" %} selected {% endif %}>Annulée</option>
+			</select>
+			<input type="hidden" value="{{order.ref}}" name="ref"/>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+	 </div>
+  </div>

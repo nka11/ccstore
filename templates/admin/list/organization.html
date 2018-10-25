@@ -1,0 +1,33 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Liste des organisations{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="text-align:left;">
+	<div class="col-md-3">	
+		<div class="panel panel-default">
+		  <div class="panel-heading">Liste des organisations ( <a href="{{ base_path }}/admin/add/organization"><span class="glyphicon glyphicon-plus"></span></a>)</div>
+			<div class="panel-body">
+				<ul class="nav nav-pills nav-stacked" role="tablist" style="height:450px;overflow:scroll">
+					{% for orga in organizations %}
+					<li role="presentation" {% if orga.id == 1 %} class="active" {% endif %}>
+						<a href="#{{orga.id}}" aria-controls="{{orga.id}}" role="tab" data-toggle="pill">
+							{{orga.label}}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+		  </div>
+		</div>
+	</div>
+	<div class="tab-content col-md-9">
+		{% for orga in organizations %}
+		<div role="tabpanel" class="tab-pane fade{% if orga.id == 1 %} in active{% endif %}" id="{{orga.id}}">{% include "admin/list/organization/plug.html" %}</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
+
+
+

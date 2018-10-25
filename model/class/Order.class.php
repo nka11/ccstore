@@ -9,6 +9,7 @@
 		private	$id,
 						$ref,	// order unique ref
 						$fk_customer,
+						$customer_type,
 						$delivery_address,
 						$delivery_zip,
 						$delivery_town,
@@ -17,6 +18,7 @@
 						$delivery_date,
 						$delivery_cost,
 						$order_date,
+						$origin, // from web, mail or phone
 						$status,
 						$total_amount,
 						
@@ -24,7 +26,7 @@
 						$list_ol,
 						
 						//object php
-						$customer;
+						$customer;		// User, Contact or Organization
 		
 		public function __construct(array $data)
 		{
@@ -55,6 +57,7 @@
 		public function delivery_week() {return $this->delivery_week;}
 		public function delivery_cost() {return $this->delivery_cost;}
 		public function fk_customer(){return $this->fk_customer;}
+		public function customer_type(){return $this->customer_type;}
 		public function status(){return $this->status;}
 		public function order_date(){return $this->order_date;}
 		public function list_ol(){return $this->list_ol;}
@@ -62,6 +65,8 @@
 		public function total_amount(){return number_format($this->total_amount, 2);}
 		public function order_dateTime(){ return new DateTime($this->order_date);}
 		public function delivery_dateTime(){ return new dateTime($this->delivery_date);}
+		public function origin(){ return $this->origin;}
+		public function value() { return number_format($this->getValue(), 2);}
 		
 		//setter
 		
@@ -75,11 +80,23 @@
 		public function setDelivery_week($delivery_week) {$this->delivery_week = $delivery_week;}
 		public function setDelivery_cost($delivery_cost) { $this->delivery_cost = $delivery_cost;}
 		public function setFk_customer($fk_customer){$this->fk_customer= (int) $fk_customer;}
+		public function setCustomer_type($customer_type){$this->customer_type= $customer_type;}
 		public function setStatus($status) { $this->status = $status;}
 		public function setOrder_date($order_date){$this->order_date= $order_date;}
 		public function setList_ol($list_ol){$this->list_ol= $list_ol;}
 		public function setCustomer($customer){$this->customer= $customer;}
 		public function setTotal_amount($total_amount){$this->total_amount= $total_amount;}
+		public function setOrigin($origin){$this->origin=$origin;}
 		
+		//function
+		
+		public function getValue() {
+			$value=0;
+			foreach($this->list_ol as $ol){
+				$value += $ol->value();
+			}
+			$value += $this->delivery_cost;
+			return $value;
+		}
 	}
 						

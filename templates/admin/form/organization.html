@@ -1,0 +1,78 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add Organization{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel panel-heading">
+		<h3 class="panel-title">Nouvelle structure</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" action="{{ base_path }}/admin/post/organization">
+		<div class="col-md-12">
+				<div class="form-group">
+					<label for="label" class="col-sm-2 control-label">Label</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="label" name="label" value="{{organization.label}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="kind" class="col-sm-2 control-label">Structure</label>
+					<div class="col-sm-10">
+						<select class="form-control" name="kind">
+							<option value="Collectivité">Collectivité</option>
+							<option value="Entreprise">Entreprise</option>
+							<option value="Association">Association</option>
+							<option value="Autre">Autre</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="siren" class="col-sm-2 control-label">Siren</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="siren" name="siren" value="{{organization.siren}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+							<label for="phone" class="col-sm-2 control-label">Téléphone</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="phone" name="phone" value="{{organization.phone}}"/>
+								</div>
+				</div>
+				<div class="form-group">
+					<label for="email" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="email" name="email" value="{{organization.email}}"/>
+						</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-2 control-label">Adresse</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="address" name="address" value="{{organization.address}}"/>
+					</div>
+				</div>
+				 <div class="form-group">
+					<label for="zip" class="col-sm-2 control-label">Code Postal</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="zip" name="zip" value="{{organization.zip}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="town" class="col-sm-2 control-label">Ville</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="town" name="town" value="{{organization.town}}"/>
+					</div>
+				</div>
+				<input type="hidden" id="mode" name="mode" value="{% if organization %}edit{% else %}add{% endif %}"/>
+				{% if organization %}
+					<input type="hidden" id="id_organization" name="id_organization" value="{{organization.id}}"/>
+				{% endif %}
+				<div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{% if organization %}Modifier {% else %}Ajouter {% endif %}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+ </div>
+ {% endblock %}

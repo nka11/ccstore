@@ -1,0 +1,31 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Liste des membres{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="text-align:left;">
+	<div class="col-md-3">	
+		<div class="panel panel-default">
+		  <div class="panel-heading">Liste des membres ( <a href="{{ base_path }}/admin/add/member"><span class="glyphicon glyphicon-plus"></span></a>)</div>
+			<div class="panel-body">
+				<ul class="nav nav-pills nav-stacked" role="tablist" style="height:450px;overflow:scroll">
+					{% for member in members %}
+					<li role="presentation" {% if supplier.id == 1 %} class="active" {% endif %}>
+						<a href="#{{member.id}}" aria-controls="{{member.id}}" role="tab" data-toggle="pill">
+							{{member.name}} {{ member.lastname }}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+		  </div>
+		</div>
+	</div>
+	<div class="tab-content col-md-9">
+		{% for member in members %}
+		<div role="tabpanel" class="tab-pane fade{% if member.id == 1 %} in active{% endif %}" id="{{member.id}}">{% include "admin/list/member/profile.html" %}</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
+

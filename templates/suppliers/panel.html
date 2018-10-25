@@ -1,0 +1,14 @@
+<div class="panel panel-warning">
+	<div class="panel panel-heading">
+		<h3>{{supplier.label}}</h3>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#infos{{supplier.id}}" aria-controls="infos" role="tab" data-toggle="pill">Informations</a></li>
+			<li role="presentation"><a href="#products{{supplier.id}}" aria-controls="orders" role="tab" data-toggle="pill">Produits <span class="badge">{{ supplier.products|length }}</span></a></li>
+		</ul>
+	</div>
+	<div class="tab-content panel-body">
+		<div role="tabpanel" class="tab-pane fade in active" id="infos{{supplier.id}}">{% include "suppliers/panel/tab-content/infos.html" %}</div>
+		<div role="tabpanel" class="tab-pane fade" id="products{{supplier.id}}">{% include "suppliers/panel/tab-content/products.html" %}</div>
+	</div>
+</div>
+

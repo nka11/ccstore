@@ -1,0 +1,18 @@
+<div class="container-fluid left-text">
+	<table class="table">
+		<tr>
+			<th>Dénomination</th>
+			<th>Voie</th>
+			<th>Code postal</th>
+			<th>Ville</th>
+		</tr>
+		{% for address in user.user_address %}
+			<tr>
+				<td>{{ address.label }}</td>
+				<td>{{ address.address }}</td>
+				<td>{{ address.zip }}</td>
+				<td>{{ address.town }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

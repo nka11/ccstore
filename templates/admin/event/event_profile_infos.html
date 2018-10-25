@@ -1,0 +1,30 @@
+<div class="container-fluid left-text">
+	<div class="row">
+		<div class="col-md-2">Du :</div>
+		<div class="col-md-6">{{event.start_date}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Au :</div>
+		<div class="col-md-6">{{event.end_date}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Organisateur :</div>
+		<div class="col-md-6">{{ event.organizer.label }}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Lieu :</div>
+		<div class="col-md-6">{{event.place.address}}, {{event.place.zip}} {{event.place.town}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Animations : </div>
+		<div class="col-md-6">{% for animation in event.animations %} {{animation.name}}, {% endfor %}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">Animateurs :</div>
+		<div class="col-md-6">{%for member in event.exposants %} {{member.name}}, {% endfor %}</div>
+	</div>
+	<div class="row">
+		<h4>DESCRIPTION</h4>
+		<p>{{supplier.description}}</p>
+	</div>
+</div>

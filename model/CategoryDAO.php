@@ -7,7 +7,7 @@ use \Httpful\Request;
 class CategoryDAO extends AbstractClient {
   public function getCategories() {
     $result = array();
-    $req = $this->pdo_db->prepare('SELECT * FROM category');
+    $req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."category");
 	$req->execute();
 	if($req->rowCount() > 0){
 			while($data = $req->fetch(PDO::FETCH_ASSOC)){
@@ -20,7 +20,7 @@ class CategoryDAO extends AbstractClient {
    * @param id $id Id category a récupérer
    */
   public function getCategoryById($id) {
-    $req = $this->pdo_db->prepare('SELECT * FROM category WHERE rowid=:id');
+    $req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."category WHERE rowid=:id");
 	$req->bindValue(':id', $id, PDO::PARAM_INT);
 	$req->execute();
 	if($req->rowCount()==1){
@@ -35,7 +35,7 @@ class CategoryDAO extends AbstractClient {
   }
   
   public function getCategoryByLabel($label){
-	$req = $this->pdo_db->prepare("SELECT * FROM category WHERE cat_label=:label");
+	$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."category WHERE cat_label=:label");
 	$req->bindValue(':label', $label);
 	$req->execute();
 	if($req->rowCount()==1){
@@ -50,7 +50,7 @@ class CategoryDAO extends AbstractClient {
   
   public function getCategoriesByParent($id_parent){
 		$result = array();
-		$req = $this->pdo_db->prepare('SELECT * FROM category WHERE fk_cat='.$id_parent);
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."category WHERE fk_cat=".$id_parent);
 		$req->execute();
 		if($req->rowCount() > 0){
 				while($data = $req->fetch(PDO::FETCH_ASSOC)){
@@ -66,7 +66,7 @@ class CategoryDAO extends AbstractClient {
 		if ($existing != false) {
 		  return false;
 		}
-		$req = $this->pdo_db->prepare('INSERT INTO category SET fk_cat=:fk_cat, cat_label=:label, cat_description=:description');
+		$req = $this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."category SET fk_cat=:fk_cat, cat_label=:label, cat_description=:description");
 		$req->bindValue(':fk_cat', $category->id_parent());
 		$req->bindValue(':label', $category->label());
 		$req->bindValue(':description', $category->description());
@@ -82,7 +82,7 @@ class CategoryDAO extends AbstractClient {
   }
   public function updateCategory(Category $category){
 	  
-		$req = $this->pdo_db->prepare('UPDATE category SET fk_cat=:fk_cat, cat_label=:label, cat_description=:description WHERE rowid=:id');
+		$req = $this->pdo_db->prepare("UPDATE ".$this->tb_prefix."category SET fk_cat=:fk_cat, cat_label=:label, cat_description=:description WHERE rowid=:id");
 		$req->bindValue(':fk_cat', $category->id_parent());
 		$req->bindValue(':label', $category->label());
 		$req->bindValue(':description', $category->description());

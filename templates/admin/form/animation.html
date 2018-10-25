@@ -1,0 +1,49 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Add animation{% endblock %}
+
+
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{% if animation %}Modifier {% else %}Ajouter {% endif %} une animation</h3>
+	</div>
+	<div class="panel-body">
+		<form  method="post" class="form-horizontal" action="{{ base_path }}/admin/post/animation">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">Name</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="name" name="name" value="{{animation.name}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="default_sell_price" class="col-sm-2 control-label">Prix de vente :</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="default_sell_price" name="default_sell_price" value="{{animation.default_sell_price}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+				<label for="number_of_animators" class="col-sm-2 control-label">Nombre d'animateurs :</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="number_of_animators" name="number_of_animators" value="{{animation.number_of_animators}}"/>
+					</div>
+				</div>
+				<input type="hidden" id="mode" name="mode" value="{% if supplier %}edit{% else %}add{% endif %}"/>
+				{% if animation %}
+				<input type="hidden" id="id_animation" name="id_animation" value="{{animation.id}}"/>
+				{% endif %}
+				  <div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">{% if animation %}Modifier {% else %}Ajouter {% endif %}</button>
+				  </div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">Description</label>
+					<textarea name="description" class="form-control" id="description" cols="30" rows="6">{{ supplier.description }}</textarea>
+				</div><br/>
+			</div>
+		 </form>
+  </div>
+</div>
+ {% endblock %}

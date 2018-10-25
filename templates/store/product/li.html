@@ -1,0 +1,43 @@
+<li class="col-md-4" style="margin-top:20px">
+	<div style="position:relative">
+		<!-- IMAGE DU PRODUIT -->
+		<a href="{{ base_path }}/store/{{ product.id }}">
+			<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded"/>		
+		</a>
+		<!-- LABEL DU PRODUIT -->
+		{% if product.agriculture == 'biologique' %}
+		<img src="{{base_path}}/files/design/logo/AB.png" class="img-responsive" style="position:absolute;width:10%;left:4px;top:4px" title="Agriculture Biologique"/>
+		{% endif %}
+		<!-- BOUTON FORMULAIRE : AJOUT AU PANIER -->
+		{% if product.availability == 1 %}
+		<div style="position:absolute;right:4px;top:4px">
+			<a class="btn btn-success btn-sm" href="javascript: show('formAmount{{ cat.id }}_{{ product.id }}')" role="button" title="Ajouter au panier"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+		</div>
+		{% endif %}
+		<!-- DIV FORMULAIRE QUANTITE -->
+		<div class="text-center" id="formAmount{{ cat.id }}_{{ product.id }}" style="position:absolute;width:50%;padding: 10px;background-color:rgba(255,255,255,0.7);left:90px;top:70px;display:none">
+			<a class="btn btn-primary btn-sm" href="javascript: substractProduct('{{ cat.id }}_{{ product.id }}')"><span class="glyphicon glyphicon-minus-sign"></span></a>
+			<span id="{{ cat.id }}_{{ product.id }}" style="font-size:14px">1</span>
+			<a class="btn btn-primary btn-sm" href="javascript: addProduct('{{ cat.id }}_{{ product.id }}')"><span class="glyphicon glyphicon-plus-sign"></span></a><br/><br/>
+			<a class="btn btn-primary btn-sm" href="javascript: submitToBasket('{{ cat.id }}_{{ product.id }}', {{ product.id }})" role="button">Ajouter au panier</a>
+		</div>
+		<!-- BANDEAU PRODUCTEUR -->
+		<div style="position:absolute;width:100%;left:0px;bottom:4px;background-color:rgba(100, 100, 100, 0.8)">
+		
+			<!--<div class="col-sm-2 col-xs-4"> LOGO </div>-->			<!-- A VOIR -->
+			
+			<div class="col-sm-12 col-xs-8">
+				<!--<a href="{{base_path}}/supplier/{{product.supplier.id}}" style="text-decoration:none;color:white">--><small class="text-uppercase" style="color:white">{{ product.supplier.label }}</small><!--</a>--><br/>
+				<small class="text-uppercase">{{product.supplier.town}}, {{product.supplier.department}}, FRANCE</small>
+			</div>
+		</div>
+	</div>
+	<!-- NOM DU PRODUIT, PRIX DU PRODUIT -->
+	<div class="row">
+		<div class="title text-uppercase col-sm-8 col-xs-8 text-left"><small>{{ product.label }}</small></div><div class="price col-sm-4 col-xs-4 text-right">{{ product.price_unit }} €<sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup></div>
+	</div>
+	<!-- PACKAGING, PRIX A L'UNITE DE MESURE -->
+	<div class="row">
+		<div class="col-sm-6 col-xs-8 text-left"><small>{{ product.packaging }} ~ {{ product.package_weight }} {{ product.weight_unit }}</small></div><div class="col-sm-6 col-xs-4 text-right"><small>{{ product.priceper|number_format(2) }} € / {{ product.weight_unit_ref }}</small></div>
+	</div>
+</li>

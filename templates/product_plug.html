@@ -32,19 +32,19 @@
 					</div>
 					<div class="panel-body">
 						<ul class="list-inline list-unstyled">
-							{% for product in products %}
+							{% for p in product.supplier.products %}
 								<li style="width:250px;margin:0px 10px;padding:0px;vertical-align:top">
 									<div class="row" style="width:250px;padding:0px;margin:0px">
-										<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded"/>
+										<img src="{{base_path}}/files/pictures/product/{{p.id}}.jpg" class="img-responsive img-rounded"/>
 									</div>
 									<div class="row">
-										<div class="text-uppercase col-sm-9 col-xs-8 text-left">{{ product.label }}</div><div class="col-sm-3 col-xs-4 text-right">{{ product.price_unit }} €<sup>{{product.price_deci}}</sup></div>
+										<div class="text-uppercase col-sm-9 col-xs-8 text-left">{{ p.label }}</div><div class="col-sm-3 col-xs-4 text-right">{{ p.price_unit }} €<sup>{{p.price_deci}}</sup></div>
 									</div>
 									<div class="row bg-info">
-										<div class="col-sm-8 col-xs-7 text-left">{{product.packaging}}</div><div class="col-sm-4 col-xs-5 text-right">~ {{product.package_weight}} {{product.weight_unit}}</div>
+										<div class="col-sm-8 col-xs-7 text-left">{{p.packaging}}</div><div class="col-sm-4 col-xs-5 text-right">~ {{p.package_weight}} {{p.weight_unit}}</div>
 									</div>
 									<div class="row bg-warning">
-										<p class="text-right col-sm-12 col-xs-12">{{product.priceper}} € / {{product.weight_unit_ref}}</p>
+										<p class="text-right col-sm-12 col-xs-12">{{p.priceper}} € / {{p.weight_unit_ref}}</p>
 									</div>
 									<div class="row">
 										<p class="col-md-4" style="margin:0px;padding:0px"><a class="btn btn-success" href="{{ base_path }}/store/{{ product.id }}" role="button">Voir details &raquo;</a></p>
