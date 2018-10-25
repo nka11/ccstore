@@ -115,7 +115,7 @@ class OrderController extends AbstractController {
 			if($ref && $ref>0 && $ref!= null && $ref!=""){
 				$order= $this->dbManager->loadOrder($ref);
 				if($order){
-					$order= $this->dbManager->delete($order);
+					$order= $this->dbManager->remove($order);
 					foreach( $_SESSION['basket'] as $key=>$article){
 						if($article['product']->label()== "Adhésion") $target_key= $key;
 					}

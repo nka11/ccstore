@@ -169,3 +169,12 @@ nav{
 	font-size: 14px;
 	font-weight: bold;
 }
+/* - DASHBOARD PARAMETERS - */
+.dashboard_tab_content{
+	margin-top			:	40px;
+	padding				:	20px;
+	-webkit-box-shadow	: 	0 0 5px 1px rgba(114,114,114,0.6);
+	-moz-box-shadow		: 	0 0 5px 1px rgba(114,114,114,0.6);
+	box-shadow			: 	0 0 5px 1px rgba(114,114,114,0.6);
+	background-color	:	#ffffff;
+}

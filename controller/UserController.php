@@ -13,7 +13,7 @@ class UserController extends AbstractController {
    */
   function indexAction() {
 	$user= $this->init();
-	if(!$user) return parent::render("alert_connexion_required.html"); // escape visitor session and invit for log in
+	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
 		$orders= $this->dbManager->loadOrders($user);
 		return parent::render('user/user.html', array(
@@ -65,21 +65,16 @@ class UserController extends AbstractController {
 			}  
 			else {
 				// Login failure
-				$message = "Mot de passe invalide";
-				http_response_code(403); //Unauthorized
-				return parent::render("error/403.html", array("message"=> $message));
+				$alert = "Mot de passe invalide";
 			}
 		}
 		else{
-			$message = "Email non valide";
-			http_response_code(400); //bad request
-			return parent::render("error/400.html", array("message"=> $message));
+			$alert = "Email non valide";
 		}
 	} else { // Erreur de parametres
-		$message = "Parametre email ou mot de passe manquant";
-		http_response_code(400); //bad request
-		return parent::render("error/400.html", array("message"=> $message));
+		$alert = "Parametre email ou mot de passe manquant";
     }
+	return parent::render("user/connection.html", array(	"alert"=>$alert));
   } //end method login
 
   /**

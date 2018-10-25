@@ -8,8 +8,8 @@ class RegistrationController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-	if($this->session['status'] == 'admin') return parent::render('registration/registration.html', array("products"=>$products));
-    else return parent::render('registration/registration.html', array("products"=>$products));
+	if($this->session['status'] == 'admin') return parent::render('registration/registration.html');
+    else return parent::render('registration/registration.html');
   }
   
   /**
@@ -94,29 +94,21 @@ class RegistrationController extends AbstractController {
 		 && $phone && $phone != null && $phone != "") {
 			// pw confirmation
 			if($password != $pwconfirm){  // No match password VS pwconfirm
-				  $message = "Votre mot de passe n'est pas confirmé.";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert = "Votre mot de passe n'est pas confirmé.";
 			} 
 			// email validation
 			elseif (filter_var($email, FILTER_VALIDATE_EMAIL) === false) { // Email non valide
-				$message = "L'email fourni n'est pas valide";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+				$alert= "L'email fourni n'est pas valide";
 			}
 			// zip validation
 			elseif( filter_var($zip, FILTER_VALIDATE_REGEXP,	array(
 				"options"=>array("regexp"=>"#[0-9]{5}$#"))) === false){
-					$message = "Le code postal fourni n'est pas valide";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert = "Le code postal fourni n'est pas valide";
 			}
 			// phone number validation
 			elseif( filter_var($phone, FILTER_VALIDATE_REGEXP, array(
 				"options" =>array("regexp"=>"#^0[1-9]([-. ]?[0-9]{2}){4}$#"))) === false) { // Phone non valide
-					$message = "Le numero de téléphone fourni n'est pas valide";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert = "Le numero de téléphone fourni n'est pas valide";
 			}
 			else { // All param OK
 				$user= new User( array(
@@ -144,21 +136,19 @@ class RegistrationController extends AbstractController {
 						 */
 					$this->sendNotification($user);
 					$this->sendMailTo($user);
-					 return parent::render("inscription_success.html",  array("user"=>$user));
+					$alert= "Votre inscription a bien été prise en compte. Pensez à valider votre adresse de messagerie. Merci de votre confiance!";
+					return parent::render("user/connection.html");
 				}
 				else {
 					// Registration failure
-					$message = "L'addresse email fournie existe déjà";	
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert = "L'addresse email fournie existe déjà";
 				}
 			} // END ALL PARAM OK
 		} else{ 
 			// Erreur de parametres
-			$message = "Un ou plusieurs parametre(s) manquant(s)";
-				http_response_code(400); //bad request
-				return parent::render("error/400.html", array("message"=> $message));
+			$alert = "Un ou plusieurs parametre(s) manquant(s)";
 		}
+		return parent::render("registration/registration.html", array(	"alert"=>$alert));
 	} // end postAction method
 	function createPw() {
 		// chaine de caractères qui sera mis dans le désordre:

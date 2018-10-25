@@ -7,14 +7,17 @@
 	<div class="alert_layer">
 		{% include "alert/alert.html" %}
 	</div>
-	<div class="container">
-		<nav>
-			<ul class="nav nav-tabs nav-justified">
-				<li role="navigation" ><a href="#">Mes commandes</a></li>
-				<li role="navigation"><a href="#">Mes Paiements</a></li>
-				<li role="navigation"><a href="#">Mon compte</a></li>
-			</ul>
-		</nav>
+	<div class="container mono_layer">
+		<ul class="nav nav-tabs nav-justified" role="tablist">
+			<li role="presentation" class="active"><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">Mes commandes</a></li>
+			<li role="presentation"><a href="#payments" aria-controls="payments" role="tab" data-toggle="tab">Mes Paiements</a></li>
+			<li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Mon compte</a></li>
+		</ul>
+		<div class="tab-content dashboard_tab_content">
+			<div role="tabpanel" class="tab-pane fade in active" id="orders">Afficher les commandes</div>
+			<div role="tabpanel" class="tab-pane fade" id="payments">Afficher les paiements</div>
+			<div role="tabpanel" class="tab-pane fade" id="account">Afficher le compte utilisateur</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
