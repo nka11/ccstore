@@ -42,7 +42,7 @@ class AbstractController extends \Pux\Controller {
 	  if(empty($_SESSION)){
 		session_start();
 	  }
-	  $temp_request= (empty($_SESSION['temp_request']))
+	  $temp_request= (empty($_SESSION['temp_request'])) // use in pw forgotten
 	  ?	null
 	  :	$_SESSION['temp_request'];
       $this->session['status'] = (empty($_SESSION['status']))
@@ -59,7 +59,7 @@ class AbstractController extends \Pux\Controller {
 		$this->session['basket_amount']+= number_format($line['value'],2);
 	}
 	$_SESSION = $this->session;
-	$_SESSION['temp_request'] = (!$temp_request)
+	$_SESSION['temp_request'] = (!$temp_request) // asked in pw forgotten
 	? null
 	: $temp_request;
   }
