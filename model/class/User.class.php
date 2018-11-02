@@ -11,6 +11,7 @@
 					$email,
 					$phone,
 					$password,
+					$balance,
 					$registration_date,
 					$email_code,
 					
@@ -48,6 +49,7 @@
 		public function phone() {return $this->phone;}
 		public function password(){return $this->password;}
 		public function user_address() {return $this->user_address;}
+		public function balance() {return $this->balance;}
 		public function rank(){return $this->rank;}
 		public function registration_date() {return $this->registration_date;}
 		public function email_code(){ return $this->email_code;}
@@ -64,6 +66,7 @@
 		public function setPhone($phone) { $this->phone = $phone;}
 		public function setPassword($pw){ $this->password = $pw;}
 		public function setUser_address($user_address) { $this->user_address = $user_address;}
+		public function setBalance($balance) {$this->balance = $balance;}
 		public function setRank($rank){$this->rank = $rank;}
 		public function setRegistration_date($reg_date) {$this->registration_date= $reg_date;}
 		public function setEmail_code($code) {$this->email_code= $code;}

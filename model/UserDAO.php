@@ -116,6 +116,7 @@ public function getUserByEmail($email) {
 											user_name=:name,
 											user_email=:email,
 											user_phone=:phone,
+											balance=:balance,
 											user_confirmed=:email_code
 									");
 		// Bind values
@@ -125,6 +126,7 @@ public function getUserByEmail($email) {
 		$req->bindValue(':lastname', $user->lastname());
 		$req->bindValue(':name', $user->name());
 		$req->bindValue(':phone', $user->phone());
+		$req->bindValue(':balance', $user->balance());
 		$req->bindValue(':email_code', $user->email_code());
 		$req->execute();
 		
@@ -176,6 +178,7 @@ public function getUserByEmail($email) {
 											user_name=:name,
 											user_email=:email,
 											user_phone=:phone,
+											balance=:balance,
 											user_confirmed=:code
 										WHERE rowid =:id
 									");
@@ -184,6 +187,7 @@ public function getUserByEmail($email) {
 		$req->bindValue(':lastname', $user->lastname());
 		$req->bindValue(':name', $user->name());
 		$req->bindValue(':phone', $user->phone());
+		$req->bindValue(':balance', $user->balance());
 		$req->bindValue(':code', $user->email_code());
 		$req->bindValue(':id', $user->id());
 		$req->execute();
@@ -215,6 +219,7 @@ public function getUserByEmail($email) {
 				"name"=>html_entity_decode($data['user_name']),
 				"email"=>$data['user_email'],
 				"phone"=>$data['user_phone'],
+				"balance"=>$data['balance'],
 				"registration_date"=>$data['user_account_time'],
 				"email_code"=> $data['user_confirmed']
 			));

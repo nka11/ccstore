@@ -16,7 +16,7 @@ class UserController extends AbstractController {
 	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
 		$orders= $this->dbManager->loadOrders($user);
-		return parent::render('user/user.html', array(
+		return parent::render('user/dashboard.html', array(
 													"user"  => $user,
 													"orders"=> $orders) );
 	}
