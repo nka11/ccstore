@@ -14,7 +14,7 @@
 			<li role="presentation"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Mon compte</a></li>
 		</ul>
 		<div class="tab-content dashboard_tab_content">
-			<div role="tabpanel" class="tab-pane fade in active" id="orders">Afficher les commandes</div>
+			<div role="tabpanel" class="tab-pane fade in active" id="orders">{% include "user/tab_content/orders.html" %}</div>
 			<div role="tabpanel" class="tab-pane fade" id="payments">Afficher les paiements</div>
 			<div role="tabpanel" class="tab-pane fade" id="account">Afficher le compte utilisateur</div>
 		</div>

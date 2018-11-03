@@ -294,6 +294,7 @@ class DbManager {
 			}
 			public function loadUserByEmail($userEmail){
 				$user= $this->loadDAO("user")->getUserByEmail($userEmail);
+				$user->setOrders($this->loadOrders($user));
 				return $user;
 			}
 	// LOGIN

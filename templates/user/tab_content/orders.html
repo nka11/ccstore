@@ -1,0 +1,18 @@
+<i> notice orderblock : {{ orderblock.week }}  </i>
+<ul>
+{% for order in user.orders %}
+	<li class="">
+		<a href="" style="display:block">
+			<div class="col-md-3">
+				Effectué le <br/> {{ order.order_date }}
+			</div>
+			<div class="col-md-3">
+				Livraison le <br/> {{ order.delivery_date }}
+			</div>
+			<div>
+				{{ order.status }}
+			</div>
+		</a>
+	</li>
+{% endfor %}
+</ul>
