@@ -58,10 +58,13 @@ class UserController extends AbstractController {
 				$_SESSION['status'] = 'user';
 				$_SESSION['user'] = $user;
 				if (array_key_exists('forward',$_REQUEST)) {
-					return header('Location: '.$_REQUEST['forward']);
+					if( $_REQUEST['forward'] == "/order/ini")
+						return header('Location: '.$_REQUEST['forward']);
 				}
+				$this->handle_session();
 				$alert= "Bonjour ".$user->name()."!";
-				return parent::render("user/dashboard.html", array("alert"=>$alert));
+				return parent::render("user/dashboard.html", array("user"=> $user,
+																	"alert"=>$alert));
 			}  
 			else {
 				// Login failure

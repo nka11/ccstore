@@ -1,18 +1,13 @@
 <i> notice orderblock : {{ orderblock.week }}  </i>
-<ul>
+<div class="list-group">
 {% for order in user.orders %}
-	<li class="">
-		<a href="" style="display:block">
-			<div class="col-md-3">
-				Effectué le <br/> {{ order.order_date }}
-			</div>
-			<div class="col-md-3">
-				Livraison le <br/> {{ order.delivery_date }}
-			</div>
-			<div>
-				{{ order.status }}
-			</div>
-		</a>
-	</li>
+	<button type="button" class="list-group-item">
+		<div class="col-md-4">
+			{{ order.ref }}
+		</div>
+		<div class="col-md-4">
+			{{ order.status }}
+		</div>
+	</button>
 {% endfor %}
-</ul>
+</div>
