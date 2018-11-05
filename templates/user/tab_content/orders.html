@@ -2,10 +2,19 @@
 <div class="list-group">
 {% for order in user.orders %}
 	<button type="button" class="list-group-item">
-		<div class="col-md-4">
+		<div class="col-md-2">
 			{{ order.ref }}
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
+			{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
+		</div>
+		<div class="col-md-2">
+			{{ order.list_ol|length }} articles
+		</div>
+		<div class="col-md-2">
+			{{ order.value }} €
+		</div>
+		<div class="col-md-2">
 			{{ order.status }}
 		</div>
 	</button>
