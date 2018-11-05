@@ -81,6 +81,5 @@
 				if($adh['date_adhesion'] == date("Y")) return true;
 				else return false;
 			}
-			
 		}
 	}
