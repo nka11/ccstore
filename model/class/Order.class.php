@@ -26,7 +26,8 @@
 						$list_ol,
 						
 						//object php
-						$customer;		// User, Contact or Organization
+						$customer,		// User, Contact or Organization
+						$payment;		// php Object
 		
 		public function __construct(array $data)
 		{
@@ -67,6 +68,7 @@
 		public function delivery_dateTime(){ return new dateTime($this->delivery_date);}
 		public function origin(){ return $this->origin;}
 		public function value() { return number_format($this->getValue(), 2);}
+		public function payment() { return $this->payment;}
 		
 		//setter
 		
@@ -87,6 +89,7 @@
 		public function setCustomer($customer){$this->customer= $customer;}
 		public function setTotal_amount($total_amount){$this->total_amount= $total_amount;}
 		public function setOrigin($origin){$this->origin=$origin;}
+		public function setPayment($payment){$this->payment=$payment;}
 		
 		//function
 		
@@ -102,11 +105,13 @@
 			switch($this->status){
 				case	"delivered"	:	$value= "Livrée";
 				break;
-				case	"confirmed"	:	$value= "Confirmée";
+				case	"canceled"	:	$value= "Annulée";
+				break;
+				case	"Confirmed"	:	$value= "Confirmée";
 				break;
 				case	"waiting"	:	$value= "En attente";
 				break;
-				case	"pending"	:	$value= "En cours";
+				case	"Pending"	:	$value= "En cours";
 				break;
 			}
 			return $value;

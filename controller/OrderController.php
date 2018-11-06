@@ -6,6 +6,7 @@ require_once './model/ProductDAO.php';
 require_once './model/CategoryDAO.php';
 require_once './model/OrderDAO.php';
 require_once './model/OrderLineDAO.php';
+require_once './model/PaymentDAO.php';
 
 class OrderController extends AbstractController {
 	/**
@@ -14,7 +15,8 @@ class OrderController extends AbstractController {
      */
    public function iniAction(){
 	   if(!isset($this->session['user'])){
-		   return parent::render('user/connection.html');
+		   $alert= "Connectez vous pour continuer!";
+		   return parent::render('user/connection.html', array("alert"=>$alert));
 	   }
 	   else{
 		   //Load user

@@ -1,6 +1,7 @@
 <?php
 require_once("./model/AbstractClient.php");
 require_once("./model/class/Order.class.php");
+require_once("./model/class/Payment.class.php");
 require_once("./model/class/Customer.class.php");
 include_once './vendor/autoload.php';
 
