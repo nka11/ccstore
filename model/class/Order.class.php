@@ -98,5 +98,18 @@
 			$value += $this->delivery_cost;
 			return $value;
 		}
+		public function status_fr(){
+			switch($this->status){
+				case	"delivered"	:	$value= "Livrée";
+				break;
+				case	"confirmed"	:	$value= "Confirmée";
+				break;
+				case	"waiting"	:	$value= "En attente";
+				break;
+				case	"pending"	:	$value= "En cours";
+				break;
+			}
+			return $value;
+		}
 	}
 						

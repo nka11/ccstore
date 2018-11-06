@@ -1,4 +1,6 @@
-<i> notice orderblock : {{ orderblock.week }}  </i>
+<div class="text-center">
+	<a href="">Voir les commandes livrées</a>
+</div>
 <div class="list-group">
 {% for order in user.orders %}
 	<button type="button" class="list-group-item">
@@ -15,7 +17,7 @@
 			{{ order.value }} €
 		</div>
 		<div class="col-md-2">
-			{{ order.status }}
+			{{ order.status_fr }}
 		</div>
 	</button>
 {% endfor %}
