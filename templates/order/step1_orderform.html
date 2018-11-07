@@ -2,95 +2,93 @@
 
 {% block title %}Formulaire de commande{% endblock %}
 
-
 {% block content %}
-<div class="wrapper container">
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h1 class="panel-title">Etape 1 : Paramêtres de la livraison</h1>
-		</div>
-		<div class="panel-body">
-			<form id='OrderParam' role="form" class="form-horizontal" data-toggle="validator"
-					   method="POST" action="{{ base_path }}/order/create">
-				<div class="form-group" id="knownAddress">
-					<label for="user_address_label" class="col-sm-2 control-label">Adresse de livraison</label>
-					<div class="col-sm-10">
-						<select name="user_address_label" id="user_address_label" class="form-control">
-							<option value=""></option>
-						{% for address in session['user'].user_address %}
-							<option value="{{ address.label }}">{{ address.label }} : {{ address.address }}, {{ address.zip }} {{ address.town }}</option>
-						{% endfor %}
-						</select>
-					</div>
-					<span id="helpBlock" class="help-block">
-						<a href="javascript: showNewAddressForm()" class="col-sm-2 col-sm-offset-2 control-label">
-							<span class='glyphicon glyphicon-plus' style='color:blue'></span>Ajouter une adresse
+<div class="wrapper container-fluid">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="store_layer container">
+		<h2>Etape 1 : Paramêtres de la livraison</h2>
+		<form id='OrderParam' role="form" class="form-horizontal" data-toggle="validator"
+				   method="POST" action="{{ base_path }}/order/create">
+			<div class="form-group" id="knownAddress">
+				<label for="user_address_label" class="col-sm-2 control-label">Adresse de livraison</label>
+				<div class="col-sm-10">
+					<select name="user_address_label" id="user_address_label" class="form-control">
+						<option value=""></option>
+					{% for address in session['user'].user_address %}
+						<option value="{{ address.label }}">{{ address.label }} : {{ address.address }}, {{ address.zip }} {{ address.town }}</option>
+					{% endfor %}
+					</select>
+				</div>
+				<span id="helpBlock" class="help-block">
+					<a href="javascript: showNewAddressForm()" class="col-sm-2 col-sm-offset-2 control-label">
+						<span class='glyphicon glyphicon-plus' style='color:blue'></span>Ajouter une adresse
+					</a>
+				</span>
+			</div>
+			<div id="newAddressForm" style="display:none">
+				<div class="form-group">
+					<label for="delivery_address" class="col-sm-2 control-label">Adresse</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="delivery_address" name="delivery_address" placeholder="Adresse"/>
+						</div>
+				</div>
+				<div class="form-group">
+					<label for="delivery_zip" class="col-sm-2 control-label">Code postal</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="delivery_zip" name="delivery_zip" placeholder="Code postal"/>
+						</div>
+				</div>
+				<div class="form-group">
+					<label for="delivery_town" class="col-sm-2 control-label">Ville</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="delivery_town" name="delivery_town" placeholder="Ville"/>
+						</div>
+					<span id="helpBlockHide" class="help-block">
+						<a href="javascript: hideNewAddressForm()" class="col-sm-2 col-sm-offset-2 control-label">
+							<span class='glyphicon glyphicon-remove' style='color:red'></span>Annuler
 						</a>
 					</span>
 				</div>
-				<div id="newAddressForm" style="display:none">
-					<div class="form-group">
-						<label for="delivery_address" class="col-sm-2 control-label">Adresse</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="delivery_address" name="delivery_address" placeholder="Adresse"/>
-							</div>
-					</div>
-					<div class="form-group">
-						<label for="delivery_zip" class="col-sm-2 control-label">Code postal</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="delivery_zip" name="delivery_zip" placeholder="Code postal"/>
-							</div>
-					</div>
-					<div class="form-group">
-						<label for="delivery_town" class="col-sm-2 control-label">Ville</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="delivery_town" name="delivery_town" placeholder="Ville"/>
-							</div>
-						<span id="helpBlockHide" class="help-block">
-							<a href="javascript: hideNewAddressForm()" class="col-sm-2 col-sm-offset-2 control-label">
-								<span class='glyphicon glyphicon-remove' style='color:red'></span>Annuler
-							</a>
-						</span>
+			</div>
+			<div class="form-group">
+				<label for="delivery_date" class="col-sm-2 control-label">Jour de livraison</label>
+				<div class="col-sm-10">
+					<select name="delivery_date" id="delivery_date" class="form-control">
+						<option value='{{ orderblock.closing|date_modify("+2 day")|date("Y-m-d") }}'>Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (17h - 20h)</option>
+						<option value='{{ orderblock.closing|date_modify("+3 day")|date("Y-m-d") }}'>Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (10h - 14h)</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="delivery_instructions" class="col-sm-2 control-label">Instructions complémentaires pour la livraison</label>
+				<div class="col-sm-10">
+					<textarea name="delivery_instructions" class="form-control" id="delivery_instructions" rows="4" placeholder="Exemples : préférences et/ou contraintes horaires, digicode, attention chien méchant... oO"></textarea>
+				</div>
+			</div>
+			 <div class="row">
+				<div class="col-md-6 col-md-offset-3" id="delivery_cost">
+					{% if session['user'].is_Member %}
+					<span class='glyphicon glyphicon-thumbs-up' style='color:green'></span> <i style='color:green'>Vous êtes adhérent! Frais de livraison : Gratuit</i>
+					{% else %}
+					<span class='glyphicon glyphicon-warning-sign' style='color:red'></span> <i style='color:red'>Vous n'êtes pas encore adhérent! Frais de livraison : 5€</i>
+					{% endif %}
+				</div>
+			</div>
+			{% if session['user'].is_Member == false %}
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<div class="checkbox">
+						<label>
+						  <input type="checkbox" name="adhesion" id="adhBox" onclick="check()"/> Inclure une adhésion à ma commande ( 20 €) et ne plus payer de frais de livraison cette année.
+						</label>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="delivery_date" class="col-sm-2 control-label">Jour de livraison</label>
-					<div class="col-sm-10">
-						<select name="delivery_date" id="delivery_date" class="form-control">
-							<option value='{{ orderblock.closing|date_modify("+2 day")|date("Y-m-d") }}'>Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (17h - 20h)</option>
-							<option value='{{ orderblock.closing|date_modify("+3 day")|date("Y-m-d") }}'>Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }} (10h - 14h)</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="delivery_instructions" class="col-sm-2 control-label">Instructions complémentaires pour la livraison</label>
-					<div class="col-sm-10">
-						<textarea name="delivery_instructions" class="form-control" id="delivery_instructions" rows="4" placeholder="Exemples : préférences et/ou contraintes horaires, digicode, attention chien méchant... oO"></textarea>
-					</div>
-				</div>
-				 <div class="row">
-					<div class="col-md-6 col-md-offset-3" id="delivery_cost">
-						{% if session['user'].is_Member %}
-						<span class='glyphicon glyphicon-thumbs-up' style='color:green'></span> <i style='color:green'>Vous êtes adhérent! Frais de livraison : Gratuit</i>
-						{% else %}
-						<span class='glyphicon glyphicon-warning-sign' style='color:red'></span> <i style='color:red'>Vous n'êtes pas encore adhérent! Frais de livraison : 5€</i>
-						{% endif %}
-					</div>
-				</div>
-				{% if session['user'].is_Member == false %}
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<div class="checkbox">
-							<label>
-							  <input type="checkbox" name="adhesion" id="adhBox" onclick="check()"/> Inclure une adhésion à ma commande ( 20 €) et ne plus payer de frais de livraison cette année.
-							</label>
-						</div>
-					</div>
-				</div>
-				{% endif %}
-			</form>
-		</div>
-		<div class="panel-footer text-right">
+			</div>
+			{% endif %}
+		</form>
+		<div class="text-right">
 			<a href="{{ base_path }}/store"><button type="button" class="btn btn-danger left-block">Annuler</button></a>
 			<a href="javascript: submitOrderParam()"><button type="button" class="btn btn-success right-block">Valider les paramêtres</button></a>
 		</div>

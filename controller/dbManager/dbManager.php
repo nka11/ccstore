@@ -51,6 +51,10 @@ class DbManager {
 				$user= $this->loadUser($user->id());
 				return $user;
 			}
+			// ADDRESS
+			public function createUserAddress($user, $address){
+				$this->loadDAO("user")->createUserAddress($user);
+			}
 			// CONTACT
 			public function createClassContact($contact){
 				$classContact= ( get_class($contact) == "OrganizationContact")

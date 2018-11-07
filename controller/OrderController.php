@@ -39,11 +39,11 @@ class OrderController extends AbstractController {
 		//Load user
 		$user= $this->session['user'];
 		if($user) $order= $this->treatFormCreateOrder();
-		else return parent::render('alert_connexion_required.html');
+		else return parent::render('user/connection.html', array("alert"=>$alert));
 		if(is_array($order)){
 			// An error has occured...
-			http_response_code(400); //bad request
-			return parent::render("error/400.html", array("message" => $order["Error"]));
+			$alert= $order["Error"];
+			return parent::render("order/step1_orderform.html", array("alert" => $alert));
 		}
 		else{
 			 return parent::render("order/recap.html",  array("order"=>$order));
