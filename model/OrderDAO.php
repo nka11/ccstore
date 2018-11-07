@@ -41,13 +41,26 @@ class OrderDAO extends AbstractClient {
 		$req->execute();
 		
 		if ($req->rowCount() == 1){
-			while($data = $req->fetch(PDO::FETCH_ASSOC)){
+			while($dataù = $req->fetch(PDO::FETCH_ASSOC)){
 				$order = $this->mapOrder($data);
 			}
 			return $order;
 		}else{
 			return false;
 		}	
+	}
+	public function getCurrentOrdersByUser($user, $delivery_week){
+		$orders=array();
+		$req_string= "SELECT * FROM ".$tb_prefix."cc_order WHERE fk_customer=".$user->id();
+		$req_string.= " AND delivery_week=:delivery_week";
+		$req_string.= " ORDER BY order_date DESC";
+		$req = $this->pdo_db->prepare($req_string);
+		$req->bindValue(':delivery_week', $delivery_week, PDO::PARAM_INT);
+		$req->execute();
+			while($data = $req->fetch(PDO::FETCH_ASSOC)){
+				$orders[] = $this->mapOrder($data);
+			}
+		return $orders;
 	}
 	public function getOrdersByUser($user, $status=null){
 		$orders=array();

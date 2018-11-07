@@ -12,13 +12,10 @@ class UserController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-	$user= $this->init();
+	$user= $this->session['user']; 
 	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
-		$orders= $this->dbManager->loadOrders($user);
-		return parent::render('user/dashboard.html', array(
-													"user"  => $user,
-													"orders"=> $orders) );
+		return parent::render('user/dashboard.html', array( "user"  => $user));
 	}
   }
   /**
