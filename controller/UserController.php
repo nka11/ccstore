@@ -15,6 +15,7 @@ class UserController extends AbstractController {
 	$user= $this->session['user']; 
 	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
+		$current_orders=array();
 		if(is_array($user->orders())){
 			foreach($user->orders() as $order){
 				if($order->delivery_week() == $this->orderblock['week']) $current_orders[]= $order;

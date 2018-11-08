@@ -1,31 +1,36 @@
-<div class="text-center">
-	<a href="">Voir les commandes livrées</a>
-</div>
-{% if current_orders is empty %}
-<div class="container current_week">
-	<p>Vous n'avez pas passé de commande cette semaine</p>
-	<button type="button" class="">Vers la boutique</button>
-</div>
-{% else %}
-<div class="list-group current_week">
-{% for order in current_orders %}
-	<button type="button" class="list-group-item">
-		<div class="col-md-2">
-			{{ order.ref }}
-		</div>
-		<div class="col-md-3">
-			{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
-		</div>
-		<div class="col-md-2">
-			{{ order.list_ol|length }} articles
-		</div>
-		<div class="col-md-2">
-			{{ order.value }} €
-		</div>
-		<div class="col-md-2">
-			{{ order.status_fr }}
-		</div>
-	</button>
-{% endfor %}
-{% endif %}
+<div class="current_orders_layer">
+	<h3>Commandes en cours</h3>
+	<div class="dashboard_tab_content">
+			<div class="list-group text-center">
+				<button type="button" class="list-group-item">Voir l'historique des commandes</button>
+			</div>
+				{% if current_orders is empty %}
+					<div class="text-center no_current_order">
+						<p>Vous n'avez pas passé de commande cette semaine</p>
+						<a href="{{base_path}}/store"><button type="button" class="btn btn-primary">Vers la boutique</button></a>
+					</div>
+				{% else %}
+					<div class="list-group">
+					{% for order in current_orders %}
+						<button type="button" class="list-group-item">
+							<div class="col-md-2">
+								{{ order.ref }}
+							</div>
+							<div class="col-md-3">
+								{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
+							</div>
+							<div class="col-md-2">
+								{{ order.list_ol|length }} articles
+							</div>
+							<div class="col-md-2">
+								{{ order.value }} €
+							</div>
+							<div class="col-md-2">
+								{{ order.status_fr }}
+							</div>
+						</button>
+					{% endfor %}
+					</div>
+				{% endif %}		
+			</div>	
 </div>
