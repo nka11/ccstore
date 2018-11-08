@@ -1,8 +1,14 @@
 <div class="text-center">
 	<a href="">Voir les commandes livrées</a>
 </div>
-<div class="list-group">
-{% for order in user.orders %}
+{% if current_orders is empty %}
+<div class="container current_week">
+	<p>Vous n'avez pas passé de commande cette semaine</p>
+	<button type="button" class="">Vers la boutique</button>
+</div>
+{% else %}
+<div class="list-group current_week">
+{% for order in current_orders %}
 	<button type="button" class="list-group-item">
 		<div class="col-md-2">
 			{{ order.ref }}
@@ -21,4 +27,5 @@
 		</div>
 	</button>
 {% endfor %}
+{% endif %}
 </div>

@@ -11,11 +11,17 @@ class UserController extends AbstractController {
    * @Route("/")
    * @Method("GET")
    */
-  function indexAction() {
+   function indexAction() {
 	$user= $this->session['user']; 
 	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
-		return parent::render('user/dashboard.html', array( "user"  => $user));
+		if(is_array($user->orders())){
+			foreach($user->orders() as $order){
+				if($order->delivery_week() == $this->orderblock['week']) $current_orders[]= $order;
+			}
+		}
+		return parent::render('user/dashboard.html', array( "user"  => $user,
+															"current_orders"	=> $current_orders));
 	}
   }
   /**
