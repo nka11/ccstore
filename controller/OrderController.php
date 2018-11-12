@@ -36,9 +36,12 @@ class OrderController extends AbstractController {
 	public function createOrderAction(){
 		$error= array();
 		$order= null;
+		$orderlines= array();
 		//Load user
 		$user= $this->session['user'];
-		if($user) $order= $this->treatFormCreateOrder();
+		if($user) {
+			$order= $this->treatFormCreateOrder();
+		}
 		else return parent::render('user/connection.html', array("alert"=>$alert));
 		if(is_array($order)){
 			// An error has occured...
@@ -46,7 +49,27 @@ class OrderController extends AbstractController {
 			return parent::render("order/step1_orderform.html", array("alert" => $alert));
 		}
 		else{
-			 return parent::render("order/recap.html",  array("order"=>$order));
+			$order= $this->dbManager->loadOrder($order->ref());
+			if($order){
+				foreach($this->session['basket'] as $article){
+					$orderline= new OrderLine( array(
+														"fk_order"=>$order->id(),
+														"fk_product"=>$article['product']->id(),
+														"amount"=>$article['amount'],
+														"value"=>$article['value']
+														));
+					$ol= $this->dbManager->create($orderline);
+					if($ol){
+						$orderlines[]= $article;
+					}
+				}
+				$order= $this->dbManager->loadOrder($order->ref());
+				if($order && count($order->list_ol()) == count($orderlines)){
+					$_SESSION['basket']=array();
+					unset($this->session['basket']);
+				}
+			return parent::render("order/recap.html",  array("order"=>$order));
+			}
 		}
 	}
 	/**
@@ -77,30 +100,27 @@ class OrderController extends AbstractController {
 						unset($this->session['basket']);
 						$order->setStatus("Confirmed");
 						$order= $this->dbManager->update($order);
-						return parent::render("order_record_success.html");
+						$alert="Votre commande a bien été prise en compte";
+						return parent::render("order_record_success.html", array("alert"=>$alert));
 					}
 					else{
-							$message="Erreur de traitement des articles";
-							http_response_code(400); //bad request
-							return parent::render("error/400.html", array("message"=> $message));
+							$alert="Erreur de traitement des articles";
+							return parent::render("order/recap.html", array("alert"=> $alert));
 					}
 				}
 				else{
-					$message="Erreur de traitement de la commande";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert="Erreur de traitement de la commande";
+					return parent::render("order/recap.html", array("alert"=> $alert));
 				}
 			}
 			else{
-					$message="Référence non valide";
-					http_response_code(400); //bad request
-					return parent::render("error/400.html", array("message"=> $message));
+					$alert="Référence non valide";
+					return parent::render("order/recap.html", array("alert"=> $alert));
 			}
 		}
 		else{
-			$message="Référence manquante";
-			http_response_code(400); //bad request
-			return parent::render("error/400.html", array("message"=> $message));
+			$alert="Référence manquante";
+			return parent::render("order/recap.html", array("alert"=> $alert));
 			}
 	}
 	/**

@@ -41,7 +41,7 @@ class OrderDAO extends AbstractClient {
 		$req->execute();
 		
 		if ($req->rowCount() == 1){
-			while($dataù = $req->fetch(PDO::FETCH_ASSOC)){
+			while($data = $req->fetch(PDO::FETCH_ASSOC)){
 				$order = $this->mapOrder($data);
 			}
 			return $order;

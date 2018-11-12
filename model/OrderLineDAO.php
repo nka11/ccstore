@@ -33,8 +33,19 @@ class OrderLineDAO extends AbstractClient {
 		}
 		return true;
 	}
-	public function updateOrderLine(Order $order){}
-	public function deleteOrderLine(Order $order){}
+	public function updateOrderLine(Orderline $orderline){
+		
+	}
+	public function deleteOrderLine(Order $order){
+		$orderlines=array();
+		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."order_line WHERE fk_order = ".$order->id());
+		
+		
+		$orderlines= $this->getOrderlinesByOrder($order->id());
+		if(!$orderlines) return true;
+		else return false;
+		
+	}
 	public function mapOrderLine($data){
 		$orderline = new OrderLine(array(
 			"id"=>(int)$data['rowid'],
