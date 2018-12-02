@@ -8,7 +8,7 @@ class ContactUsController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-    return parent::render('contactUs/form.html');
+    return parent::render('contactUs/contactUs.html');
   }
   /**
    * @Route("/sendMail")
