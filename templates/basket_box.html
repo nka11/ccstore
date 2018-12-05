@@ -10,6 +10,16 @@
       </div>
       <!--<div class="modal-body">-->
 		<table class="table">
+			{% if session['basket'] == NULL %}
+			
+				<tr>
+					<div class="text-center">
+						Votre panier est vide !
+						<a href="{{base_path}}/store"><button type="button" class="btn btn-default">Vers la boutique</button></a>
+					</div>
+				</tr>
+			
+			{% else %}
 			<tr>
 				<th>Produit</th>
 				<th>Prix unitaire</th>
@@ -30,6 +40,7 @@
 				<td colspan="3"><b>Montant du panier </b></td>
 				<td colspan="2">{{ session['basket_amount'] }} €</td>
 			</tr>
+			{% endif %}
 			<tr>
 				<td colspan="4">
 				{% if session['user'].is_Member %}
