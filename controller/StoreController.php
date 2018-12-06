@@ -70,6 +70,7 @@ class StoreController extends AbstractController {
 	* @Method("POST")
 	*/
    function addArticleAction(){
+		$basket= null;
 	    $amount=NULL;
 	    $id_p=NULL;
 	    if(array_key_exists('amount', $_REQUEST)

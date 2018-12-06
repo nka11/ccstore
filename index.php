@@ -11,7 +11,7 @@ require 'conf/controllers.cnf.default.php';
 use Pux\Executor;
 
 // MAINTENANCE - URGENCE -
-$mode= "open";
+$mode= "close";
 if($mode != "open"){ require "templates/construction.html";exit();}
 
 $mount = explode("/", $path);
