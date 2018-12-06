@@ -1,13 +1,14 @@
 <?php
 require_once './vendor/autoload.php';
 require_once './controller/dbManager/dbManager.php';
+require_once './model/class/Basket.class.php';
 use Pux\Mux;
 class AbstractController extends \Pux\Controller {
   private $loader;
   private $twig;
   protected $db_connect;
   protected $dbManager;
-  public $orderblock;				//  ...> ( sent to cManger)
+  public $orderblock;				//  ...> ( sent to cManager)
   public $session;
   public $base_path;
   
