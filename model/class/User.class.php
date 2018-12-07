@@ -82,4 +82,12 @@
 				else return false;
 			}
 		}
+		public function status_orders($status){
+			$status_orders= array();
+			if(is_array($this->orders)){
+				foreach( $this->orders as $o){
+					if($o->status() == $status) $status_orders[]= $o;
+				}
+			}
+		}
 	}

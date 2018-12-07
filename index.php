@@ -10,30 +10,57 @@ require 'conf/controllers.cnf.default.php';
 
 use Pux\Executor;
 
-// MAINTENANCE - URGENCE -
-$mode= "close";
-if($mode != "open"){ require "templates/construction.html";exit();}
+$mode= "maintenance";
 
-$mount = explode("/", $path);
-$controller= ($mount[1] != "")
-					? ucfirst($mount[1])."Controller"
-					: "PortalController";
-//echo "path : $path -- mount : $mount[1] -- controller : $controller";exit();
-
-$mux = new Pux\Mux;
-$mux->mount("/".$mount[1], new $controller());
-
-// Define @route
-$route = ( $path == "/" || $path == "/".$mount[1])
-		? $mux->dispatch( "$path/" )
-		: $mux->dispatch( "$path" );
-//Execute $route
-if(!empty($route)) echo Executor::execute($route);
-else{
-	$mux->mount("/error", new ErrorController());
-    $route = $mux->dispatch( '/error/404/'."Action controller introuvable. Route = ".$route );
-    echo Executor::execute($route);
+if($mode == "maintenance"){
+	$pass = explode("/", $path);
+	if(!isset($_COOKIE["maintenance"])){
+		//echo "Pas de cookie operateur<br/>";
+		if($pass[1] == "maintenance"){
+			//echo "...creation du cookie operateur...<br/>";
+			setCookie( "maintenance", "operator", time()+60*60, '/', 'www.courtcircuit.bio', true, true);
+			$path= "/";
+		}else {
+			//echo "<br/>redirection vers page de maintenance";exit();
+			require "templates/construction.html";
+			exit();
+		}
+	}else{
+		//echo "Cookie opérateur détecté<br/>";
+		if($pass[1] == "maintenance"){
+			//echo "<br/>Demande de suppression cookie";
+			setCookie( "maintenance", "operator", time()- 60*60, '/', 'www.courtcircuit.bio', true, true);
+			//echo "<br/>redirection page maintenance";exit();
+			require "templates/construction.html";
+			exit();
+		}
+	}
+	//echo "renouvellement du path";
+	
+	//echo "<br/>".$path;
 }
+	$mount = explode("/", $path);
+	$controller= ($mount[1] != "")
+						? ucfirst($mount[1])."Controller"
+						: "PortalController";
+	//echo "path : $path -- mount : $mount[1] -- controller : $controller";exit();
+	//echo "Controller : ".$controller;
+	//echo "<br/> Tentative redirection...";
+	//exit();
+	$mux = new Pux\Mux;
+	$mux->mount("/".$mount[1], new $controller());
+
+	// Define @route
+	$route = ( $path == "/" || $path == "/".$mount[1])
+			? $mux->dispatch( "$path/" )
+			: $mux->dispatch( "$path" );
+	//Execute $route
+	if(!empty($route)) echo Executor::execute($route);
+	else{
+		$mux->mount("/error", new ErrorController());
+		$route = $mux->dispatch( '/error/404/'."Action controller introuvable. Route = ".$route );
+		echo Executor::execute($route);
+	}
 
 /*
 try {

@@ -171,10 +171,25 @@ nav{
 }
 /* - DASHBOARD PARAMETERS - */
 .dashboard_tab_content{
+	position	:	relative;
+	width		:	100%;
+}
+.dashboard_tab_content_orders{
+	position			:	absolute;
+	width				:	100%;
 	margin-top			:	40px;
 	padding				:	20px;
 	-webkit-box-shadow	: 	0 0 5px 1px rgba(114,114,114,0.6);
 	-moz-box-shadow		: 	0 0 5px 1px rgba(114,114,114,0.6);
 	box-shadow			: 	0 0 5px 1px rgba(114,114,114,0.6);
 	background-color	:	#ffffff;
+	-webkit-transition	:	opacity 2s;
+	transition			:	opacity 2s;
+}
+#user_current_order{
+	opacity	:	1;
+}
+#user_orders_history{
+	opacity	:	0;
+	visibility:hidden;
 }

@@ -1,17 +1,31 @@
+<script>
+	function fadeInCurrent(){
+		var activeElement= document.getElementById('user_current_order');
+		activeElement.style.opacity= "0";
+		activeElement.style.visibility="hidden";
+		var adventElement= document.getElementById('user_orders_history');
+		adventElement.style.opacity= "1";
+	}
+	function fadeInHistory(){
+		var activeElement= document.getElementById('user_orders_history');
+		activeElement.style.opacity= "0";
+		var adventElement= document.getElementById('user_current_order');
+		adventElement.style.opacity= "1";
+	}
+</script>
 <div class="current_orders_layer">
 	<h3>Commandes en cours</h3>
 	<div class="dashboard_tab_content">
-			<div class="list-group text-center">
-				<button type="button" class="list-group-item">Voir l'historique des commandes</button>
-			</div>
-				{% if current_orders is empty %}
+			<div id="user_current_order" class="dashboard_tab_content_orders">
+				<a href="javascript: fadeInCurrent()"> Voir l'historique des commandes <span class="badge">{{ user.orders|length }}</span></a>
+				{% if user.orders_status("pending") is empty %}
 					<div class="text-center no_current_order">
 						<p>Vous n'avez pas passé de commande cette semaine</p>
 						<a href="{{base_path}}/store"><button type="button" class="btn btn-primary">Vers la boutique</button></a>
 					</div>
 				{% else %}
 					<div class="list-group">
-					{% for order in current_orders %}
+					{% for order in user.orders_status("pending") %}
 						<button type="button" class="list-group-item">
 							<div class="col-md-2">
 								{{ order.ref }}
@@ -31,6 +45,29 @@
 						</button>
 					{% endfor %}
 					</div>
-				{% endif %}		
-			</div>	
+				{% endif %}
+			</div>
+			<div id="user_orders_history" class="dashboard_tab_content_orders">
+				<a href="javascript: fadeInHistory()"> Voir ma commande en cours <span class="badge">{{ user.orders('pending')|length }}</span></a>
+				{% for order in user.orders %}
+					<button type="button" class="list-group-item">
+						<div class="col-md-2">
+							{{ order.ref }}
+						</div>
+						<div class="col-md-3">
+							{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
+						</div>
+						<div class="col-md-2">
+							{{ order.list_ol|length }} articles
+						</div>
+						<div class="col-md-2">
+							{{ order.value }} €
+						</div>
+						<div class="col-md-2">
+							{{ order.status_fr }}
+						</div>
+					</button>
+				{% endfor %}
+			</div>
+	</div>	
 </div>
