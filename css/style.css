@@ -183,13 +183,22 @@ nav{
 	-moz-box-shadow		: 	0 0 5px 1px rgba(114,114,114,0.6);
 	box-shadow			: 	0 0 5px 1px rgba(114,114,114,0.6);
 	background-color	:	#ffffff;
-	-webkit-transition	:	opacity 2s;
-	transition			:	opacity 2s;
+	-webkit-transition	:	opacity 1s;
+	transition			:	opacity 1s;
+}
+.onclick{
+	margin-bottom		:	30px;
+	text-decoration		:	underline;
+	cursor				:	pointer;
+}
+.no_current_order{
+	margin				:	80px auto;
 }
 #user_current_order{
 	opacity	:	1;
+	visibility:	visible;
 }
 #user_orders_history{
 	opacity	:	0;
-	visibility:hidden;
+	visibility	:	hidden;
 }
