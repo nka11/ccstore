@@ -171,7 +171,7 @@ nav{
 }
 /* - DASHBOARD PARAMETERS - */
 .dashboard_tab_content_orders{
-	position			:	relative;
+	position			:	absolute;
 	width				:	100%;
 	margin-top			:	40px;
 	-webkit-box-shadow	: 	0 0 5px 1px rgba(114,114,114,0.6);
@@ -181,29 +181,26 @@ nav{
 	-webkit-transition	:	opacity 1s;
 	transition			:	opacity 1s;
 }
-.onclick{
-	position			:	absolute;
+.switchable_content{
+	background-color	:	red;
+	position			:	relative;
 	width				:	100%;
-	margin-bottom		:	30px;
+}
+.onclick{
+	/*position			:	absolute;*/
+	top					:	0px;
+	width				:	100%;
+	background-color	:	green;
 	text-decoration		:	underline;
 	cursor				:	pointer;
 }
-.no_current_order{
-	position	:	absolute;
-	width		:	80%;
-	margin		:	auto;
-}
 #dashboard_tab_content_current_order{
 	position	:	absolute;
-	top			:	30px;
-	width		:	100%;
 	border		:	1px solid black;
 	opacity		:	1;
 }
 #dashboard_tab_content_orders_history{
 	position	:	absolute;
-	width		:	100%;
-	top			:	30px;
 	opacity		:	0;
 	visibility	:	"hidden";
 }
