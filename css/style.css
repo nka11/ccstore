@@ -170,15 +170,10 @@ nav{
 	font-weight: bold;
 }
 /* - DASHBOARD PARAMETERS - */
-.dashboard_tab_content{
-	position	:	relative;
-	width		:	100%;
-}
 .dashboard_tab_content_orders{
-	position			:	absolute;
+	position			:	relative;
 	width				:	100%;
 	margin-top			:	40px;
-	padding				:	20px;
 	-webkit-box-shadow	: 	0 0 5px 1px rgba(114,114,114,0.6);
 	-moz-box-shadow		: 	0 0 5px 1px rgba(114,114,114,0.6);
 	box-shadow			: 	0 0 5px 1px rgba(114,114,114,0.6);
@@ -187,18 +182,28 @@ nav{
 	transition			:	opacity 1s;
 }
 .onclick{
+	position			:	absolute;
+	width				:	100%;
 	margin-bottom		:	30px;
 	text-decoration		:	underline;
 	cursor				:	pointer;
 }
 .no_current_order{
-	margin				:	80px auto;
+	position	:	absolute;
+	width		:	80%;
+	margin		:	auto;
 }
-#user_current_order{
-	opacity	:	1;
-	visibility:	visible;
+#dashboard_tab_content_current_order{
+	position	:	absolute;
+	top			:	30px;
+	width		:	100%;
+	border		:	1px solid black;
+	opacity		:	1;
 }
-#user_orders_history{
-	opacity	:	0;
-	visibility	:	hidden;
+#dashboard_tab_content_orders_history{
+	position	:	absolute;
+	width		:	100%;
+	top			:	30px;
+	opacity		:	0;
+	visibility	:	"hidden";
 }

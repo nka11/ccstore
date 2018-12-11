@@ -1,74 +1,78 @@
 <script>
-	function fadeInCurrent(){
-		var activeElement= document.getElementById('user_current_order');
-		var adventElement= document.getElementById('user_orders_history');
-		adventElement.style.visibility="visible";
-		adventElement.style.opacity="1";
-		activeElement.style.opacity= "0";
-	}
-	function fadeInHistory(){
-		var activeElement= document.getElementById('user_orders_history');
-		var adventElement= document.getElementById('user_current_order');
-		activeElement.style.opacity= "0";
-		adventElement.style.opacity="1";
-		activeElement.style.visibility="hidden";
+	function fadeIn(){
+		var layer_title= document.getElementById('layer_title');
+		var link= document.getElementById('dashboard_tab_content_link');
+		var current_order= document.getElementById("dashboard_tab_content_current_order");
+		var orders_history= document.getElementById("dashboard_tab_content_orders_history");
+		if(link.innerHTML=="Voir les commandes terminées"){
+			layer_title.innerHTML= "Commandes terminées";
+			link.innerHTML= "Voir les commandes en cours";
+			current_order.style.opacity="0";
+			orders_history.style.opacity="1";
+			
+		}
+		else{
+			layer_title.innerHTML= "Commandes en cours";
+			link.innerHTML= "Voir les commandes terminées";
+			current_order.style.opacity="1";
+			orders_history.style.opacity="0";
+		}
 	}
 </script>
-<div class="current_orders_layer">
-	<h3>Commandes en cours</h3>
-	<div class="dashboard_tab_content">
-			<div id="user_current_order" class="dashboard_tab_content_orders">
-				<div onclick="javascript: fadeInCurrent()" class="onclick text-center"> Voir l'historique des commandes <span class="badge">{{ user.orders|length }}</span></div>
-				{% if user.orders_status("pending") is empty %}
-					<div class="text-center no_current_order">
-						<p>Vous n'avez pas passé de commande cette semaine</p>
-						<a href="{{base_path}}/store"><button type="button" class="btn btn-primary">Vers la boutique</button></a>
-					</div>
-				{% else %}
-					<div class="list-group">
-					{% for order in user.orders_status("pending") %}
-						<button type="button" class="list-group-item">
-							<div class="col-md-2">
-								{{ order.ref }}
-							</div>
-							<div class="col-md-3">
-								{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
-							</div>
-							<div class="col-md-2">
-								{{ order.list_ol|length }} articles
-							</div>
-							<div class="col-md-2">
-								{{ order.value }} €
-							</div>
-							<div class="col-md-2">
-								{{ order.status_fr }}
-							</div>
-						</button>
-					{% endfor %}
-					</div>
-				{% endif %}
+<h3 id="layer_title">Commandes en cours</h3>
+<div class="dashboard_tab_content_orders">
+	<div id="dashboard_tab_content_link" onclick="javascript: fadeIn()" class="onclick text-center">Voir les commandes terminées</div>
+	<div id="dashboard_tab_content_current_order">
+		{% if user.orders_status("pending") is empty %}
+			<div class="text-center no_current_order">
+				<p>Vous n'avez pas passé de commande cette semaine</p>
+				<a href="{{base_path}}/store"><button type="button" class="btn btn-primary">Vers la boutique</button></a>
 			</div>
-			<div id="user_orders_history" class="dashboard_tab_content_orders">
-				<div onclick="javascript: fadeInHistory()" class="onclick text-center"> Voir ma commande en cours <span class="badge">{{ user.orders_status('pending')|length }}</span></div>
-				{% for order in user.orders %}
-					<button type="button" class="list-group-item">
-						<div class="col-md-2">
-							{{ order.ref }}
-						</div>
-						<div class="col-md-3">
-							{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
-						</div>
-						<div class="col-md-2">
-							{{ order.list_ol|length }} articles
-						</div>
-						<div class="col-md-2">
-							{{ order.value }} €
-						</div>
-						<div class="col-md-2">
-							{{ order.status_fr }}
-						</div>
-					</button>
-				{% endfor %}
+		{% else %}
+			<div class="list-group">
+			{% for order in user.orders_status("pending") %}
+				<button type="button" class="list-group-item no_current_order">
+					<div class="col-md-2">
+						{{ order.ref }}
+					</div>
+					<div class="col-md-3">
+						{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
+					</div>
+					<div class="col-md-2">
+						{{ order.list_ol|length }} articles
+					</div>
+					<div class="col-md-2">
+						{{ order.value }} €
+					</div>
+					<div class="col-md-3">
+						{{ order.status_fr }}
+					</div>
+				</button>
+			{% endfor %}
 			</div>
-	</div>	
+		{% endif %}
+	</div>
+	<div id="dashboard_tab_content_orders_history">
+		<div class="list-group">
+		{% for order in user.orders %}
+			<button type="button" class="list-group-item">
+				<div class="col-md-2">
+					{{ order.ref }}
+				</div>
+				<div class="col-md-3">
+					{{ days[order.order_date|date("N")] }} {{ order.order_date|date('d') }} {{ months[order.order_date|date('n')] }}
+				</div>
+				<div class="col-md-2">
+					{{ order.list_ol|length }} articles
+				</div>
+				<div class="col-md-2">
+					{{ order.value }} €
+				</div>
+				<div class="col-md-3">
+					{{ order.status_fr }}
+				</div>
+			</button>
+		{% endfor %}
+		</div>
+	</div>
 </div>
