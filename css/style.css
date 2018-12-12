@@ -171,36 +171,70 @@ nav{
 }
 /* - DASHBOARD PARAMETERS - */
 .dashboard_tab_content_orders{
-	position			:	absolute;
 	width				:	100%;
 	margin-top			:	40px;
 	-webkit-box-shadow	: 	0 0 5px 1px rgba(114,114,114,0.6);
 	-moz-box-shadow		: 	0 0 5px 1px rgba(114,114,114,0.6);
 	box-shadow			: 	0 0 5px 1px rgba(114,114,114,0.6);
 	background-color	:	#ffffff;
-	-webkit-transition	:	opacity 1s;
-	transition			:	opacity 1s;
 }
 .switchable_content{
-	background-color	:	red;
 	position			:	relative;
+	background-color	:	red;
 	width				:	100%;
 }
 .onclick{
-	/*position			:	absolute;*/
-	top					:	0px;
 	width				:	100%;
 	background-color	:	green;
 	text-decoration		:	underline;
 	cursor				:	pointer;
 }
+.no_current_orders{
+	padding		:	100px 0px;
+	border		:	1px solid black;
+}
+@keyframes fadeIn{
+	0%{
+		visibility	:	visible;
+		opacity		:	1;
+	}
+	50%{
+		visibility	:	visible;
+		opacity		:	0;
+	}
+	100%{
+		visibility	:	hidden;
+		opacity		:	0;
+	}
+}
+@keyframes brighten{
+	0%{
+		visibility	:	hidden;
+		opacity		:	0;
+	}
+	50%{
+		visibility	:	visible;
+		opacity		:	0;
+	}
+	100%{
+		visibility	:	visible;
+		opacity		:	1;
+	}
+}
 #dashboard_tab_content_current_order{
 	position	:	absolute;
-	border		:	1px solid black;
+	width		:	100%;
+	z-index		:	0;
 	opacity		:	1;
 }
 #dashboard_tab_content_orders_history{
 	position	:	absolute;
+	width		:	100%;
+	z-index		:	0;
 	opacity		:	0;
 	visibility	:	"hidden";
+}
+.clear{
+	clear	:	both;
+	width	:	100%;
 }
