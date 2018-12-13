@@ -31,7 +31,7 @@ body{
 }
 .mono_layer{
 	position			:	relative;
-	margin-top			:	100px;
+	margin-top			:	80px;
 }
 .body_layer{
 	position			:	relative;
@@ -179,7 +179,7 @@ nav{
 	background-color	:	#ffffff;
 }
 .switchable_content{
-	position			:	absolute;
+	position			:	relative;
 	background-color	:	red;
 	width				:	100%;
 }
@@ -191,12 +191,12 @@ nav{
 }
 .no_current_orders{
 	padding				:	100px 0px;
-	border-left			:	1px solid black;
 }
 @keyframes fadeIn{
 	0%{
 		visibility	:	visible;
 		opacity		:	1;
+		z-index		:	0;
 	}
 	50%{
 		visibility	:	visible;
@@ -205,12 +205,14 @@ nav{
 	100%{
 		visibility	:	hidden;
 		opacity		:	0;
+		z-index		:	-1;
 	}
 }
 @keyframes brighten{
 	0%{
 		visibility	:	hidden;
 		opacity		:	0;
+		z-index		:	-1;
 	}
 	50%{
 		visibility	:	visible;
@@ -219,6 +221,7 @@ nav{
 	100%{
 		visibility	:	visible;
 		opacity		:	1;
+		z-index		:	0;
 	}
 }
 #dashboard_tab_content_current_order{
@@ -230,7 +233,7 @@ nav{
 #dashboard_tab_content_orders_history{
 	position	:	absolute;
 	width		:	100%;
-	z-index		:	0;
+	z-index		:	-1;
 	opacity		:	0;
 	visibility	:	"hidden";
 }
