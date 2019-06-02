@@ -33,7 +33,7 @@ class DbManager {
 					:	$objectCLASS."s";
 			$loadClass= "load".ucfirst($classname);
 			$data[$classname]= ($classname=="products")
-					?	$this->$loadClass(null, true)
+					?	$this->$loadClass(null, false)
 					:	$this->$loadClass();
 			return $data;
 		}
