@@ -34,7 +34,7 @@
 	</div>
 	<!-- NOM DU PRODUIT, PRIX DU PRODUIT -->
 	<div class="row">
-		<div class="title text-uppercase col-sm-8 col-xs-8 text-left"><small>{{ product.label }}</small></div><div class="price col-sm-4 col-xs-4 text-right">{{ product.price_unit }} €<sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup></div>
+		<div class="title text-uppercase col-sm-8 col-xs-8 text-left"><small>{{ product.label }}</small></div><div class="price col-sm-4 col-xs-4 text-right">{{ product.price|number_format(2) }} €<!-- {{ product.price_unit }} € <sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup>--></div>
 	</div>
 	<!-- PACKAGING, PRIX A L'UNITE DE MESURE -->
 	<div class="row">

@@ -7,7 +7,7 @@
 		{% endif %}
 	</a>
 	<div class="row">
-		<div class="title text-uppercase col-sm-9 col-xs-8 text-left">{{ product.label }}</div><div class="price col-sm-3 col-xs-4 text-right">{{ product.price_unit }} €<sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup></div>
+		<div class="title text-uppercase col-sm-9 col-xs-8 text-left">{{ product.label }}</div><div class="price col-sm-3 col-xs-4 text-right">{{ product.price|number_format(2) }} €<!-- {{ product.price_unit }} € <sup>{% if product.price_deci == 0 %}00{% else %}{{ product.price_deci }}{% endif %}</sup> --></div>
 	</div>
 	<div class="col-sm-9 col-xs-8 text-left">{{ product.packaging }}</div><div class="col-sm-3 col-xs-4 text-right">~ {{ product.package_weight }} {{ product.weight_unit }}</div>
 	<div class="col-sm-12 col-xs-12 text-right">{{ product.priceper|number_format(2) }} € / {{ product.weight_unit_ref }}</div>
