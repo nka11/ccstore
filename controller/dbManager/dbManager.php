@@ -13,7 +13,7 @@ require_once './model/MemberDAO.php';
 require_once './model/ProductDAO.php';
 require_once './model/EventDAO.php';
 require_once './model/StockDAO.php';
-require_once './model/PaymentDAO.php';
+require_once './model/OrderPaymentDAO.php';
 
 class DbManager {
 	private $db_connect;

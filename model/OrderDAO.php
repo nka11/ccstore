@@ -1,7 +1,7 @@
 <?php
 require_once("./model/AbstractClient.php");
 require_once("./model/class/Order.class.php");
-require_once("./model/class/Payment.class.php");
+require_once("./model/class/OrderPayment.class.php");
 require_once("./model/class/Customer.class.php");
 include_once './vendor/autoload.php';
 
@@ -11,7 +11,7 @@ class OrderDAO extends AbstractClient {
 		$string_type= ($customer_type!=NULL)
 					?	" WHERE customer_type='".$customer_type."'"
 					:	"";
-		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order".$string_type." ORDER BY order_date DESC");
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."privateorder".$string_type." ORDER BY order_date DESC");
 		$req->execute();
 		
 		if ($req->rowCount() > 0){
@@ -23,7 +23,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function getOrderById($id){
 		$order=null;
-		$req= $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order WHERE rowid=".$id);
+		$req= $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."privateorder WHERE rowid=".$id);
 		$req->execute();
 		
 		if($req->rowCount() == 1){
@@ -36,7 +36,7 @@ class OrderDAO extends AbstractClient {
 		}
 	}
 	public function getOrderByRef($ref){
-		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."cc_order WHERE ref=:ref");
+		$req = $this->pdo_db->prepare("SELECT * FROM ".$this->tb_prefix."privateorder WHERE ref=:ref");
 		$req->bindValue(':ref', $ref);
 		$req->execute();
 		
@@ -51,7 +51,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function getCurrentOrdersByUser($user, $delivery_week){
 		$orders=array();
-		$req_string= "SELECT * FROM ".$tb_prefix."cc_order WHERE fk_customer=".$user->id();
+		$req_string= "SELECT * FROM ".$tb_prefix."privateorder WHERE fk_customer=".$user->id();
 		$req_string.= " AND delivery_week=:delivery_week";
 		$req_string.= " ORDER BY order_date DESC";
 		$req = $this->pdo_db->prepare($req_string);
@@ -64,7 +64,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function getOrdersByUser($user, $status=null){
 		$orders=array();
-		$req_string= "SELECT * FROM ".$tb_prefix."cc_order WHERE fk_customer=".$user->id();
+		$req_string= "SELECT * FROM ".$tb_prefix."privateorder WHERE fk_customer=".$user->id();
 		$req_string.= ($status!=null)
 							?	" AND status= '$status'"
 							:	"";
@@ -78,7 +78,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function getOrdersByCustomer($customer, $status=null){
 		$orders=array();
-		$req_string= "SELECT * FROM ".$this->tb_prefix."cc_order WHERE fk_customer=".$customer->id()." AND customer_type='".get_class($customer)."'";
+		$req_string= "SELECT * FROM ".$this->tb_prefix."privateorder WHERE fk_customer=".$customer->id()." AND customer_type='".get_class($customer)."'";
 		$req_string.= ($status!=null)
 							?	" AND status= '$status'"
 							:	"";
@@ -91,7 +91,7 @@ class OrderDAO extends AbstractClient {
 			else return $orders;
 	}
 	public function createOrder(Order $order){
-		 $req=$this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."cc_order SET fk_customer=:fk_customer, customer_type=:customer_type, ref=:ref, total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_cost= :delivery_cost, delivery_date=:delivery_date, origin=:origin, status=:status, order_date=NOW()");
+		 $req=$this->pdo_db->prepare("INSERT INTO ".$this->tb_prefix."privateorder SET fk_customer=:fk_customer, customer_type=:customer_type, ref=:ref, total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_cost= :delivery_cost, delivery_date=:delivery_date, origin=:origin, status=:status, order_date=NOW()");
 		 $req->bindValue(':fk_customer', $order->fk_customer(), PDO::PARAM_INT);
 		 $req->bindValue(':customer_type', $order->customer_type());
 		 $req->bindValue(':ref', $order->ref());
@@ -120,7 +120,7 @@ class OrderDAO extends AbstractClient {
 			}
 	}
 	public function updateOrder(Order $order){
-		 $req=$this->pdo_db->prepare("UPDATE ".$this->tb_prefix."cc_order SET total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_date=:delivery_date, origin=:origin, status=:status WHERE ref=:ref");
+		 $req=$this->pdo_db->prepare("UPDATE ".$this->tb_prefix."privateorder SET total_amount=:total_amount, delivery_address=:delivery_address, delivery_zip=:delivery_zip, delivery_town=:delivery_town, delivery_instructions=:delivery_instructions, delivery_week=:delivery_week, delivery_date=:delivery_date, origin=:origin, status=:status WHERE ref=:ref");
 		 $req->bindValue(':ref', $order->ref());
 		 $req->bindValue(':total_amount', $order->total_amount());
 		 $req->bindValue(':delivery_address', $order->delivery_address());
@@ -146,7 +146,7 @@ class OrderDAO extends AbstractClient {
 			}
 	}
 	public function deleteOrder(Order $order){
-		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."cc_order WHERE ref = ".$order->ref());
+		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."privateorder WHERE ref = ".$order->ref());
 		
 		$order= $this->getOrderByRef($order->ref());
 		if(!$order) return true;

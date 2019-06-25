@@ -6,7 +6,7 @@ require_once './model/ProductDAO.php';
 require_once './model/CategoryDAO.php';
 require_once './model/OrderDAO.php';
 require_once './model/OrderLineDAO.php';
-require_once './model/PaymentDAO.php';
+require_once './model/OrderPaymentDAO.php';
 
 class OrderController extends AbstractController {
 	/**
