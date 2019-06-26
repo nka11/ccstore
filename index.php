@@ -9,7 +9,7 @@ require 'vendor/autoload.php';
 require 'conf/controllers.cnf.default.php';
 
 use Pux\Executor;
-echo "ok";exit();
+
 $mode= "maintenance";
 
 if($mode == "maintenance"){
