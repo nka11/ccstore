@@ -9,7 +9,10 @@ class AdminController extends AbstractController {
 	* @Method("GET")
 	*/
 	public function indexAction(){
-		if(get_Class($this->session["user"]) != "member") return parent::render("admin/form/connect.html");
+		$user_status = get_Class($this->session['user']);
+		echo "Session status".$user_status;
+		echo "<br/>Utilisateur : ".$this->session['user']->pseudo();
+		if($user_status != "member" && $user_status != "Admin") return parent::render("admin/form/connect.html");
 		return parent::render('admin/base_admin.html');
 	}
 	/**
@@ -17,7 +20,8 @@ class AdminController extends AbstractController {
 	 *	@Method("GET")
 	 */
 	public function objetAction($object){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		$user_status = get_Class($this->session['user']);
+		if($user_status != "member" && $user_status != "admin") return parent::render("admin/form/connect.html");
 		$data= $this->dbManager->getAll($object);
 		return parent::render("admin/list/$object.html", $data);
 	}
