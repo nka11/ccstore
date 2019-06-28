@@ -12,7 +12,7 @@ class UserController extends AbstractController {
    * @Method("GET")
    */
    function indexAction() {
-	$user= $this->session['user']; 
+	$user= $this->session['user'];
 	if(!$user) return parent::render("user/connection.html"); // escape visitor session and invit for log in
 	else{
 		//$pending_orders= $user->status_orders('pending');
