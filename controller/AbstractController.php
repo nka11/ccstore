@@ -60,10 +60,13 @@ class AbstractController extends \Pux\Controller {
 		$this->session['basket_amount']+= number_format($line['value'],2);
 	}
 	$_SESSION = $this->session;
+	echo "<br/><br/><br/>";
+	print_r($_SESSION);
 	$_SESSION['temp_request'] = (!$temp_request) // asked in pw forgotten
 	? null
 	: $temp_request;
   }
+  
   public function setOrderblock(){
 		$closing= new DateTime(date("Y-m-d"));
 		$opening= new DateTime(date("Y-m-d"));

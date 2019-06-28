@@ -10,8 +10,7 @@ class AdminController extends AbstractController {
 	*/
 	public function indexAction(){
 		$user_status = get_Class($this->session['user']);
-		echo "Session status".$user_status;
-		echo "<br/>Utilisateur : ".$this->session['user']->pseudo();
+		echo "Session status : ".$user_status;exit();
 		if($user_status != "member" && $user_status != "Admin") return parent::render("admin/form/connect.html");
 		return parent::render('admin/base_admin.html');
 	}
@@ -48,7 +47,7 @@ class AdminController extends AbstractController {
 					"password"	=> $password));
 				$admin= $this->dbManager->logAdmin($admin);
 				if($admin){
-					$_SESSION['status']= 'admin';
+					$_SESSION['status']= 'Admin';
 					$_SESSION['user']=$admin;
 					$this->handle_session();
 					return parent::render('admin/base_admin.html');
