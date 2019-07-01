@@ -10,7 +10,7 @@ class AdminController extends AbstractController {
 	*/
 	public function indexAction(){
 		$user_status = get_Class($this->session['user']);
-		echo "Session status : ".$user_status;exit();
+		echo "Session status : ".$user_status;
 		if($user_status != "member" && $user_status != "Admin") return parent::render("admin/form/connect.html");
 		return parent::render('admin/base_admin.html');
 	}
