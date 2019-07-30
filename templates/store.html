@@ -9,7 +9,7 @@
 	</div>
 	<div class="store_layer">
 		{% include "store/sidebar.html" %}
-		<div class="col-sm-12 col-md-offset-2 col-md-10">
+		<div class="col-sm-12 col-md-10">
 			<ul class="nav nav-tabs nav-fill" role="tablist">
 				<li role="presentation" class="nav-item"><a href="#all" aria-controls="all" role="tab" data-toggle="pill">{% if category.label != NULL %}{{ category.label }} : {% else %} Tous les produits : {% endif %}Tout  <span class="badge">{{ category.badge }}</span></a></li>
 				{% for cat in category.childCats %}

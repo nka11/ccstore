@@ -1,8 +1,7 @@
-<div class="col-md-offset-2 col-md-10">
-	<div class="alert_layer">
-		{% include "alert/alert.html" %}
+<div class="col-md-10">
+	<div class="col-md-12">
+		<a href="{{base_path}}/store">Retour à la boutique</a>
 	</div>
-	<div class="row">
 		<div class="col-md-8 col-xs-12 col-sm-9">
 			<img src="{{base_path}}/files/pictures/product/{{product.id}}.jpg" class="img-responsive img-rounded" alt="image grand format" style="background-color:green;"/>
 		</div>
@@ -13,6 +12,13 @@
 							 <small>{{product.ref}}</small>
 						</div>
 						<table class="table">
+							<tr>
+								<th>Producteur : </th>
+								<td>{{product.supplier.label}}</td>
+							<tr>
+							<tr>
+								<th>Agriculture : </th>
+								<td>{{product.agriculture}}</td>
 							<tr>
 								<th>Emballage : </th>
 								<td>{{product.packaging }}</td>
@@ -30,10 +36,15 @@
 							<p>{{product.description}}</p>
 						</div>
 				</div>
+				<!-- DIV FORMULAIRE QUANTITE -->
+				<div class="text-center" id="formAmount{{ cat.id }}_{{ product.id }}">
+					<a class="btn btn-primary btn-sm" href="javascript: substractProduct('{{ cat.id }}_{{ product.id }}')"><span class="glyphicon glyphicon-minus-sign"></span></a>
+					<span id="{{ cat.id }}_{{ product.id }}" style="font-size:14px">1</span>
+					<a class="btn btn-primary btn-sm" href="javascript: addProduct('{{ cat.id }}_{{ product.id }}')"><span class="glyphicon glyphicon-plus-sign"></span></a><br/><br/>
+					<a class="btn btn-primary btn-sm" href="javascript: submitToBasket('{{ cat.id }}_{{ product.id }}', {{ product.id }})" role="button">Ajouter au panier</a>
+				</div>
 		</div>
-	</div><br/>
-	<div class="row">
-			<div class="col-md-12">
+		<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">Autres produits pour ce producteur : </h4>

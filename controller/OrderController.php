@@ -65,8 +65,8 @@ class OrderController extends AbstractController {
 				}
 				$order= $this->dbManager->loadOrder($order->ref());
 				if($order && count($order->list_ol()) == count($orderlines)){
-					$_SESSION['basket']=array();
-					unset($this->session['basket']);
+					/*$_SESSION['basket']=array();
+					unset($this->session['basket']);*/
 				}
 			return parent::render("order/recap.html",  array("order"=>$order));
 			}
@@ -86,27 +86,12 @@ class OrderController extends AbstractController {
 			if($ref && $ref>0 && $ref!= null && $ref!=""){
 				$order= $this->dbManager->loadOrder($ref);
 				if($order){
-					foreach($this->session['basket'] as $article){
-						$orderline= new OrderLine( array(
-															"fk_order"=>$order->id(),
-															"fk_product"=>$article['product']->id(),
-															"amount"=>$article['amount'],
-															"value"=>$article['value']
-															));
-						$ol= $this->dbManager->create($orderline);
-					}
-					if($ol){
-						$_SESSION['basket']=array();
-						unset($this->session['basket']);
-						$order->setStatus("Confirmed");
-						$order= $this->dbManager->update($order);
-						$alert="Votre commande a bien été prise en compte";
-						return parent::render("order_record_success.html", array("alert"=>$alert));
-					}
-					else{
-							$alert="Erreur de traitement des articles";
-							return parent::render("order/recap.html", array("alert"=> $alert));
-					}
+					$_SESSION['basket']=array();
+					unset($this->session['basket']);
+					$order->setStatus("Confirmed");
+					$order= $this->dbManager->update($order);
+					$alert="Votre commande a bien été prise en compte";
+					return parent::render("order_record_success.html", array("alert"=>$alert));
 				}
 				else{
 					$alert="Erreur de traitement de la commande";
@@ -121,7 +106,7 @@ class OrderController extends AbstractController {
 		else{
 			$alert="Référence manquante";
 			return parent::render("order/recap.html", array("alert"=> $alert));
-			}
+		}
 	}
 	/**
     * @Route("/cancel")

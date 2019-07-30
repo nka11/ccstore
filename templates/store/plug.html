@@ -4,11 +4,54 @@
 
 {% block content %}
 <div class="wrapper container-fluid">
-	<div class="store_layer" style="background-color:red">
+	<div class="alert_layer">
+		{% include "alert/alert.html" %}
+	</div>
+	<div class="store_layer" style="background-color:yellow">
 	  <!-- Example row of columns -->
 	  <!-- div class="row" -->
-	  {% include "store/sidebar.html" %}
-	  {% include "store/product/div.html" %}
+	  <div class="row">
+		{% include "store/sidebar.html" %}
+		{% include "store/product/div.html" %}
+	  </div>
 	</div>
 </div>
+<form class="form-inline" id="addToBasketForm" method="post" action="{{base_path}}/store/add/basket" style="display:none">
+		<input type="hidden" class="form-control" id="amount" name="amount" min='1' value='1'/>
+		<input type="hidden" class="form-control" id="product" name="id_p" min="1" value=""/>
+</form>
+<script type="text/javascript">
+function show(inputName){
+	var formAmount = document.getElementById(inputName);
+	var display = formAmount.style.display;
+	if(display == "none"){
+		formAmount.style.display = "block";
+	}
+	if(display == "block"){
+		formAmount.style.display = "none";
+	}
+}
+function substractProduct(inputName){
+	var qte = document.getElementById(inputName).innerHTML;
+	qte = parseInt(qte);
+	if(qte > 0){
+		qte = qte - 1;
+		document.getElementById(inputName).innerHTML = qte;
+	}
+}
+function addProduct(inputName){
+	var qte = document.getElementById(inputName).innerHTML;
+	qte = parseInt(qte);
+	if(qte < 5){
+		qte = qte+ 1;
+		document.getElementById(inputName).innerHTML = qte;
+	}
+}
+function submitToBasket(inputName, id_p){
+	var qte = document.getElementById(inputName).innerHTML;
+	document.getElementById("amount").value = qte;
+	document.getElementById("product").value = id_p;
+	document.getElementById("addToBasketForm").submit();
+}
+</script>
 {% endblock %}

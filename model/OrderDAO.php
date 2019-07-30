@@ -147,7 +147,7 @@ class OrderDAO extends AbstractClient {
 	}
 	public function deleteOrder(Order $order){
 		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."privateorder WHERE ref = ".$order->ref());
-		
+		$this->pdo_db->exec("DELETE FROM ".$this->tb_prefix."privateorder_line WHERE fk_order = ".$order->id());
 		$order= $this->getOrderByRef($order->ref());
 		if(!$order) return true;
 		else return false;
