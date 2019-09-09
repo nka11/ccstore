@@ -23,4 +23,11 @@ class PortalController extends AbstractController { // *TO DO* : DELETED.
 											"exemples"=>$exemples
 										));
   }
+  /**
+   * @Route("/lamarge")
+   * @Method("GET")
+   */
+  public function LaMargeAction(){
+	return parent::render('portail/lamarge.html', array());
+  }
 }

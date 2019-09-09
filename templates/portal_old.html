@@ -4,8 +4,40 @@
 
 {% block content %}
 <div class="wrapper container-fluid">
+	<img class="homepageBckgd img-responsive" src="{{base_path}}/files/design/portal/JardinTrolls_forWeb.jpg"/>
 	<div class="alert_layer">
 		{% include "alert/alert.html" %}
+	</div>
+	<div class="homepage_hero container">
+		<div class="text-center">
+			<h2 class="homepage_hero_title">Vos produits fermiers locaux, <br/><span class="mid_sentence">livrés à domicile</span></h2>
+			<h2 class="homepage_hero_subtitle">Une stratégie économique pour garantir une alimentation saine... <i>durablement!</i></h2>
+			<div class="homepage_form">
+				<form  class="form-inline" method="post" action="{{ base_path }}/store">
+					<select name="id_cat" id="category" class="form-control input-lg">
+						<option value="0">Choisir une catégorie</option>
+						{% for category in categories %}
+						<option value="{{category.id}}">{{category.label}}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="btn btn-primary btn-lg">Rechercher</button>
+				</form>
+			</div>
+			<div class="homepage_oblck">
+				<h2 class="homepage_oblck_delivery_date">Prochaines livraisons<br/><span class="mid_sentence">Vendredi {{ orderblock.closing|date_modify("+2 day")|date("d") }} et Samedi {{ orderblock.closing|date_modify("+3 day")|date("d") }} {{ months[orderblock.closing|date("n")] }}</span></h2>
+			</div>
+		</div>
+	</div>
+	<div class="homepage_footer text-center">
+		<div class="col-md-3 col-md-offset-1">
+			{{ count_products }} produits disponibles issus de l'agriculture biologique et raisonnée locale
+		</div>
+		<div class="col-md-4" style="border-right: solid 2px grey;border-left: solid 2px grey">
+			Cette année, déjà 1100 € reversés dans des projets de territoire inscrits dans une démarche durable
+		</div>
+		<div class="col-md-3">
+			Livraison gratuite pour les adhérents
+		</div>
 	</div>
 	<div class="ordered container">
 		<h2>Commandés fréquemments sur Court Circuit</h2>
