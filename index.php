@@ -10,7 +10,7 @@ require 'conf/controllers.cnf.default.php';
 
 use Pux\Executor;
 
-$mode= "maintenance";
+$mode= "";
 
 if($mode == "maintenance"){
 	$pass = explode("/", $path);
