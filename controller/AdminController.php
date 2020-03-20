@@ -20,7 +20,7 @@ class AdminController extends AbstractController {
 	 */
 	public function objetAction($object){
 		$user_status = get_Class($this->session['user']);
-		if($user_status != "member" && $user_status != "admin") return parent::render("admin/form/connect.html");
+		if($user_status != "member" && $user_status != "Admin") return parent::render("admin/form/connect.html");
 		$data= $this->dbManager->getAll($object);
 		return parent::render("admin/list/$object.html", $data);
 	}
@@ -72,7 +72,7 @@ class AdminController extends AbstractController {
 	 * @Method("GET")
 	 */
 	public function addObjectAction($object, $targetID=NULL){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$data=array($object=>null);
 		if($targetID && $targetID>0 && $targetID!=null && $targetID!=""){
 				$loadObject= "load".ucfirst($object);
@@ -94,7 +94,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postAdminAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$pseudo=null;
 		$password=null;
 		if(array_key_exists('pseudo', $_POST)
@@ -128,7 +128,7 @@ class AdminController extends AbstractController {
 	 * @Method("POST")
 	 */
 	public function postAnimationAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$id_animation=null;
 		$name=null;
 		$default_sell_price=null;
@@ -186,7 +186,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postCategoryAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$id_category=null;
 		$label=NULL;
 		$description=NULL;
@@ -242,7 +242,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postContactAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$gender=NULL;
 		$lastname=NULL;
 		$name=NULL;
@@ -318,7 +318,7 @@ class AdminController extends AbstractController {
 	 * @Method("POST")
 	 */
 	public function postEventAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$name=null;
 		$price=null;
 		$fk_organizer=null;
@@ -400,7 +400,7 @@ class AdminController extends AbstractController {
 	 * @Method("POST")
 	 */
 	public function postMemberAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$lastname=NULL;
 		$name=null;
 		$email=null;
@@ -469,7 +469,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postOrganizationAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$label=null;
 		$kind=null;
 		$siren=null;
@@ -533,7 +533,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postOrganizationContactAction($orgaID){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$fk_organization= (int) $orgaID;
 		$gender=NULL;
 		$lastname=NULL;
@@ -610,7 +610,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postProductAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$alert=null;
 		$label= NULL;
 		$ref=NULL;
@@ -749,7 +749,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postSupplierAction(){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$label=NULL;
 		$code=NULL;
 		$phone=NULL;
@@ -839,7 +839,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function postSupplierContactAction($supplierID){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$fk_supplier= (int) $supplierID;
 		$gender=NULL;
 		$lastname=NULL;
@@ -913,7 +913,7 @@ class AdminController extends AbstractController {
 	* @Method("GET")
 	*/
 	public function deleteFormConfirmAction(string $object, int $id){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$target= array(
 			"type"=>$object,
 			"id_object"=>$id);
@@ -925,7 +925,7 @@ class AdminController extends AbstractController {
 	* @Method("POST")
 	*/
 	public function deleteObjectAction(string $object, int $targetID){
-		if($this->session["status"] != "admin") return parent::render("admin/form/connect.html");
+		if($this->session["status"] != "Admin") return parent::render("admin/form/connect.html");
 		$loadTarget= "load".ucfirst($object);
 		$target= $this->dbManager->$loadTarget($targetID);
 		if($target){
