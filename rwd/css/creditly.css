@@ -46,11 +46,14 @@
 }
 
 .creditly-card-form .submit span {
-    padding: 12px 25px;
-    letter-spacing: 1px;
-    background: #FF5722;
-    font-size: 16px;
+    display: block;
+    position: relative;
+    padding: 6px 50px 11px;
+    letter-spacing: 3px;
+    background:#84c639;
+    font-size: 1.5em;
     color: #fff;
+    font-weight: 500;
     border: none;
     outline: none;
     transition: 0.5s all;
@@ -58,15 +61,16 @@
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
     -ms-transition: 0.5s all;
-	display: inline-block;
+    text-transform: uppercase;
 }
 .creditly-card-form .submit span:hover{
-    background: #1accfd;
-    transition: 0.5s all;
-    -webkit-transition: 0.5s all;
-    -moz-transition: 0.5s all;
-    -o-transition: 0.5s all;
-    -ms-transition: 0.5s all;
+    background: #fa1818;
+    color: #fff;
+	transition:0.5s all;
+	-webkit-transition:0.5s all;
+	-moz-transition:0.5s all;
+	-o-transition:0.5s all;
+	-ms-transition:0.5s all;
 }
 .creditly-card-form .submit span:hover i{
 	padding-left:1em;
@@ -98,7 +102,4 @@
 	.creditly-card-form .submit span {
 		padding: 6px 10px 11px;
 	}
-	.creditly-card-form .submit span {
-        font-size: 1em;
-    }
 }
