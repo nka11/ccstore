@@ -1,10 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine on
+  <IfModule mod_ssl.c>
+      RewriteCond %{HTTP:HTTPS} !on
+      RewriteRule (.*) https://%{SERVER_NAME}/$1 [QSA,L,R=301]
+  </IfModule>
 #    RewriteCond %{HTTPS} !=on 
     #RewriteRule ^.*$ https://courtcircuit.bio/%{REQUEST_URI} [R,L]
-    RewriteCond %{HTTP:HTTPS} !on
-    RewriteRule (.*) https://%{SERVER_NAME}/$1 [QSA,L,R=301]
     RewriteCond %{REQUEST_FILENAME} !-f
     #RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?path=/$1 [QSA]
- </IfModule>
+</IfModule>
